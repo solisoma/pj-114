@@ -7,7 +7,7 @@ import React from "react";
 export default function page({
   params: { trade },
 }: {
-  params: { trade: string };
+  params: Awaited<{ trade: string }>;
 }) {
   switch (trade) {
     case "options":

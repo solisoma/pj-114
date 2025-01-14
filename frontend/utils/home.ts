@@ -19,7 +19,7 @@ export const boxTwoDeet: { imgURL: string; desc: string; url: string }[] = [
   {
     url: "mirror/options",
     imgURL: "/mir-1.jpg",
-    desc: "Copy Option Trading<br/>Copy option trading lets you mimic the trades of experienced traders, making it easier for beginners to invest successfully. It’s simple but depends on choosing the right traders to follow.",
+    desc: "Copy Trading<br/>Copy option trading lets you mimic the trades of experienced traders, making it easier for beginners to invest successfully. It’s simple but depends on choosing the right traders to follow.",
   },
   {
     url: "mirror/advance",

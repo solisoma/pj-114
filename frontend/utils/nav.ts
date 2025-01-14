@@ -2,7 +2,7 @@ export const dynamicURL = [
   {
     name: "Mirror trading",
     links: [
-      { link: "/mirror/options", name: "Options copy trading" },
+      { link: "/mirror/copy", name: "Copy trading" },
       { link: "/mirror/advance", name: "Advanced trading account above PDT" },
       { link: "/mirror/live-trading", name: "Live trading interface" },
     ],

@@ -3,7 +3,7 @@ import Nav from "../nav-section/Nav";
 import Footer from "../footer-section/Footer";
 import BoxThree from "../BoxThree";
 
-export default function Options() {
+export default function Copy() {
   return (
     <>
       <div className="fixed top-0 pt-2 left-0 w-full shadow-md bg-[#0a0a0a] z-10">
@@ -21,9 +21,7 @@ export default function Options() {
         <div className="absolute inset-0 bg-gradient-to-br from-[#02082D] to-[#081C49] opacity-80"></div>
         <div className="relative flex justify-center">
           <div className="flex flex-col gap-8 px-4 py-[5rem] w-full md:px-10 lg:w-[72%]">
-            <h2 className="font-bold text-4xl md:text-6xl">
-              Option Copy Trading
-            </h2>
+            <h2 className="font-bold text-4xl md:text-6xl">Copy Trading</h2>
             <p className="text-xl text-[#7B8EA4]">
               Cinpax Trade has been sharing financial freedom with traders since
               2014. In a continuous effort to give traders a more comfortable
@@ -37,7 +35,7 @@ export default function Options() {
       <div className="flex justify-center">
         <div className="flex flex-col gap-8 px-4 pt-[5rem] w-full md:px-10 md:pt-[6rem] lg:w-[72%]">
           <div className="flex flex-col gap-8">
-            <h2 className="font-bold text-4xl">Option Copy Trading</h2>
+            <h2 className="font-bold text-4xl">Copy Trading</h2>
             <div className="flex flex-col gap-4 mb-[3rem] md:justify-between md:flex-row">
               <div className="flex-1">
                 <BoxThree

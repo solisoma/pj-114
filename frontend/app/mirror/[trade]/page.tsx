@@ -1,6 +1,6 @@
 import Advanced from "@/components/mirror/Advanced";
 import LiveTrading from "@/components/mirror/LiveTrading";
-import Options from "@/components/mirror/Options";
+import Copy from "@/components/mirror/Copy";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -12,8 +12,8 @@ export default async function page({
   const { trade } = await params;
 
   switch (trade) {
-    case "options":
-      return <Options />;
+    case "copy":
+      return <Copy />;
     case "advance":
       return <Advanced />;
     case "live-trading":

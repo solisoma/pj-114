@@ -1,6 +1,7 @@
 "use client";
 import { NavType } from "@/utils/type";
-import React from "react";
+import React, { useState } from "react";
+import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
 
 export default function PrettyMenu({
   nav,
@@ -13,35 +14,67 @@ export default function PrettyMenu({
   route: (param: string) => void;
   setShowMobileMenu: (param: boolean) => void;
 }) {
+  const [showSub, setShowSub] = useState(false);
+  const [index, setIndex] = useState<number | null>(null);
   return (
     <>
       <h2 className="text-white font-bold ml-1 md:ml-6">{nav.header}</h2>
       {nav.content.map((inav, i) => {
         return (
-          <button
-            onClick={() => {
-              setShowMobileMenu(false);
-              route(inav.route || "#");
-            }}
-            key={i}
-            className={`flex items-center text-gray-300 ${
-              activeLink == inav.route && "bg-background2"
-            } px-3 md:px-[2.3vw] rounded-xl gap-2 py-2 md:gap-[1.2vw] md:py-[1vw]`}
-          >
-            {inav.route === "notification" ? (
-              <inav.icon
-                className={
-                  JSON.parse(localStorage.getItem("notis") || "{}").exist
-                    ? "text-red-600"
-                    : "text-white"
+          <div key={i}>
+            <button
+              onClick={() => {
+                if (inav.sub) {
+                  setShowSub((prev) => !prev);
+                  setIndex(i);
+                } else {
+                  setShowMobileMenu(false);
+                  route(inav.route || "#");
                 }
-                size={24}
-              />
-            ) : (
+              }}
+              className={`w-full flex items-center text-gray-300 ${
+                activeLink === inav.route && "bg-background2"
+              } ${
+                showSub && index === i && activeLink !== inav.route && "border"
+              } pl-4 md:pl-[2vw] rounded-xl gap-2 py-2 md:py-[1vw] md:gap-[1.2vw]`}
+            >
               <inav.icon className="text-white" size={24} />
+              <div className="flex items-center gap-4">
+                <p className="block md:text-[1rem]">{inav.text}</p>
+                {inav.sub && (
+                  <>
+                    {showSub ? (
+                      <MdKeyboardArrowDown size={20} />
+                    ) : (
+                      <MdKeyboardArrowRight size={20} />
+                    )}
+                  </>
+                )}
+              </div>
+            </button>
+            {inav.sub && (
+              <div className={showSub ? "block" : "hidden"}>
+                {inav.sub?.map((itm, i) => (
+                  <button
+                    onClick={() => {
+                      setShowMobileMenu(false);
+                      route(itm.route || "#");
+                    }}
+                    key={i}
+                    className={`flex items-center text-gray-300 pl-10 md:pl-[4vw] py-1 md:py-[.3vw]`}
+                  >
+                    <p
+                      className={`block md:text-[.9rem] ${
+                        activeLink == itm.route && "text-background2"
+                      }`}
+                    >
+                      {itm.text}
+                    </p>
+                  </button>
+                ))}
+              </div>
             )}
-            <p className="block md:text-[1rem]">{inav.text}</p>
-          </button>
+          </div>
         );
       })}
     </>

@@ -96,7 +96,7 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
             </div>
           </div>
           <div className="w-full bg-background3 md:w-[95%]">
-            <div className="flex justify-between items-center bg-background2 w-full h-[10%] p-6">
+            <div className="flex justify-between items-center bg-background w-full h-[10%] p-6">
               <div className="flex items-center gap-3 md:hidden">
                 <Link href="/">
                   {/* <Icon /> */}

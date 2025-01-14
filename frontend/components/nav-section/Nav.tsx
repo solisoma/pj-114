@@ -24,7 +24,7 @@ export default function Nav({
   const [sid, setSid] = useState<number | null>(null);
 
   async function checkUser() {
-    const user = await getSecureStorage("token");
+    const user = (await getSecureStorage("token")) || true;
     setUserExist(user);
     setShow(true);
   }

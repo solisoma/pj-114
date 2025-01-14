@@ -4,11 +4,13 @@ import Options from "@/components/mirror/Options";
 import { redirect } from "next/navigation";
 import React from "react";
 
-export default function page({
-  params: { trade },
+export default async function page({
+  params,
 }: {
-  params: Awaited<{ trade: string }>;
+  params: Promise<{ trade: string }>;
 }) {
+  const { trade } = await params;
+
   switch (trade) {
     case "options":
       return <Options />;

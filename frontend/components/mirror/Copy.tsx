@@ -9,7 +9,7 @@ export default function Copy() {
       <div className="fixed top-0 pt-2 left-0 w-full shadow-md bg-[#0a0a0a] z-10">
         <div className="flex justify-center w-full">
           <div className="w-full lg:w-[70%]">
-            <Nav activeLink="Options copy trading" />
+            <Nav activeLink="Copy trading" />
           </div>
         </div>
       </div>

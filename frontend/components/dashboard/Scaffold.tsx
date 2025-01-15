@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import { sidenavs } from "@/utils/scaffold";
 import AuthGuard from "../auth/AuthGuard";
 import { clearSecureStorage, hash_notis, is_same } from "@/api/auth";
@@ -28,6 +28,7 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [refresh, setRefresh] = useState<boolean>(false);
   const router = useRouter();
+  const elementRef = useRef(null);
   const Children = React.cloneElement(children, {
     userId: userDetail.id,
     permission: userDetail.permission,
@@ -53,14 +54,26 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
     setLoading(false);
   }
 
+  const updateHeight = () => {
+    if (elementRef.current) {
+      (elementRef.current as any).style.height = `${window.innerHeight}px`;
+    }
+  };
+
   useEffect(() => {
     // setUser();
+    updateHeight(); // Set height on load
+    window.addEventListener("resize", updateHeight); // Adjust height on resize
+
+    return () => {
+      window.removeEventListener("resize", updateHeight);
+    };
   }, [refresh]);
 
   return (
     !loading && (
       <>
-        <div className="flex h-screen w-screen">
+        <div ref={elementRef} className="flex w-screen">
           <div
             onClick={(e: any) =>
               e.target.id === "parent" && setShowMobileMenu(false)
@@ -95,7 +108,7 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
               </div>
             </div>
           </div>
-          <div className="w-full bg-background3 md:w-[95%] h-[83%] overflow-y-scroll remove-scrollbar md:h-full border">
+          <div className="w-full bg-background3 md:w-[95%] h-full overflow-y-scroll remove-scrollbar">
             <div className="fixed z-[99] top-0 w-full md:w-[82%] flex justify-between items-center bg-background h-[10%] p-6">
               <div className="flex items-center gap-3 md:hidden">
                 <Link href="/">

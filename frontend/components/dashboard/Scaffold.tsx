@@ -108,7 +108,7 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
               </div>
             </div>
           </div>
-          <div className="w-full bg-background3 md:w-[95%] h-full overflow-y-scroll remove-scrollbar border">
+          <div className="w-full bg-background3 md:w-[95%] h-full overflow-y-scroll remove-scrollbar">
             <div className="fixed z-[99] top-0 w-full md:w-[82%] flex justify-between items-center bg-background h-[10%] p-6">
               <div className="flex items-center gap-3 md:hidden">
                 <Link href="/">

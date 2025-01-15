@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { sidenavs } from "@/utils/scaffold";
 import AuthGuard from "../auth/AuthGuard";
 import { clearSecureStorage, hash_notis, is_same } from "@/api/auth";
@@ -28,7 +28,6 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [refresh, setRefresh] = useState<boolean>(false);
   const router = useRouter();
-  const elementRef = useRef(null);
   const Children = React.cloneElement(children, {
     userId: userDetail.id,
     permission: userDetail.permission,
@@ -54,26 +53,14 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
     setLoading(false);
   }
 
-  const updateHeight = () => {
-    if (elementRef.current) {
-      (elementRef.current as any).style.height = `${window.innerHeight}px`;
-    }
-  };
-
   useEffect(() => {
     // setUser();
-    updateHeight(); // Set height on load
-    window.addEventListener("resize", updateHeight); // Adjust height on resize
-
-    return () => {
-      window.removeEventListener("resize", updateHeight);
-    };
   }, [refresh]);
 
   return (
     !loading && (
       <>
-        <div ref={elementRef} className="flex w-screen">
+        <div className="flex h-screen w-screen">
           <div
             onClick={(e: any) =>
               e.target.id === "parent" && setShowMobileMenu(false)
@@ -81,7 +68,7 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
             id="parent"
             className={`absolute top-0 z-[999] h-full w-full bg-transparent ${
               showMobileMenu ? "translate-x-0" : "-translate-x-full"
-            } transition-transform duration-700 md:w-[20%] md:translate-x-0 md:static`}
+            } transition-transform duration-700 md:w-[20%] md:translate-x-0 md:static border`}
           >
             <div className="bg-background h-full w-[65%] md:w-full px-[1rem] md:px-[1.4vw] border-r">
               <div className="h-[15%] md:py-[.9vw]">

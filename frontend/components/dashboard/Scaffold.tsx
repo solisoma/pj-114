@@ -66,7 +66,7 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
               e.target.id === "parent" && setShowMobileMenu(false)
             }
             id="parent"
-            className={`absolute top-0 z-[99] h-full w-full bg-transparent ${
+            className={`absolute top-0 z-[999] h-full w-full bg-transparent ${
               showMobileMenu ? "translate-x-0" : "-translate-x-full"
             } transition-transform duration-700 md:w-[20%] md:translate-x-0 md:static`}
           >
@@ -95,8 +95,8 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
               </div>
             </div>
           </div>
-          <div className="w-full bg-background3 md:w-[95%] h-full overflow-y-scroll remove-scrollbar">
-            <div className="fixed z-[999] top-0 w-full md:w-[82%] flex justify-between items-center bg-background h-[10%] p-6">
+          <div className="w-full bg-background3 md:w-[95%] h-[95%] overflow-y-scroll remove-scrollbar md:h-full">
+            <div className="fixed z-[99] top-0 w-full md:w-[82%] flex justify-between items-center bg-background h-[10%] p-6">
               <div className="flex items-center gap-3 md:hidden">
                 <Link href="/">
                   <img src="/clans-logo.png" className="md:w-[4vw] w-[3rem]" />

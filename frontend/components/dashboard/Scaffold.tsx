@@ -52,6 +52,9 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
+    document.body.style.margin = "0px";
+    document.body.style.padding = "0px";
+
     // setUser();
   }, [refresh]);
 

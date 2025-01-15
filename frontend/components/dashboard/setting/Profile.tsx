@@ -75,7 +75,7 @@ export default function Profile() {
   }
 
   useEffect(() => {
-    setUserInfo();
+    // setUserInfo();
   }, []);
 
   return (

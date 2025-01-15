@@ -232,7 +232,6 @@ export default function Overview() {
         </a>
       </div>
       <div className="flex flex-col gap-4 md:justify-between items-stretch md:flex-row">
-        {/* First Child */}
         <div className="w-full md:w-[30%]">
           <div className="tradingview-widget-container h-[55vh]">
             <div
@@ -241,9 +240,7 @@ export default function Overview() {
             ></div>
           </div>
         </div>
-
-        {/* Second Child */}
-        <div className="w-full md:w-[70%] h-[55vh]">
+        <div className="w-full md:w-[70%] max-h-[55vh]">
           <TnxTable tableData={[]} />
         </div>
       </div>

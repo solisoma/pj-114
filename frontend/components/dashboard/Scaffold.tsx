@@ -73,7 +73,7 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
   return (
     !loading && (
       <>
-        <div className="flex w-screen">
+        <div ref={elementRef} className="flex w-screen">
           <div
             onClick={(e: any) =>
               e.target.id === "parent" && setShowMobileMenu(false)

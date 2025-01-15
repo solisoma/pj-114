@@ -95,11 +95,10 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
               </div>
             </div>
           </div>
-          <div className="w-full bg-background3 md:w-[95%]">
-            <div className="flex justify-between items-center bg-background w-full h-[10%] p-6">
+          <div className="w-full bg-background3 md:w-[95%] h-screen overflow-y-scroll remove-scrollbar">
+            <div className="fixed top-0 w-full md:w-[82%] flex justify-between items-center bg-background h-[10%] p-6">
               <div className="flex items-center gap-3 md:hidden">
                 <Link href="/">
-                  {/* <Icon /> */}
                   <img src="/clans-logo.png" className="md:w-[4vw] w-[3rem]" />
                 </Link>
                 <button
@@ -116,41 +115,16 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
                 Hi, {userDetail.name} 👋
               </div>
               <div className="flex items-center gap-2 md:gap-[.9vw]">
-                <button onClick={() => route("notification")}>
-                  <VscBellDot
-                    className={
-                      JSON.parse(localStorage.getItem("notis") || "{}").exist
-                        ? "text-red-600"
-                        : "text-white"
-                    }
-                    size={24}
-                  />
-                </button>
-                {userDetail.permission !== "user" && (
-                  <button type="button" onClick={() => setAddProduct(true)}>
-                    <IoMdAdd className="text-tex" size={24} />
-                  </button>
-                )}
-                <button type="button" onClick={() => setShowLogoOut(true)}>
-                  <IoExitOutline className="text-tex" size={24} />
-                </button>
-                {/* <div className="font-semibold rounded-full bg-tex2 text-black w-[2rem] h-[2rem] flex items-center justify-center border-2 border-tex2 md:w-[3vw] md:h-[3vw]">
-                  {userDetail.picture ? (
-                    <img
-                      src={userDetail?.picture}
-                      className="h-full w-full rounded-full"
-                    />
-                  ) : (
-                    <p className="text-bold text-2xl md:text-[1.5vw]">
-                      {String(userDetail.name[0]).toUpperCase()}
-                    </p>
-                  )}
-                </div> */}
+                <div className="font-semibold rounded-full bg-tex2 text-black w-[2rem] h-[2rem] flex items-center justify-center border-2 border-tex2 md:w-[2.5vw] md:h-[2.5vw]">
+                  <img src="/user.jpg" className="h-full w-full rounded-full" />
+                </div>
               </div>
             </div>
-            <div className="relative p-1 h-[83%] md:p-[1vw] md:h-[90%] overflow-hidden">
-              <div className="bg-background3 h-full p-4 md:p-[1.3vw]">
-                {Children}
+            <div className="pt-[4rem] md:pt-[5rem]">
+              <div className="flex justify-center">
+                <div className="flex flex-col gap-8 bg-background3 p-4 h-full w-full md:p-[1.3vw] lg:w-[72%]">
+                  {Children}
+                </div>
               </div>
               <Modal
                 show={showLogOut}

@@ -12,13 +12,10 @@ import { LogOutAction } from "./Utils";
 import { ScaffoldType, User } from "./type";
 import { NavType } from "@/utils/type";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { IoExitOutline } from "react-icons/io5";
-import { IoMdAdd } from "react-icons/io";
 // import Icon from "../svg/icon";
 import PrettyMenu from "./PrettyMenu";
 import Link from "next/link";
 // import { get_announcement } from "@/api/announcement";
-import { VscBellDot } from "react-icons/vsc";
 
 function Scaffold({ children, activeLink, route }: ScaffoldType) {
   const [loading, setLoading] = useState(false);
@@ -28,7 +25,6 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [refresh, setRefresh] = useState<boolean>(false);
   const router = useRouter();
-  const elementRef = useRef(null);
   const Children = React.cloneElement(children, {
     userId: userDetail.id,
     permission: userDetail.permission,
@@ -48,12 +44,6 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
     }
   }
 
-  const updateHeight = () => {
-    if (elementRef.current) {
-      (elementRef.current as any).style.height = `${window.innerHeight}px`;
-    }
-  };
-
   async function setUser() {
     const get_user = await get_user_status();
     setUserDetail(get_user);
@@ -61,19 +51,14 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
   }
 
   useEffect(() => {
+    document.body.style.overflow = "hidden";
     // setUser();
-    updateHeight(); // Set height on load
-    window.addEventListener("resize", updateHeight); // Adjust height on resize
-
-    return () => {
-      window.removeEventListener("resize", updateHeight);
-    };
   }, [refresh]);
 
   return (
     !loading && (
       <>
-        <div ref={elementRef} className="flex w-screen">
+        <div className="flex h-screen w-screen">
           <div
             onClick={(e: any) =>
               e.target.id === "parent" && setShowMobileMenu(false)

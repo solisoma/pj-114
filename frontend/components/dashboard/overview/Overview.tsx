@@ -240,7 +240,7 @@ export default function Overview() {
             ></div>
           </div>
         </div>
-        <div className="w-full md:w-[70%] max-h-[55vh]">
+        <div className="w-full md:w-[70%] mh-[55vh]">
           <TnxTable tableData={[]} />
         </div>
       </div>

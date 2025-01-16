@@ -23,19 +23,54 @@ export default function Invest() {
       </div>
       <div className="flex flex-col gap-4 md:flex-wrap md:flex-row">
         <div className="w-full md:w-[32%]">
-          <PlanBox />
+          <PlanBox
+            plan="Basic"
+            interest="10%"
+            days="30"
+            min={1000}
+            max={9999}
+            capReturn="Each Term"
+          />
         </div>
         <div className="w-full md:w-[32%]">
-          <PlanBox />
+          <PlanBox
+            plan="Basic"
+            interest="10%"
+            days="30"
+            min={1000}
+            max={9999}
+            capReturn="Each Term"
+          />
         </div>
         <div className="w-full md:w-[32%]">
-          <PlanBox />
+          <PlanBox
+            plan="Standard"
+            interest="10%"
+            days="30"
+            min={1000}
+            max={9999}
+            capReturn="Each Term"
+          />
         </div>
         <div className="w-full md:w-[32%]">
-          <PlanBox />
+          <PlanBox
+            plan="Cooperate"
+            interest="10%"
+            days="30"
+            min={1000}
+            max={9999}
+            capReturn="Each Term"
+          />
         </div>
         <div className="w-full md:w-[32%]">
-          <PlanBox />
+          <PlanBox
+            plan="Premium"
+            interest="10%"
+            days="30"
+            min={1000}
+            max={9999}
+            capReturn="Each Term"
+          />
         </div>
       </div>
     </div>

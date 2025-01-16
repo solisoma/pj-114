@@ -47,7 +47,7 @@ export default function Referral() {
             </button>
           </div>
         </div>
-        <div className="flex-1 flex flex-col gap-4 rounded-lg p-8 w-full bg-[#1E222D]">
+        <div className="flex-1 flex flex-col gap-4 rounded-lg py-4 px-2 w-full bg-[#1E222D]">
           <div className="flex-1 flex flex-col gap-4 rounded-lg p-8 w-full bg-[#1E222D]">
             <div className="flex flex-col gap-2">
               <h2 className="relative font-base text-xl">Referral Us & Earn</h2>
@@ -59,7 +59,7 @@ export default function Referral() {
               <div className="bg-[#EBF3FE] px-2 py-1">
                 <MdInsertLink size={17} color="black" />
               </div>
-              <h2 className="border p-1 rounded-lg text-sm">
+              <h2 className="border p-1 rounded-lg text-[15px] w-full overflow-hidden text-ellipsis whitespace-nowrap md:text-sm">
                 https://noble.eliteoptionsllc.com/user/register?ref=first
               </h2>
             </div>

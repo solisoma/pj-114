@@ -22,6 +22,11 @@ import POverview from "@/components/dashboard/setting/Overview";
 import Investment from "@/components/dashboard/app/Investment";
 import Plan from "@/components/dashboard/app/Plan";
 import Invest from "@/components/dashboard/app/Invest";
+import CopyTrade from "@/components/dashboard/app/CopyTrade";
+import Transactions from "@/components/dashboard/transaction/Transactions";
+import Withdrawals from "@/components/dashboard/transaction/Withdrawals";
+import Deposits from "@/components/dashboard/transaction/Deposits";
+import Referral from "@/components/dashboard/transaction/Referral";
 
 interface IRoute {
   [key: string]: React.FC;
@@ -84,6 +89,11 @@ export const RouteHash: IRoute = {
   iplan: Investment,
   icopytrade: Plan,
   plan: Invest,
+  copytrade: CopyTrade,
+  transaction: Transactions,
+  withdrawal: Withdrawals,
+  deposit: Deposits,
+  referral: Referral,
   //   product: Details,
   //   admin: Admin,
   //   deposit: Deposit,

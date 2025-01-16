@@ -16,6 +16,15 @@ export default function PrettyMenu({
 }) {
   const [showSub, setShowSub] = useState(false);
   const [index, setIndex] = useState<number | null>(null);
+
+  function isParent(activeLink: string, inav: (typeof nav.content)[0]) {
+    if (activeLink === inav.route) return true;
+    if (inav.sub) {
+      if (inav.sub.map((itm) => itm.route).includes(activeLink)) return true;
+    }
+    return false;
+  }
+
   return (
     <>
       <h2 className="text-white font-bold ml-1 md:ml-6">{nav.header}</h2>
@@ -33,9 +42,12 @@ export default function PrettyMenu({
                 }
               }}
               className={`w-full flex items-center text-gray-300 ${
-                activeLink === inav.route && "bg-background2"
+                isParent(activeLink, inav) && "bg-background2"
               } ${
-                showSub && index === i && activeLink !== inav.route && "border"
+                showSub &&
+                index === i &&
+                !isParent(activeLink, inav) &&
+                "border"
               } pl-4 md:pl-[2vw] rounded-xl gap-2 py-2 md:py-[1vw] md:gap-[1.2vw]`}
             >
               <inav.icon className="text-white" size={24} />

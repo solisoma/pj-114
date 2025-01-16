@@ -19,6 +19,9 @@ import { GrDocumentDownload } from "react-icons/gr";
 import { ImSwitch } from "react-icons/im";
 import Overview from "@/components/dashboard/overview/Overview";
 import POverview from "@/components/dashboard/setting/Overview";
+import Investment from "@/components/dashboard/app/Investment";
+import Plan from "@/components/dashboard/app/Plan";
+import Invest from "@/components/dashboard/app/Invest";
 
 interface IRoute {
   [key: string]: React.FC;
@@ -78,6 +81,9 @@ export function sidenavs(notUser: boolean): NavType[] {
 export const RouteHash: IRoute = {
   overview: Overview,
   profile: POverview,
+  iplan: Investment,
+  icopytrade: Plan,
+  plan: Invest,
   //   product: Details,
   //   admin: Admin,
   //   deposit: Deposit,

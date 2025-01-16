@@ -1,5 +1,3 @@
-import { Provider } from "@/components/dashboard/number/type";
-
 type FunctionOrNull<T = void> = (...args: any[]) => T;
 
 type FunctionList<T = void> = FunctionOrNull<T>[];
@@ -45,19 +43,6 @@ export interface IActiveTrade {
 export interface InfoType {
   cost: number;
   count: number;
-}
-
-export interface NumberType {
-  id: number;
-  activation_id: string;
-  phone_number: string;
-  code: number;
-  country: string;
-  service: string;
-  status: string;
-  resend: boolean;
-  cost: number;
-  provider: Provider;
 }
 
 export interface UpdateBalanceType {

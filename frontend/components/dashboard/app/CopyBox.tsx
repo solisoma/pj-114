@@ -27,11 +27,11 @@ export default function CopyBox({
           <IoMdCheckmarkCircle size={24} color="green" />
         </div>
         <button className="flex gap-2 rounded-lg items-center bg-background2 px-8 py-2">
-          <p>COPY MASTER - 28 days</p>
-          <LuLockKeyhole size={20} />
+          <p className="text-[.8rem] md:text-normal">COPY MASTER - 28 days</p>
+          <LuLockKeyhole size={15} />
         </button>
         <p className="text-sm">TitanTrust does not own this master.</p>
-        <div className="flex justify-between w-full gap-4 text-sm">
+        <div className="flex flex-col justify-between w-full gap-4 text-sm md:flex-row">
           <div className="flex-1 flex justify-between">
             <p>ROI:</p>
             <p>{percent}%</p>
@@ -41,7 +41,7 @@ export default function CopyBox({
             <p>{accuracy}</p>
           </div>
         </div>
-        <div className="flex justify-between w-full gap-4 text-sm">
+        <div className="flex flex-col justify-between w-full gap-4 text-sm md:flex-row">
           <div className="flex-1 flex justify-between">
             <p>All Profits:</p>
             <p>108,900 USD</p>
@@ -54,7 +54,7 @@ export default function CopyBox({
             </div>
           </div>
         </div>
-        <div className="flex justify-between w-full gap-4 text-sm">
+        <div className="flex flex-col justify-between w-full gap-4 text-sm md:flex-row">
           <div className="flex-1 flex justify-between">
             <p>Min Fee</p>
             <p>{min} USD</p>

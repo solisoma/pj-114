@@ -1,8 +1,7 @@
 /*eslint-disable */
-import { NumberType } from "@/api/type";
-import { invHead, tnxHead } from "@/utils/table";
+import { invHead } from "@/utils/table";
 
-export const InvTable = ({ tableData }: { tableData: NumberType[] }) => {
+export const InvTable = ({ tableData }: { tableData: any }) => {
   return (
     <div
       className={`w-full overflow-x-scroll live-trade-table border md:overflow-y-scroll md:h-full ${
@@ -23,7 +22,7 @@ export const InvTable = ({ tableData }: { tableData: NumberType[] }) => {
           </tr>
         </thead>
         <tbody className="w-full border border-gray-400">
-          {tableData.map((data) => {
+          {tableData.map((data: any) => {
             return (
               <tr
                 className="hover:bg-background3 border border-gray-400"

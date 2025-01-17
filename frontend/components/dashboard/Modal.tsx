@@ -1,36 +1,63 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ModalType } from "./type";
+import { MdOutlineCancel } from "react-icons/md";
 
-export default function Modal({
+const Modal: React.FC<ModalType> = ({
   children,
   show,
   classes,
   setShow,
   onClose,
-}: ModalType) {
+}) => {
+  // Close modal when clicking outside or pressing Escape
+  useEffect(() => {
+    if (!show) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeModal();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [show]);
+
   function closeModal() {
     if (onClose) onClose();
     setShow(false);
   }
 
   const Children = React.Children.map(children, (child) =>
-    React.cloneElement(child, { closeModal })
+    React.isValidElement(child)
+      ? React.cloneElement(child as React.ReactElement<any>, { closeModal })
+      : child
   );
+
+  if (!show) return null;
+
   return (
     <div
-      className={`absolute top-0 justify-center items-center ${
-        show ? "flex" : "hidden"
-      } w-full h-[95%] z-10`}
+      className="fixed top-0 left-0 flex justify-center items-center w-full h-full bg-black bg-opacity-50 z-50"
+      onClick={closeModal} // Close modal on backdrop click
     >
       <div
-        className={
-          classes
-            ? classes
-            : "bg-background2 w-full min-h-[60%] shadow-2xl md:p-[2vw] rounded-lg md:w-[50%]"
-        }
+        className={`relative ${
+          classes || "bg-white w-full md:w-1/2 rounded-lg p-4 shadow-lg"
+        }`}
+        onClick={(e) => e.stopPropagation()} // Prevent close when clicking inside modal
       >
+        <button
+          onClick={closeModal}
+          className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
+        >
+          <MdOutlineCancel size={24} color="white" />
+        </button>
         {Children}
       </div>
     </div>
   );
-}
+};
+
+export default Modal;

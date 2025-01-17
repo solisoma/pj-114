@@ -1,5 +1,5 @@
 import Button from "@/components/Button";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { LogOutActionType } from "./type";
 import { ErrorMessage, Field, Form, Formik, FormikValues } from "formik";
@@ -52,10 +52,12 @@ export function LogOutAction({
   );
 }
 
-export function DeleteProduct({
+export function Deposit({
   closeModal,
   onDelete,
 }: LogOutActionType): React.JSX.Element {
+  const [confirmPayment, setConfirmPayment] = useState(false);
+
   async function handleLogOut() {
     try {
       await onDelete!();
@@ -65,6 +67,8 @@ export function DeleteProduct({
       toast.error("Failed to delete product please try again");
     }
   }
+
+  useEffect(() => {}, []);
 
   return (
     <div className="flex items-center justify-center h-[95%]">

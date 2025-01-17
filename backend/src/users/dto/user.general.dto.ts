@@ -1,5 +1,11 @@
 /* eslint-disable prettier/prettier */
-import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export enum Actions {
   Suspend = 'suspend',
@@ -7,6 +13,7 @@ export enum Actions {
   Delete = 'delete',
   ToAdmin = 'to-admin',
   ToUser = 'to-user',
+  Verify = 'verify',
 }
 
 export enum Directions {
@@ -42,4 +49,44 @@ export class IdDto {
   @IsString()
   @IsNotEmpty()
   userId: string;
+}
+
+export class TransferDto {
+  @IsString()
+  @IsNotEmpty()
+  from: string;
+
+  @IsString()
+  @IsNotEmpty()
+  to: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  amount: number;
+}
+
+export class DepositDto {
+  @IsNumber()
+  @IsNotEmpty()
+  amount: number;
+}
+
+export class KycDto {
+  @IsOptional()
+  @IsString()
+  front?: string;
+
+  @IsOptional()
+  @IsString()
+  back?: string;
+}
+
+export class ProofDto {
+  @IsNumber()
+  @IsNotEmpty()
+  id: number;
+
+  @IsOptional()
+  @IsString()
+  file?: string;
 }

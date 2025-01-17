@@ -7,11 +7,13 @@ import { User } from 'src/typeorm/entities/user.entity';
 import { Services } from 'src/utils/constants';
 import { Transaction } from '@app/typeorm/entities/transaction.entity';
 import { TransactionModule } from '@app/transaction/transaction.module';
+import { UploadModule } from '@app/upload/upload.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, Transaction]),
     TransactionModule,
+    UploadModule,
   ],
   controllers: [UsersController],
   providers: [

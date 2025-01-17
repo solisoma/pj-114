@@ -90,7 +90,11 @@ export class AuthController {
     description: 'User status successfully retrieved',
     type: StatusResponseDto,
   })
-  public status(@Request() request): Promise<NullableType<User>> {
+  public status(
+    @Request() request,
+  ): Promise<
+    NullableType<User | { totalDeposits: number; totalWithdrawals: number }>
+  > {
     return this.authService.status(request.user);
   }
 

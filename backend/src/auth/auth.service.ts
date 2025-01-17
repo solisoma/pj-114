@@ -30,16 +30,24 @@ import { IUsersService } from 'src/users/users';
 import { addHours } from 'date-fns';
 import axios from 'axios';
 import { EncryptService } from 'src/encrypt/encrypt.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import {
+  Category,
+  Transaction,
+  TrxStatus,
+} from '@app/typeorm/entities/transaction.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService implements IAuthService {
   constructor(
+    @InjectRepository(Transaction)
+    private readonly trxRepository: Repository<Transaction>,
     @Inject(Services.USERS) private readonly usersService: IUsersService,
     @Inject(Services.SESSION) private readonly sessionService: ISessionService,
     @Inject(Services.FORGOT_PASSWORD)
     private readonly forgotPasswordService: IForgotPasswordService,
     private readonly encryptService: EncryptService,
-
     private readonly configService: ConfigService<AllConfigType>,
     private readonly jwtService: JwtService,
   ) {}
@@ -58,22 +66,6 @@ export class AuthService implements IAuthService {
           },
         },
         HttpStatus.UNPROCESSABLE_ENTITY,
-      );
-    }
-
-    if (
-      user.status === UserStatus.Inactive &&
-      user.activationExpiry &&
-      user.activationExpiry < new Date()
-    ) {
-      throw new HttpException(
-        {
-          status: HttpStatus.UNAUTHORIZED,
-          errors: {
-            account: 'expired',
-          },
-        },
-        HttpStatus.UNAUTHORIZED,
       );
     }
 
@@ -164,7 +156,7 @@ export class AuthService implements IAuthService {
       const profile = userInfo.data;
 
       let user = await this.usersService.findOneUser({
-        socialId: profile.id,
+        // socialId: profile.id,
         provider: AuthProvidersEnum.google,
       });
 
@@ -175,7 +167,6 @@ export class AuthService implements IAuthService {
           socialId: profile.id,
           provider: AuthProvidersEnum.google,
           status: UserStatus.Active,
-          picture: profile.picture,
         });
       }
 
@@ -228,14 +219,57 @@ export class AuthService implements IAuthService {
       email: registerDto.email,
       status: UserStatus.Active,
       hash,
-      activationExpiry,
+      referral_id: crypto.randomBytes(4).toString('hex'),
     });
+
+    if (registerDto.referral_id) {
+      const owner = await this.usersService.findOneUser({
+        referral_id: registerDto.referral_id,
+      });
+
+      if (owner) {
+        owner.balance += 2;
+        this.usersService.saveUser(owner);
+      }
+    }
   }
 
-  async status(userJwtPayload: JwtPayloadType): Promise<NullableType<User>> {
-    return await this.usersService.findOneUser({
+  async status(
+    userJwtPayload: JwtPayloadType,
+  ): Promise<
+    NullableType<User | { totalDeposits: number; totalWithdrawals: number }>
+  > {
+    const user = await this.usersService.findOneUser({
       id: userJwtPayload.id,
     });
+
+    const totalWithdrawals = (
+      await this.trxRepository.find({
+        where: {
+          user: { id: userJwtPayload.id },
+          category: Category.Withdrawal,
+          status: TrxStatus.Successful,
+        },
+      })
+    )
+      .map((itm) => itm.amount)
+      .reduce((a, b) => a + b, 0);
+
+    const totalDeposits = (
+      await this.trxRepository.find({
+        where: {
+          user: { id: userJwtPayload.id },
+          category: Category.Deposit,
+          status: TrxStatus.Successful,
+        },
+      })
+    )
+      .map((itm) => itm.amount)
+      .reduce((a, b) => a + b, 0);
+
+    const newUser = { ...user, totalDeposits, totalWithdrawals };
+
+    return newUser;
   }
 
   async confirmEmail(hash: string): Promise<void> {

@@ -9,6 +9,14 @@ export enum TrxStatus {
   Successful = 'successful',
 }
 
+export enum Category {
+  Transfer = 'transfer',
+  Withdrawal = 'withdrawal',
+  Deposit = 'deposit',
+  CopyTrade = 'copytrade',
+  Plan = 'plan',
+}
+
 @Entity()
 export class Transaction {
   @PrimaryGeneratedColumn()
@@ -17,11 +25,17 @@ export class Transaction {
   @ManyToOne(() => User, (user) => user.transactions, { onDelete: 'CASCADE' })
   user: User;
 
-  @Column({ type: 'enum', enum: TrxStatus, default: TrxStatus.Successful })
+  @Column({ type: 'enum', enum: Category })
+  category: Category;
+
+  @Column({ type: 'enum', enum: TrxStatus, default: TrxStatus.Pending })
   status: TrxStatus;
 
   @Column({ type: String })
   service: string;
+
+  @Column({ type: String, nullable: true })
+  proof: string;
 
   @Column({ type: 'decimal', precision: 15, scale: 4 })
   amount: number;

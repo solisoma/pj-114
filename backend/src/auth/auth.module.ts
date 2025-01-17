@@ -14,6 +14,8 @@ import { ForgotPasswordModule } from 'src/forgot-password/forgot-password.module
 // import { GoogleStrategy } from './strategies/google-strategy';
 import { SessionSerializer } from './strategies/serializer';
 import { EncryptModule } from 'src/encrypt/encrypt.module';
+import { Transaction } from '@app/typeorm/entities/transaction.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
@@ -23,6 +25,7 @@ import { EncryptModule } from 'src/encrypt/encrypt.module';
     ForgotPasswordModule,
     JwtModule.register({}),
     EncryptModule,
+    TypeOrmModule.forFeature([Transaction]),
   ],
 
   controllers: [AuthController],

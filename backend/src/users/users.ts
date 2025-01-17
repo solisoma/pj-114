@@ -8,7 +8,11 @@ import { User } from 'src/typeorm/entities/user.entity';
 import { ChangePasswordDto } from './dto/changePasswordDto';
 import {
   adminChangeUserStatusDto,
+  DepositDto,
+  KycDto,
+  ProofDto,
   transcDetailsDto,
+  TransferDto,
 } from './dto/user.general.dto';
 import { Transaction } from '@app/typeorm/entities/transaction.entity';
 
@@ -28,6 +32,11 @@ export interface IUsersService {
   saveUser(user: User): Promise<User>;
   getAllUser(id: number): Promise<User[]>;
   getTrx(id: number): Promise<Transaction[]>;
+  handleKYC(id: number, details: KycDto): Promise<void>;
+  addDepositProof(proof: ProofDto): Promise<void>;
+  deposit(id: number, details: DepositDto): Promise<Transaction>;
+  withdraw(id: number, details: DepositDto): Promise<Transaction>;
+  transfer(id: number, trxDetails: TransferDto): Promise<void>;
   changePassword(
     id: User['id'],
     changePasswordDto: ChangePasswordDto,

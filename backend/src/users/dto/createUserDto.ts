@@ -1,7 +1,13 @@
 /* eslint-disable prettier/prettier */
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
-import { IsString, IsEmail, IsNotEmpty, IsDate } from 'class-validator';
+import {
+  IsString,
+  IsEmail,
+  IsNotEmpty,
+  IsDate,
+  IsOptional,
+} from 'class-validator';
 import { AuthProvidersEnum } from 'src/auth/enums/auth-providers.enum';
 import { UserStatus } from 'src/typeorm/entities/user.entity';
 import { lowerCaseTransformer } from 'src/utils/transformers/lower-case.transformer';
@@ -23,12 +29,8 @@ export class CreateUserDto {
   provider?: AuthProvidersEnum;
   status?: UserStatus;
   socialId?: string | null;
-  picture?: string | null;
+  @IsOptional()
+  referral_id?: string;
 
   hash?: string | null;
-
-  @ApiProperty({ example: new Date().toISOString() })
-  @IsDate()
-  @Type(() => Date)
-  activationExpiry?: Date;
 }

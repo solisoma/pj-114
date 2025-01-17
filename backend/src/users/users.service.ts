@@ -19,10 +19,17 @@ import { ChangePasswordDto } from './dto/changePasswordDto';
 import {
   Actions,
   adminChangeUserStatusDto,
+  DepositDto,
   Directions,
+  KycDto,
+  ProofDto,
   transcDetailsDto,
+  TransferDto,
 } from './dto/user.general.dto';
-import { Transaction } from '@app/typeorm/entities/transaction.entity';
+import {
+  Category,
+  Transaction,
+} from '@app/typeorm/entities/transaction.entity';
 import { TransactionService } from '@app/transaction/transaction.service';
 
 @Injectable()
@@ -35,20 +42,6 @@ export class UsersService implements IUsersService {
     private readonly trxService: TransactionService,
     // @Inject(Services.MAILS) private readonly mailsService: IMailsService,
   ) {}
-
-  async deleteExpiredUsers(): Promise<void> {
-    const currentDate = new Date();
-    const expiredUsers = await this.usersRepository.find({
-      where: {
-        status: UserStatus.Inactive,
-        activationExpiry: LessThan(currentDate),
-      },
-    });
-
-    for (const user of expiredUsers) {
-      await this.usersRepository.softDelete(user.id);
-    }
-  }
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
     const existingUser = await this.usersRepository.findOne({
@@ -76,16 +69,9 @@ export class UsersService implements IUsersService {
     if (currentUser.permission === UserPermission.User)
       throw new HttpException('Not allowed', HttpStatus.FORBIDDEN);
 
-    if (currentUser.permission === UserPermission.Admin)
-      return await this.usersRepository.find({
-        where: { permission: Not(UserPermission.SuperAdmin), id: Not(id) },
-        select: ['id', 'name'],
-      });
-
-    if (currentUser.permission === UserPermission.SuperAdmin)
-      return await this.usersRepository.find({
-        select: ['id', 'name'],
-      });
+    return await this.usersRepository.find({
+      select: ['id', 'name'],
+    });
   }
 
   findUsersWithPagination(
@@ -151,11 +137,8 @@ export class UsersService implements IUsersService {
       );
 
     switch (action) {
-      case Actions.Suspend:
-        await this.usersRepository.update(userId, { suspended: true });
-        break;
       case Actions.Delete:
-        if (isUser.permission === UserPermission.SuperAdmin) {
+        if (isUser.permission === UserPermission.Admin) {
           await this.usersRepository.delete(userId);
         } else {
           throw new HttpException(
@@ -164,11 +147,18 @@ export class UsersService implements IUsersService {
           );
         }
         break;
-      case Actions.Activate:
-        await this.usersRepository.update(userId, { suspended: false });
+      case Actions.Verify:
+        if (isUser.permission === UserPermission.Admin) {
+          await this.usersRepository.update(userId, { isVerified: true });
+        } else {
+          throw new HttpException(
+            "User doesn't have the permission",
+            HttpStatus.UNAUTHORIZED,
+          );
+        }
         break;
       case Actions.ToAdmin:
-        if (isUser.permission === UserPermission.SuperAdmin) {
+        if (isUser.permission === UserPermission.Admin) {
           await this.usersRepository.update(userId, {
             permission: UserPermission.Admin,
           });
@@ -180,7 +170,7 @@ export class UsersService implements IUsersService {
         }
         break;
       case Actions.ToUser:
-        if (isUser.permission === UserPermission.SuperAdmin) {
+        if (isUser.permission === UserPermission.Admin) {
           await this.usersRepository.update(userId, {
             permission: UserPermission.User,
           });
@@ -217,21 +207,23 @@ export class UsersService implements IUsersService {
       case Directions.Send:
         newBalance = objectUser.balance - amount;
         await this.usersRepository.update(userId, { balance: newBalance });
-        await this.trxService.createTrx(userId, {
-          service: `Removed funds`,
-          amount,
-        });
+        // await this.trxService.createTrx(userId, {
+        //   service: `Removed funds`,
+        //   amount,
+        //   category: Category.Withdrawal,
+        // });
         break;
       case Directions.Receive:
-        if (isUser.permission === UserPermission.SuperAdmin) {
+        if (isUser.permission === UserPermission.Admin) {
           newBalance = Number(objectUser.balance) + Number(amount);
           await this.usersRepository.update(userId, {
             balance: newBalance,
           });
-          await this.trxService.createTrx(userId, {
-            service: `Added funds`,
-            amount,
-          });
+          // await this.trxService.createTrx(userId, {
+          //   service: `Added funds`,
+          //   amount,
+          //   category: Category.Deposit,
+          // });
         } else {
           throw new HttpException(
             "User doesn't have the permission",
@@ -239,6 +231,75 @@ export class UsersService implements IUsersService {
           );
         }
     }
+  }
+
+  async addDepositProof(proof: ProofDto): Promise<void> {
+    const { id, file } = proof;
+
+    const trx = await this.trxRepository.findOne({ where: { id } });
+
+    if (!trx)
+      throw new HttpException('Transaction not found', HttpStatus.NOT_FOUND);
+    trx.proof = file;
+    this.trxRepository.save(trx);
+  }
+
+  async handleKYC(id: number, details: KycDto): Promise<void> {
+    const user = await this.usersRepository.findOne({ where: { id } });
+    user.front_image = details.front;
+    user.back_image = details.back;
+    await this.usersRepository.save(user);
+  }
+
+  async deposit(id: number, details: DepositDto): Promise<Transaction> {
+    const { amount } = details;
+    return await this.trxService.createTrx(id, {
+      service: 'Deposit',
+      category: Category.Deposit,
+      amount,
+    });
+  }
+
+  async withdraw(id: number, details: DepositDto): Promise<Transaction> {
+    const { amount } = details;
+    return await this.trxService.createTrx(id, {
+      service: 'Withdrawal',
+      category: Category.Withdrawal,
+      amount,
+    });
+  }
+
+  async transfer(id: number, trxDetails: TransferDto): Promise<void> {
+    const user = await this.usersRepository.findOne({ where: { id } });
+    const { from, to, amount } = trxDetails;
+
+    const keys = ['balance', 'copytrade_balance', 'plan_balance'];
+    if (!keys.includes(from))
+      throw new HttpException(
+        `Wrong value for field "from" must be one of this values ${String(keys)}`,
+        HttpStatus.CONFLICT,
+      );
+
+    if (!keys.includes(to))
+      throw new HttpException(
+        `Wrong value for field "to" must be one of this values ${String(keys)}`,
+        HttpStatus.CONFLICT,
+      );
+
+    if (from === to)
+      throw new HttpException(
+        "from and to can't be same value",
+        HttpStatus.CONFLICT,
+      );
+
+    if (user[from] >= amount) {
+      user[from] -= amount;
+      user[to] += amount;
+
+      this.usersRepository.save(user);
+    }
+
+    throw new HttpException('Insufficient funds', HttpStatus.CONFLICT);
   }
 
   async getTrx(id: number): Promise<Transaction[]> {

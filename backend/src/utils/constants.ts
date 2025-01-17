@@ -4,12 +4,8 @@ export enum Routes {
   TRADE = 'trade',
   AUTH_GOOGLE = 'auth/google',
   USERS = 'users',
-  PRODUCT = 'product',
-  PRODUCT_DETAILS = 'product/details',
-  NUMBER = 'number',
-  ANNOUNCEMENT = 'announcement',
-  SMS_ACTIVATE = 'sms/activate',
-  PAYMENT = 'payment',
+  CopyTrade = 'copytrade',
+  Plan = 'plan',
 }
 
 export enum Services {

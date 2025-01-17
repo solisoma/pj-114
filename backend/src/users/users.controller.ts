@@ -9,6 +9,7 @@ import {
   Post,
   Query,
   Req,
+  Res,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
@@ -19,18 +20,27 @@ import { AuthGuard } from '@nestjs/passport';
 import { ChangePasswordDto } from './dto/changePasswordDto';
 import {
   adminChangeUserStatusDto,
+  DepositDto,
   IdDto,
+  KycDto,
+  ProofDto,
   transcDetailsDto,
+  TransferDto,
 } from './dto/user.general.dto';
 import { NullableType } from '@app/utils/types/nullable.type';
 import { User } from '@app/typeorm/entities/user.entity';
 import { Transaction } from '@app/typeorm/entities/transaction.entity';
+import { UpdateTrxDto } from '@app/transaction/dto/transactionDto';
+import { TransactionService } from '@app/transaction/transaction.service';
+import { UploadService } from '@app/upload/upload.service';
 
 @ApiTags('User')
 @Controller(Routes.USERS)
 export class UsersController {
   constructor(
     @Inject(Services.USERS) private readonly userService: IUsersService,
+    private readonly trxService: TransactionService,
+    private readonly uploadService: UploadService,
   ) {}
 
   @UseGuards(AuthGuard('jwt'))
@@ -119,5 +129,118 @@ export class UsersController {
   ): Promise<void> {
     const userId = req.user.id;
     return this.userService.updateBalance(userId, transcDetails);
+  }
+  @UseGuards(AuthGuard('jwt'))
+  @Post('transfer')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'transfer' })
+  @ApiResponse({
+    status: 204,
+    description: 'Balance updated successfully',
+  })
+  async transfer(
+    @Body() transcDetails: TransferDto,
+    @Req() req: any,
+  ): Promise<void> {
+    const userId = req.user.id;
+    return this.userService.transfer(userId, transcDetails);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('withdraw')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Update balance' })
+  @ApiResponse({
+    status: 204,
+    description: 'Balance updated successfully',
+  })
+  async withdraw(
+    @Body() transcDetails: DepositDto,
+    @Req() req: any,
+  ): Promise<Transaction> {
+    const userId = req.user.id;
+    return this.userService.withdraw(userId, transcDetails);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('deposit')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Update balance' })
+  @ApiResponse({
+    status: 204,
+    description: 'Balance updated successfully',
+  })
+  async deposit(
+    @Body() transcDetails: DepositDto,
+    @Req() req: any,
+  ): Promise<Transaction> {
+    const userId = req.user.id;
+    return this.userService.deposit(userId, transcDetails);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('update/trx')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Update balance' })
+  @ApiResponse({
+    status: 204,
+    description: 'Balance updated successfully',
+  })
+  async updateTrxStatus(
+    @Body() transcDetails: UpdateTrxDto,
+  ): Promise<Transaction> {
+    return this.trxService.updateTrx(transcDetails.id, transcDetails);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('kyc')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Update kyc' })
+  async handleKYC(
+    @Body() Details: KycDto,
+    @Req() req: any,
+    @Res() res: any,
+  ): Promise<void> {
+    await this.uploadService.getUploadMiddleware(
+      [
+        { name: 'front', maxCount: 1 }, // Handle 'front'
+        { name: 'back', maxCount: 1 }, // Handle 'back'
+      ],
+      ['png', 'jpeg', 'pdf'],
+    )(req, res);
+
+    const { id } = req.user;
+
+    Details = {
+      ...req.body,
+      front: req.files?.front ? req.files.front[0].path : '', // Handle 'front'
+      back: req.files?.back ? req.files.back[0].path : '', // Handle 'back'
+    };
+
+    return await this.userService.handleKYC(id, Details);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('deposit/proof')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'proof uploaded' })
+  async addDepositProof(
+    @Body() Details: ProofDto,
+    @Req() req: any,
+    @Res() res: any,
+  ): Promise<void> {
+    await this.uploadService.getUploadMiddleware(
+      [
+        { name: 'file', maxCount: 1 }, // Handle 'front'
+      ],
+      ['png', 'jpeg', 'pdf'],
+    )(req, res);
+
+    Details = {
+      ...req.body,
+      file: req.files?.file ? req.files.file[0].path : '', // Handle 'file'
+    };
+
+    return await this.userService.addDepositProof(Details);
   }
 }

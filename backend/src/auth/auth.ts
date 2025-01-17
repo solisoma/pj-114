@@ -11,7 +11,11 @@ export interface IAuthService {
   validateLogin(loginDto: AuthEmailLoginDto): Promise<LoginResponseType>;
   registerUser(registerDto: AuthRegisterDto): Promise<void>;
   handleOAuthCallback(code: string): Promise<LoginResponseType>;
-  status(userJwtPayload: JwtPayloadType): Promise<NullableType<User>>;
+  status(
+    userJwtPayload: JwtPayloadType,
+  ): Promise<
+    NullableType<User | { totalDeposits: number; totalWithdrawals: number }>
+  >;
   confirmEmail(hash: string): Promise<void>;
   forgotPassword(email: string): Promise<void>;
   resetPassword(hash: string, password: string): Promise<void>;

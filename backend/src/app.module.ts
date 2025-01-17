@@ -15,6 +15,10 @@ import { UsersController } from './users/users.controller';
 import { UsersModule } from './users/users.module';
 import authConfig from './config/auth.config';
 import { EncryptModule } from './encrypt/encrypt.module';
+import { CopyTradeModule } from './copy-trade/copytrade.module';
+import { PlanModule } from './plan/plan.module';
+import { TransactionModule } from './transaction/transaction.module';
+import { UploadModule } from './upload/upload.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -32,6 +36,10 @@ import { EncryptModule } from './encrypt/encrypt.module';
     AuthModule,
     UsersModule,
     EncryptModule,
+    CopyTradeModule,
+    PlanModule,
+    TransactionModule,
+    UploadModule,
   ],
   controllers: [AppController, AuthController, UsersController],
   providers: [DatabaseInitializerService, AppService],

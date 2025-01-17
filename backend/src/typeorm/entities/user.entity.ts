@@ -19,6 +19,7 @@ import { AuthProvidersEnum } from 'src/auth/enums/auth-providers.enum';
 import { Transaction } from './transaction.entity';
 import { CopyTrade } from './copy.trade.entity';
 import { Plan } from './plan.entity';
+import { CryptoWallet } from './bank.account.entity';
 
 export enum UserStatus {
   Active = 'active',
@@ -316,7 +317,7 @@ export class User {
   @Column({ type: 'decimal', precision: 15, scale: 4, default: 0 })
   plan_balance: number;
 
-  @Column({ type: Boolean })
+  @Column({ type: Boolean, default: false })
   isVerified: boolean;
 
   @Column({ type: String })
@@ -356,6 +357,11 @@ export class User {
     cascade: true,
   })
   copytrade: CopyTrade;
+
+  @OneToMany(() => CryptoWallet, (wallet) => wallet.user, {
+    cascade: true,
+  })
+  crypto_wallet: CryptoWallet;
 
   @DeleteDateColumn()
   deletedAt?: Date;

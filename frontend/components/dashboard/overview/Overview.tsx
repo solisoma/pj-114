@@ -11,9 +11,13 @@ import { MdAccountBalanceWallet } from "react-icons/md";
 import { IoMdTrendingUp } from "react-icons/io";
 import { AiFillRobot } from "react-icons/ai";
 import { TnxTable } from "../TnxTable";
+import { User } from "../type";
+import { MultiType } from "@/api/type";
+import { get_trxs } from "@/api/transactions";
 
-export default function Overview() {
+export default function Overview({ userDetail }: { userDetail?: User }) {
   const [dotIndex, setDotIndex] = useState<number>(0);
+  const [transactions, setTransactions] = useState<MultiType[] | null>();
   const containerRef = useRef(null);
   const coverRef = useRef(null);
   const symbolRef = useRef(null);
@@ -38,6 +42,18 @@ export default function Overview() {
     }
   }
 
+  async function getTrxs() {
+    const trxs = await get_trxs(true);
+    console.log(trxs);
+    setTransactions(trxs);
+  }
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Call scrollToTop() wherever needed, such as on a button click or route change.
+
   function setScript(ref: any, src: string, innerHTML: any) {
     // Clear the container before appending
     if (ref.current) {
@@ -55,6 +71,8 @@ export default function Overview() {
   }
 
   useEffect(() => {
+    // scrollToTop();
+    getTrxs(); // Get transactions
     setScript(
       containerRef,
       "https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js",
@@ -154,19 +172,21 @@ export default function Overview() {
             <img src="/welcome-bg.svg" />
           </div>
         </div>
-        <div className="flex flex-col items-center rounded-lg p-2 bg-[#FA896B] md:flex-row md:justify-between md:items-center">
-          <div className="flex items-center gap-2">
-            <IoIosInformationCircleOutline />
-            <p className="text-[13px] md:text-normal">
-              Verify KYC Information to activate withdrawals
-            </p>
+        {!userDetail!.isVerified && (
+          <div className="flex flex-col items-center rounded-lg p-2 bg-[#FA896B] md:flex-row md:justify-between md:items-center">
+            <div className="flex items-center gap-2">
+              <IoIosInformationCircleOutline />
+              <p className="text-[13px] md:text-normal">
+                Verify KYC Information to activate withdrawals
+              </p>
+            </div>
+            <div>
+              <button className="flex gap-2 rounded-lg items-center bg-white px-4 py-2">
+                <p className="text-[#FA896B]">Verify KYC</p>
+              </button>
+            </div>
           </div>
-          <div>
-            <button className="flex gap-2 rounded-lg items-center bg-white px-4 py-2">
-              <p className="text-[#FA896B]">Verify KYC</p>
-            </button>
-          </div>
-        </div>
+        )}
         <div
           onScroll={handleScroll}
           ref={coverRef}
@@ -204,9 +224,9 @@ export default function Overview() {
         </div>
       </div>
       <div className="flex flex-col gap-4 md:flex-row">
-        <Box heading="Available Balance" desc="0.00" />
-        <Box heading="Total Deposit" desc="0.00" />
-        <Box heading="Total Withdraw" desc="0.00" />
+        <Box heading="Available Balance" desc={userDetail!.balance} />
+        <Box heading="Total Deposit" desc={userDetail!.totalDeposits} />
+        <Box heading="Total Withdraw" desc={userDetail!.totalWithdrawals} />
       </div>
       <div className="flex items-center justify-between bg-[#E6FFFA] px-4 py-6 rounded-lg">
         <div className="flex gap-2 items-center">
@@ -214,7 +234,11 @@ export default function Overview() {
           <h2 className="font-semibold text-xm text-black">TOTAL PROFIT</h2>
         </div>
         <div className="flex gap-2">
-          <p className="font-bold text-xl text-[#FA896B]">$0.00</p>
+          <p className="font-bold text-xl text-[#FA896B]">
+            $
+            {userDetail!.balance -
+              (userDetail!.totalDeposits - userDetail!.totalWithdrawals)}
+          </p>
           <div className="flex gap-1">
             <IoMdTrendingDown size={24} color="red" />
             <IoMdTrendingUp size={24} color="green" />
@@ -241,7 +265,7 @@ export default function Overview() {
           </div>
         </div>
         <div className="w-full md:w-[70%] mh-[55vh]">
-          <TnxTable tableData={[]} />
+          <TnxTable tableData={transactions || []} />
         </div>
       </div>
     </div>

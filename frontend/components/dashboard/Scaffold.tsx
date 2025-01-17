@@ -2,7 +2,7 @@
 import React, { Suspense, useEffect, useRef, useState } from "react";
 import { sidenavs } from "@/utils/scaffold";
 import AuthGuard from "../auth/AuthGuard";
-import { clearSecureStorage, hash_notis, is_same } from "@/api/auth";
+import { clearSecureStorage } from "@/api/auth";
 import { useRouter } from "next/navigation";
 import { get_user_status, log_out } from "@/api/default";
 import { Bounce, ToastContainer } from "react-toastify";
@@ -12,10 +12,8 @@ import { LogOutAction } from "./Utils";
 import { ScaffoldType, User } from "./type";
 import { NavType } from "@/utils/type";
 import { GiHamburgerMenu } from "react-icons/gi";
-// import Icon from "../svg/icon";
 import PrettyMenu from "./PrettyMenu";
 import Link from "next/link";
-// import { get_announcement } from "@/api/announcement";
 
 function Scaffold({ children, activeLink, route }: ScaffoldType) {
   const [loading, setLoading] = useState(false);
@@ -27,6 +25,7 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
   const router = useRouter();
   const Children = React.cloneElement(children, {
     userId: userDetail.id,
+    userDetail,
     permission: userDetail.permission,
     addProduct,
     refresh: setRefresh,
@@ -55,7 +54,7 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
     document.body.style.margin = "0px";
     document.body.style.padding = "0px";
 
-    // setUser();
+    setUser();
   }, [refresh]);
 
   return (
@@ -161,12 +160,12 @@ export default function RenderScaffold({
   route,
 }: ScaffoldType) {
   return (
-    // <AuthGuard>
-    <Suspense>
-      <Scaffold activeLink={activeLink} route={route}>
-        {children}
-      </Scaffold>
-    </Suspense>
-    // </AuthGuard>
+    <AuthGuard>
+      <Suspense>
+        <Scaffold activeLink={activeLink} route={route}>
+          {children}
+        </Scaffold>
+      </Suspense>
+    </AuthGuard>
   );
 }

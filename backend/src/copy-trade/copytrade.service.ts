@@ -14,7 +14,7 @@ export class CopyTradeService implements ICopyTradeService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
-    @InjectRepository(User)
+    @InjectRepository(CopyTrade)
     private readonly copyTradeRepository: Repository<CopyTrade>,
     private readonly trxService: TransactionService,
     // @Inject(Services.MAILS) private readonly mailsService: IMailsService,

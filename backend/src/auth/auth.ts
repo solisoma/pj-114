@@ -10,7 +10,7 @@ import { User } from 'src/typeorm/entities/user.entity';
 export interface IAuthService {
   validateLogin(loginDto: AuthEmailLoginDto): Promise<LoginResponseType>;
   registerUser(registerDto: AuthRegisterDto): Promise<void>;
-  handleOAuthCallback(code: string): Promise<LoginResponseType>;
+  // handleOAuthCallback(code: string): Promise<LoginResponseType>;
   status(
     userJwtPayload: JwtPayloadType,
   ): Promise<

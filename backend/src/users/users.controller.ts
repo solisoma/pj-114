@@ -97,8 +97,10 @@ export class UsersController {
   })
   async getTrx(
     @Query(new ValidationPipe()) param: IdDto,
+    @Req() req: any,
   ): Promise<Transaction[]> {
-    return this.userService.getTrx(Number(param.userId));
+    const id = param.userId || req.user.id;
+    return this.userService.getTrx(Number(id));
   }
 
   @UseGuards(AuthGuard('jwt'))

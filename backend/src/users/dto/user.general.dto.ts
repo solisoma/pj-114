@@ -47,7 +47,7 @@ export class transcDetailsDto {
 
 export class IdDto {
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   userId: string;
 }
 

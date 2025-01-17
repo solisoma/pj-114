@@ -14,7 +14,7 @@ export class PlanService implements IPlanService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
-    @InjectRepository(User)
+    @InjectRepository(Plan)
     private readonly planRepository: Repository<Plan>,
     private readonly trxService: TransactionService,
     // @Inject(Services.MAILS) private readonly mailsService: IMailsService,

@@ -1,5 +1,11 @@
 /* eslint-disable prettier/prettier */
-import { IsEmail, IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { Transform } from 'class-transformer';
 import { lowerCaseTransformer } from 'src/utils/transformers/lower-case.transformer';
 import { ApiProperty } from '@nestjs/swagger';
@@ -21,9 +27,9 @@ export class AuthRegisterDto {
   name: string;
 
   @ApiProperty({ example: 'Ufere Goodnews' })
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  referral_id: string;
+  referral_id?: string;
 
   @ApiProperty({ example: 'Ufere Goodnews' })
   @IsNotEmpty()

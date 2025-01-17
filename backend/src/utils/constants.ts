@@ -6,6 +6,7 @@ export enum Routes {
   USERS = 'users',
   CopyTrade = 'copytrade',
   Plan = 'plan',
+  Wallet = 'wallet',
 }
 
 export enum Services {

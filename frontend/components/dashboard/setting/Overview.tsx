@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Profile from "./Profile";
 import { FaRegUserCircle } from "react-icons/fa";
 import { TbBuildingBank } from "react-icons/tb";
@@ -6,6 +6,16 @@ import Account from "./Account";
 
 export default function Overview() {
   const [activeTab, setActiveTab] = useState("profile");
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Call scrollToTop() wherever needed, such as on a button click or route change.
+
+  useEffect(() => {
+    scrollToTop();
+  }, []);
   return (
     <div className="flex flex-col gap-4">
       <div className="relative flex bg-[#EBF3FE] rounded-lg px-8 h-[25vh] items-end overflow-hidden md:items-center">

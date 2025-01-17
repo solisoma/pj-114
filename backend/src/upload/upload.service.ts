@@ -44,12 +44,7 @@ export class UploadService {
       fileFilter: (_, file, cb) => {
         const fileFormat = file.mimetype.split('/')[1];
         if (!formats.includes(fileFormat)) {
-          return cb(
-            new Error(
-              `Invalid file format. Only ${formats.join(', ')} are allowed.`,
-            ),
-            false,
-          );
+          return cb(null, false);
         }
         cb(null, true);
       },

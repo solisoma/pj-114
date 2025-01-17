@@ -31,18 +31,17 @@ export const TnxTable = ({ tableData }: { tableData: any }) => {
                 <td className="py-4 px-1 h-16 border border-gray-400 md:w-[5%] md:px-2 md:h-20">
                   {data.id}
                 </td>
+                <td className="py-4 px-1 h-16 border border-gray-400 md:w-[5%] md:px-2 md:h-20">
+                  {data.service}
+                </td>
                 <td className="py-4 px-1 border border-gray-400 text-sm md:text-sm md:w-[8%] md:px-2">
-                  {data.phone_number}
+                  {data.status}
                 </td>
                 <td className="py-4 px-1 border text-center border-gray-400 text-sm md:text-sm md:w-[8%] md:px-2">
-                  {data.status === "awaiting" ? (
-                    <span className="loader"></span>
-                  ) : (
-                    data.code
-                  )}
+                  {data.category}
                 </td>
                 <td className="py-4 px-1 border border-gray-400 text-sm md:text-sm md:w-[8%] md:px-2">
-                  {data.country}
+                  {data.created_at}
                 </td>
               </tr>
             );

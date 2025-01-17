@@ -204,17 +204,17 @@ export class AuthController {
   //   }
   // }
 
-  @Get('/oauth2callback')
-  async handleOAuth2Callback(@Req() req, @Res() res) {
-    try {
-      const user = await this.authService.handleOAuthCallback(req.query.code);
+  // @Get('/oauth2callback')
+  // async handleOAuth2Callback(@Req() req, @Res() res) {
+  //   try {
+  //     const user = await this.authService.handleOAuthCallback(req.query.code);
 
-      return res.status(200).json({ user });
-    } catch (error) {
-      console.log(error);
-      return res.status(500).json({ error: 'Internal Server Error' });
-    }
-  }
+  //     return res.status(200).json({ user });
+  //   } catch (error) {
+  //     console.log(error);
+  //     return res.status(500).json({ error: 'Internal Server Error' });
+  //   }
+  // }
 
   @UseGuards(AuthGuard('jwt'))
   @Get('encrypt-token')

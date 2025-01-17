@@ -19,6 +19,7 @@ import { CopyTradeModule } from './copy-trade/copytrade.module';
 import { PlanModule } from './plan/plan.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { UploadModule } from './upload/upload.module';
+import { WalletModule } from './wallet/wallet.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -40,6 +41,7 @@ import { UploadModule } from './upload/upload.module';
     PlanModule,
     TransactionModule,
     UploadModule,
+    WalletModule,
   ],
   controllers: [AppController, AuthController, UsersController],
   providers: [DatabaseInitializerService, AppService],

@@ -28,7 +28,6 @@ import { JwtRefreshPayloadType } from './strategies/types/jwt-refresh-payload.ty
 import { User, UserStatus } from 'src/typeorm/entities/user.entity';
 import { IUsersService } from 'src/users/users';
 import { addHours } from 'date-fns';
-import axios from 'axios';
 import { EncryptService } from 'src/encrypt/encrypt.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -112,87 +111,87 @@ export class AuthService implements IAuthService {
     };
   }
 
-  async handleOAuthCallback(code: string): Promise<LoginResponseType> {
-    try {
-      const tokenUrl = 'https://oauth2.googleapis.com/token';
-      const clientId = this.configService.getOrThrow<string>(
-        'google.extensionClientId',
-        {
-          infer: true,
-        },
-      );
-      const clientSecret = this.configService.getOrThrow<string>(
-        'google.clientExtensionSecret',
-        {
-          infer: true,
-        },
-      );
-      const redirectUri = this.configService.getOrThrow<string>(
-        'google.extensionRedirectURL',
-        {
-          infer: true,
-        },
-      );
+  // async handleOAuthCallback(code: string): Promise<LoginResponseType> {
+  //   try {
+  //     const tokenUrl = 'https://oauth2.googleapis.com/token';
+  //     const clientId = this.configService.getOrThrow<string>(
+  //       'google.extensionClientId',
+  //       {
+  //         infer: true,
+  //       },
+  //     );
+  //     const clientSecret = this.configService.getOrThrow<string>(
+  //       'google.clientExtensionSecret',
+  //       {
+  //         infer: true,
+  //       },
+  //     );
+  //     const redirectUri = this.configService.getOrThrow<string>(
+  //       'google.extensionRedirectURL',
+  //       {
+  //         infer: true,
+  //       },
+  //     );
 
-      const tokenResponse = await axios.post(tokenUrl, {
-        code,
-        client_id: clientId,
-        client_secret: clientSecret,
-        redirect_uri: redirectUri,
-        grant_type: 'authorization_code',
-      });
+  //     const tokenResponse = await axios.post(tokenUrl, {
+  //       code,
+  //       client_id: clientId,
+  //       client_secret: clientSecret,
+  //       redirect_uri: redirectUri,
+  //       grant_type: 'authorization_code',
+  //     });
 
-      const { access_token } = tokenResponse.data;
+  //     const { access_token } = tokenResponse.data;
 
-      const userInfo = await axios.get(
-        'https://www.googleapis.com/oauth2/v2/userinfo',
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
-        },
-      );
+  //     const userInfo = await axios.get(
+  //       'https://www.googleapis.com/oauth2/v2/userinfo',
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${access_token}`,
+  //         },
+  //       },
+  //     );
 
-      const profile = userInfo.data;
+  //     const profile = userInfo.data;
 
-      let user = await this.usersService.findOneUser({
-        // socialId: profile.id,
-        provider: AuthProvidersEnum.google,
-      });
+  //     let user = await this.usersService.findOneUser({
+  //       // socialId: profile.id,
+  //       provider: AuthProvidersEnum.google,
+  //     });
 
-      if (!user) {
-        user = await this.usersService.createUser({
-          email: profile.email,
-          name: profile.name,
-          socialId: profile.id,
-          provider: AuthProvidersEnum.google,
-          status: UserStatus.Active,
-        });
-      }
+  //     if (!user) {
+  //       user = await this.usersService.createUser({
+  //         email: profile.email,
+  //         name: profile.name,
+  //         socialId: profile.id,
+  //         provider: AuthProvidersEnum.google,
+  //         status: UserStatus.Active,
+  //       });
+  //     }
 
-      const session = await this.sessionService.create({
-        user,
-      });
+  //     const session = await this.sessionService.create({
+  //       user,
+  //     });
 
-      const { token, refreshToken, tokenExpires } = await this.getTokensData({
-        id: user.id,
-        sessionId: session.id,
-      });
+  //     const { token, refreshToken, tokenExpires } = await this.getTokensData({
+  //       id: user.id,
+  //       sessionId: session.id,
+  //     });
 
-      return {
-        refreshToken,
-        token,
-        tokenExpires,
-        user,
-      };
-    } catch (error) {
-      console.log(error);
-      throw new HttpException(
-        'Failed to authenticate via Google',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
-  }
+  //     return {
+  //       refreshToken,
+  //       token,
+  //       tokenExpires,
+  //       user,
+  //     };
+  //   } catch (error) {
+  //     console.log(error);
+  //     throw new HttpException(
+  //       'Failed to authenticate via Google',
+  //       HttpStatus.INTERNAL_SERVER_ERROR,
+  //     );
+  //   }
+  // }
 
   async registerUser(registerDto: AuthRegisterDto): Promise<void> {
     console.log('Register DTO:', registerDto);
@@ -253,7 +252,7 @@ export class AuthService implements IAuthService {
       })
     )
       .map((itm) => itm.amount)
-      .reduce((a, b) => a + b, 0);
+      .reduce((a, b) => Number(a) + Number(b), 0);
 
     const totalDeposits = (
       await this.trxRepository.find({
@@ -265,7 +264,7 @@ export class AuthService implements IAuthService {
       })
     )
       .map((itm) => itm.amount)
-      .reduce((a, b) => a + b, 0);
+      .reduce((a, b) => Number(a) + Number(b), 0);
 
     const newUser = { ...user, totalDeposits, totalWithdrawals };
 

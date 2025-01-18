@@ -8,10 +8,11 @@ import { Services } from 'src/utils/constants';
 import { Transaction } from '@app/typeorm/entities/transaction.entity';
 import { TransactionModule } from '@app/transaction/transaction.module';
 import { UploadModule } from '@app/upload/upload.module';
+import { Referral } from '@app/typeorm/entities/referral.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Transaction]),
+    TypeOrmModule.forFeature([User, Transaction, Referral]),
     TransactionModule,
     UploadModule,
   ],

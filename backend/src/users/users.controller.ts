@@ -33,6 +33,7 @@ import { Transaction } from '@app/typeorm/entities/transaction.entity';
 import { UpdateTrxDto } from '@app/transaction/dto/transactionDto';
 import { TransactionService } from '@app/transaction/transaction.service';
 import { UploadService } from '@app/upload/upload.service';
+import { Referral } from '@app/typeorm/entities/referral.entity';
 
 @ApiTags('User')
 @Controller(Routes.USERS)
@@ -100,7 +101,19 @@ export class UsersController {
     @Req() req: any,
   ): Promise<Transaction[]> {
     const id = param.userId || req.user.id;
-    return this.userService.getTrx(Number(id));
+    return this.userService.getTrx(Number(id), param.category);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('referrals')
+  @ApiOperation({ summary: 'Get referrals' })
+  @ApiResponse({
+    status: 204,
+    description: 'Referrals fetched successfully',
+  })
+  async getReferrals(@Req() req: any): Promise<Referral[]> {
+    const id = req.user.id;
+    return this.userService.getRefferrals(Number(id));
   }
 
   @UseGuards(AuthGuard('jwt'))

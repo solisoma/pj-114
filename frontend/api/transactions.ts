@@ -8,8 +8,8 @@ export async function get_trxs(
   const token = await getSecureStorageClient("token");
   if (token) {
     const SAPI = process.env.NEXT_PUBLIC_SAPI_URL;
-    const param = userId ? `?userId=${userId}` : "";
-    const route = `${SAPI}/users/get-trx${param}`;
+    const param = userId ? `userId=${userId}` : "";
+    const route = `${SAPI}/users/get-trx?category=all&${param}`;
     const res = await fetch(route, {
       method: "GET",
       headers: {
@@ -21,6 +21,78 @@ export async function get_trxs(
       const data = await res.json();
       if (part) return data.slice(0, 10);
 
+      console.log(data);
+      return data;
+    }
+  }
+
+  return [];
+}
+
+export async function get_withdrawals(
+  userId?: number
+): Promise<MultiType[] | null> {
+  const token = await getSecureStorageClient("token");
+  if (token) {
+    const SAPI = process.env.NEXT_PUBLIC_SAPI_URL;
+    const param = userId ? `userId=${userId}` : "";
+    const route = `${SAPI}/users/get-trx?category=withdrawal&${param}`;
+    const res = await fetch(route, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token.token}`,
+      },
+    });
+    if (res.ok) {
+      const data = await res.json();
+
+      return data;
+    }
+  }
+
+  return [];
+}
+
+export async function get_Deposits(
+  userId?: number
+): Promise<MultiType[] | null> {
+  const token = await getSecureStorageClient("token");
+  if (token) {
+    const SAPI = process.env.NEXT_PUBLIC_SAPI_URL;
+    const param = userId ? `userId=${userId}` : "";
+    const route = `${SAPI}/users/get-trx?category=deposit&${param}`;
+    const res = await fetch(route, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token.token}`,
+      },
+    });
+    if (res.ok) {
+      const data = await res.json();
+
+      return data;
+    }
+  }
+
+  return [];
+}
+
+export async function get_referrals(): Promise<MultiType[] | null> {
+  const token = await getSecureStorageClient("token");
+  if (token) {
+    const SAPI = process.env.NEXT_PUBLIC_SAPI_URL;
+    const route = `${SAPI}/users/referrals`;
+    const res = await fetch(route, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token.token}`,
+      },
+    });
+    if (res.ok) {
+      const data = await res.json();
       return data;
     }
   }

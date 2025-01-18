@@ -16,6 +16,12 @@ export enum Actions {
   Verify = 'verify',
 }
 
+export enum TrxCategory {
+  All = 'all',
+  Withdrawal = 'withdrawal',
+  Deposit = 'deposit',
+}
+
 export enum Directions {
   Send = 'send',
   Receive = 'receive',
@@ -49,6 +55,10 @@ export class IdDto {
   @IsString()
   @IsOptional()
   userId: string;
+
+  @IsNotEmpty()
+  @IsEnum(TrxCategory)
+  category: TrxCategory;
 }
 
 export class TransferDto {

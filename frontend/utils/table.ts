@@ -6,4 +6,5 @@ export const tnxHead = [
   "Category",
   "Date",
 ];
+export const refHead = ["Id", "User", "Profit", "Date"];
 export const invHead = ["Id", "Amount", "Status", "ROI", "Duration", "Date"];

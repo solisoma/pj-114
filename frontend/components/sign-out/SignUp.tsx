@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import Link from "next/link";
 import Button from "../Button";
 import { Formik, Form, ErrorMessage, Field, FormikHelpers } from "formik";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Error from "../Error";
 import { sign_up } from "@/api/default";
 import { getSecureStorage } from "@/api/auth";
@@ -27,6 +27,7 @@ export default function SignUp() {
   const [confirmPasswordField, setConfirmPassswordField] = useState(true);
   const [apiError, setApiError] = useState({ state: false, msg: "" });
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const validator = Yup.object({
     name: Yup.string()
@@ -66,6 +67,7 @@ export default function SignUp() {
     address: "",
     confirm_password: "",
     remember: false,
+    referral_id: "",
   };
 
   async function handleSubmit(
@@ -78,6 +80,10 @@ export default function SignUp() {
       });
       const path = localStorage.getItem("path") || "/dashboard?page=overview";
       const { confirm_password, ...details } = values;
+      const ref = searchParams.get("ref");
+      if (ref) {
+        details.referral_id = ref;
+      }
       await sign_up(details, router);
       setSubmitting(false);
       localStorage.clear();

@@ -16,6 +16,7 @@ import { SessionSerializer } from './strategies/serializer';
 import { EncryptModule } from 'src/encrypt/encrypt.module';
 import { Transaction } from '@app/typeorm/entities/transaction.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Referral } from '@app/typeorm/entities/referral.entity';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     ForgotPasswordModule,
     JwtModule.register({}),
     EncryptModule,
-    TypeOrmModule.forFeature([Transaction]),
+    TypeOrmModule.forFeature([Transaction, Referral]),
   ],
 
   controllers: [AuthController],

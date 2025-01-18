@@ -13,8 +13,10 @@ import {
   ProofDto,
   transcDetailsDto,
   TransferDto,
+  TrxCategory,
 } from './dto/user.general.dto';
 import { Transaction } from '@app/typeorm/entities/transaction.entity';
+import { Referral } from '@app/typeorm/entities/referral.entity';
 
 export interface IUsersService {
   createUser(createUserDto: CreateUserDto): Promise<User>;
@@ -31,12 +33,13 @@ export interface IUsersService {
   deleteUser(id: User['id']): Promise<void>;
   saveUser(user: User): Promise<User>;
   getAllUser(id: number): Promise<User[]>;
-  getTrx(id: number): Promise<Transaction[]>;
+  getTrx(id: number, category: TrxCategory): Promise<Transaction[]>;
   handleKYC(id: number, details: KycDto): Promise<void>;
   addDepositProof(proof: ProofDto): Promise<void>;
   deposit(id: number, details: DepositDto): Promise<Transaction>;
   withdraw(id: number, details: DepositDto): Promise<Transaction>;
   transfer(id: number, trxDetails: TransferDto): Promise<void>;
+  getRefferrals(id: number): Promise<Referral[]>;
   changePassword(
     id: User['id'],
     changePasswordDto: ChangePasswordDto,

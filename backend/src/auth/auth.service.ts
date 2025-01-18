@@ -36,12 +36,15 @@ import {
   TrxStatus,
 } from '@app/typeorm/entities/transaction.entity';
 import { Repository } from 'typeorm';
+import { Referral } from '@app/typeorm/entities/referral.entity';
 
 @Injectable()
 export class AuthService implements IAuthService {
   constructor(
     @InjectRepository(Transaction)
     private readonly trxRepository: Repository<Transaction>,
+    @InjectRepository(Referral)
+    private readonly refRepository: Repository<Referral>,
     @Inject(Services.USERS) private readonly usersService: IUsersService,
     @Inject(Services.SESSION) private readonly sessionService: ISessionService,
     @Inject(Services.FORGOT_PASSWORD)
@@ -212,7 +215,7 @@ export class AuthService implements IAuthService {
 
     console.log('Activation Expiry:', activationExpiry);
 
-    await this.usersService.createUser({
+    const newUser = await this.usersService.createUser({
       ...registerDto,
       password: hashedPassword,
       email: registerDto.email,
@@ -227,8 +230,15 @@ export class AuthService implements IAuthService {
       });
 
       if (owner) {
-        owner.balance += 2;
+        const ref = this.refRepository.create({
+          profit: 10,
+          host: { id: newUser.id },
+          user: { id: owner.id },
+        });
+
+        owner.balance = Number(owner.balance) + 10;
         this.usersService.saveUser(owner);
+        this.refRepository.save(ref);
       }
     }
   }
@@ -266,7 +276,15 @@ export class AuthService implements IAuthService {
       .map((itm) => itm.amount)
       .reduce((a, b) => Number(a) + Number(b), 0);
 
-    const newUser = { ...user, totalDeposits, totalWithdrawals };
+    const referralBonus = (
+      await this.refRepository.find({
+        where: { user: { id: userJwtPayload.id } },
+      })
+    )
+      .map((itm) => itm.profit)
+      .reduce((a, b) => Number(a) + Number(b), 0);
+
+    const newUser = { ...user, totalDeposits, totalWithdrawals, referralBonus };
 
     return newUser;
   }

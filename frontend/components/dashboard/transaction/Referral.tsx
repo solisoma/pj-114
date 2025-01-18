@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaGift } from "react-icons/fa";
 import { GoArrowUpLeft } from "react-icons/go";
 import { TiArrowRightOutline } from "react-icons/ti";
 import { MdInsertLink } from "react-icons/md";
 import { FaRegCopy } from "react-icons/fa6";
-import { InvTable } from "../InvTable";
+import { User } from "../type";
+import { toast } from "react-toastify";
+import { MultiType } from "@/api/type";
+import { get_referrals } from "@/api/transactions";
+import { RefTable } from "../RefTable";
 
-export default function Referral() {
+export default function Referral({ userDetail }: { userDetail: User }) {
+  const [referrals, setReferrals] = useState<MultiType[] | null>();
+
+  async function getRef() {
+    const refs = await get_referrals();
+    setReferrals(refs);
+  }
+
+  useEffect(() => {
+    getRef();
+  }, []);
+
   return (
     <div className="flex flex-col gap-4">
       <div className="relative flex bg-[#EBF3FE] rounded-lg px-8 h-[25vh] items-end overflow-hidden md:items-center">
@@ -25,7 +40,9 @@ export default function Referral() {
             <h2 className="relative font-base text-xl">Referral Bonus</h2>
             <div>
               <div className="flex gap-2 justify-between">
-                <h2 className="font-bold text-3xl">$0</h2>
+                <h2 className="font-bold text-3xl">
+                  ${userDetail.referralBonus}
+                </h2>
                 <div>
                   <div className="rounded-full p-2 bg-[#D5745B]">
                     <FaGift
@@ -38,11 +55,10 @@ export default function Referral() {
               </div>
               <div className="flex gap-1 items-center">
                 <GoArrowUpLeft size={15} color="green" />
-                <p>0 USD</p>
               </div>
             </div>
             <button className="flex gap-2 rounded-lg justify-center items-center bg-[#D5745B] px-4 py-2">
-              <p className="text-white">Request Withdrawal</p>
+              <p className="text-white">Refer & Earn</p>
               <TiArrowRightOutline size={15} color="white" />
             </button>
           </div>
@@ -60,10 +76,18 @@ export default function Referral() {
                 <MdInsertLink size={17} color="black" />
               </div>
               <h2 className="border p-1 rounded-lg text-[15px] w-full overflow-hidden text-ellipsis whitespace-nowrap md:text-sm">
-                https://noble.eliteoptionsllc.com/user/register?ref=first
+                {`https://quantureinc.netlify.app/account/sign-up?ref=${userDetail.referral_id}`}
               </h2>
             </div>
-            <button className="flex gap-2 rounded-lg justify-center items-center bg-background2 px-4 py-2">
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `https://quantureinc.netlify.app/account/sign-up?ref=${userDetail.referral_id}`
+                );
+                toast.success("Link copied to clipboard!");
+              }}
+              className="flex gap-2 rounded-lg justify-center items-center bg-background2 px-4 py-2"
+            >
               <FaRegCopy size={17} color="white" />
               <p className="text-white">Copy Link</p>
             </button>
@@ -75,7 +99,7 @@ export default function Referral() {
           <h2 className="font-semibold text-xl">Referral List</h2>
           <p className="text-sm">List of referred users</p>
         </div>
-        <InvTable tableData={[]} />
+        <RefTable tableData={referrals || []} />
       </div>
     </div>
   );

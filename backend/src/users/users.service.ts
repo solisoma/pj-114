@@ -21,12 +21,14 @@ import {
   ProofDto,
   transcDetailsDto,
   TransferDto,
+  TrxCategory,
 } from './dto/user.general.dto';
 import {
   Category,
   Transaction,
 } from '@app/typeorm/entities/transaction.entity';
 import { TransactionService } from '@app/transaction/transaction.service';
+import { Referral } from '@app/typeorm/entities/referral.entity';
 
 @Injectable()
 export class UsersService implements IUsersService {
@@ -35,6 +37,8 @@ export class UsersService implements IUsersService {
     private readonly usersRepository: Repository<User>,
     @InjectRepository(Transaction)
     private readonly trxRepository: Repository<Transaction>,
+    @InjectRepository(Referral)
+    private readonly refRepository: Repository<Referral>,
     private readonly trxService: TransactionService,
     // @Inject(Services.MAILS) private readonly mailsService: IMailsService,
   ) {}
@@ -46,7 +50,7 @@ export class UsersService implements IUsersService {
     if (existingUser)
       throw new HttpException('User already exists', HttpStatus.CONFLICT);
     const user = this.usersRepository.create(createUserDto);
-    return this.usersRepository.save(user);
+    return await this.usersRepository.save(user);
   }
 
   async findOneUser(
@@ -299,15 +303,26 @@ export class UsersService implements IUsersService {
     throw new HttpException('Insufficient funds', HttpStatus.CONFLICT);
   }
 
-  async getTrx(id: number): Promise<Transaction[]> {
+  async getTrx(id: number, category: TrxCategory): Promise<Transaction[]> {
     const isUser = await this.usersRepository.findOne({ where: { id } });
 
     // Does users exist
     if (!isUser)
       throw new HttpException("User doesn't exist", HttpStatus.NOT_FOUND);
+    if (category === TrxCategory.All)
+      return await this.trxRepository.find({
+        where: { user: { id } },
+        order: { id: 'DESC' },
+      });
+
+    if (category === TrxCategory.Deposit)
+      return await this.trxRepository.find({
+        where: { user: { id }, category: Category.Deposit },
+        order: { id: 'DESC' },
+      });
 
     return await this.trxRepository.find({
-      where: { user: { id } },
+      where: { user: { id }, category: Category.Withdrawal },
       order: { id: 'DESC' },
     });
   }
@@ -352,5 +367,15 @@ export class UsersService implements IUsersService {
     };
 
     await this.usersRepository.save(user);
+  }
+
+  async getRefferrals(id: number): Promise<Referral[]> {
+    return await this.refRepository
+      .createQueryBuilder('ref')
+      .leftJoinAndSelect('ref.host', 'host')
+      .select(['ref', 'host.name']) // Select ref fields and only user.name
+      .where('ref.userId = :id', { id })
+      .orderBy('ref.id', 'DESC')
+      .getMany();
   }
 }

@@ -27,9 +27,10 @@ import Transactions from "@/components/dashboard/transaction/Transactions";
 import Withdrawals from "@/components/dashboard/transaction/Withdrawals";
 import Deposits from "@/components/dashboard/transaction/Deposits";
 import Referral from "@/components/dashboard/transaction/Referral";
+import React from "react";
 
 interface IRoute {
-  [key: string]: React.FC;
+  [key: string]: React.FC<any>;
 }
 
 export function sidenavs(notUser: boolean): NavType[] {

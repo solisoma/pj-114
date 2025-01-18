@@ -22,13 +22,13 @@ export class CopyTrade {
   @Column({ type: 'decimal', precision: 15, scale: 4 })
   amount: number;
 
-  @Column({ type: 'decimal', precision: 15, scale: 4 })
+  @Column({ type: 'decimal', precision: 15, scale: 4, default: 0 })
   pnl: number;
 
   @Column({ type: Number })
   duration: number;
 
-  @Column({ type: Boolean })
+  @Column({ type: Boolean, default: false })
   expired: boolean;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

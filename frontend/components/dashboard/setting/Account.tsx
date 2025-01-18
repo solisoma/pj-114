@@ -12,8 +12,16 @@ import {
 import { MultiType } from "@/api/type";
 import { toast } from "react-toastify";
 import { DeleteWallet } from "../Utils";
+import Kyc from "../Kyc";
+import { User } from "../type";
 
-export default function Account({ isVerified }: { isVerified?: boolean }) {
+export default function Account({
+  userDetail,
+  setUser,
+}: {
+  setUser?: () => void;
+  userDetail?: User;
+}) {
   const [action, setAction] = useState("delete");
   const [showLogOut, setShowLogoOut] = useState(false);
   const [initialValue, setInitialValue] = useState<MultiType>();
@@ -74,7 +82,7 @@ export default function Account({ isVerified }: { isVerified?: boolean }) {
     <>
       <Frame>
         <>
-          {!isVerified && (
+          {!userDetail!.isVerified && (
             <div className="flex flex-col py-8 px-6 gap-4 rounded-lg bg-[#1E222D] md:flex-row md:justify-between md:gap-0">
               <div className="flex flex-col gap-4">
                 <h2 className="font-semibold text-xl">KYC Verification</h2>
@@ -84,8 +92,14 @@ export default function Account({ isVerified }: { isVerified?: boolean }) {
                 </p>
               </div>
               <div className="flex items-center">
-                <button className="px-6 py-2 rounded-lg bg-background2">
-                  Verify
+                <button
+                  onClick={() => {
+                    setAction("kyc");
+                    setShowLogoOut(true);
+                  }}
+                  className="px-6 py-2 rounded-lg bg-background2"
+                >
+                  {userDetail!.front_image ? "Verifying..." : "Verify"}
                 </button>
               </div>
             </div>
@@ -181,6 +195,8 @@ export default function Account({ isVerified }: { isVerified?: boolean }) {
       >
         {action === "delete" ? (
           <DeleteWallet onDelete={handleDelete} />
+        ) : action === "kyc" ? (
+          <Kyc setUser={setUser!} />
         ) : (
           <AddWallet
             initialValue={initialValue || {}}

@@ -8,6 +8,7 @@ export default function PlanBox({
   min,
   max,
   capReturn,
+  onInvest,
 }: {
   plan: string;
   interest: string;
@@ -15,6 +16,7 @@ export default function PlanBox({
   min: number;
   max: number;
   capReturn: string;
+  onInvest: () => void;
 }) {
   return (
     <div className="flex flex-col rounded-lg w-full h-full">
@@ -48,7 +50,10 @@ export default function PlanBox({
           <p>{capReturn}</p>
         </div>
         <div>
-          <button className="flex gap-2 rounded-lg items-center bg-background2 px-8 py-2">
+          <button
+            onClick={onInvest}
+            className="flex gap-2 rounded-lg items-center bg-background2 px-8 py-2"
+          >
             <p>Invest Now</p>
             <LuLockKeyhole size={20} />
           </button>

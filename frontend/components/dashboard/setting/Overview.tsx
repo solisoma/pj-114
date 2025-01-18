@@ -5,7 +5,13 @@ import { TbBuildingBank } from "react-icons/tb";
 import Account from "./Account";
 import { User } from "../type";
 
-export default function Overview({ userDetail }: { userDetail?: User }) {
+export default function Overview({
+  userDetail,
+  setUser,
+}: {
+  userDetail?: User;
+  setUser?: () => void;
+}) {
   const [activeTab, setActiveTab] = useState("profile");
 
   const scrollToTop = () => {
@@ -52,7 +58,7 @@ export default function Overview({ userDetail }: { userDetail?: User }) {
       {activeTab === "profile" ? (
         <Profile />
       ) : (
-        <Account isVerified={userDetail!.isVerified} />
+        <Account userDetail={userDetail} setUser={setUser!} />
       )}
     </div>
   );

@@ -1,9 +1,9 @@
-export const tnxHead = ["Id", "Details", "Status", "Category", "Date"];
-export const invHead = [
+export const tnxHead = [
   "Id",
+  "Details",
   "Amount",
   "Status",
-  "ROI",
-  "Duration",
+  "Category",
   "Date",
 ];
+export const invHead = ["Id", "Amount", "Status", "ROI", "Duration", "Date"];

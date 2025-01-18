@@ -19,7 +19,7 @@ export class Plan {
   @Column({ type: 'decimal', precision: 15, scale: 4 })
   amount: number;
 
-  @Column({ type: Boolean })
+  @Column({ type: Boolean, default: false })
   expired: boolean;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

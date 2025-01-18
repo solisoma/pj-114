@@ -2,15 +2,14 @@ import React from "react";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { LuLockKeyhole } from "react-icons/lu";
 import { IoMdContacts } from "react-icons/io";
+import { traders } from "@/utils/info";
 
 export default function CopyBox({
-  percent,
-  min,
-  accuracy,
+  details,
+  onInvest,
 }: {
-  percent: number;
-  min: number;
-  accuracy: string;
+  details: (typeof traders)[0];
+  onInvest: () => void;
 }) {
   return (
     <div className="rounded-lg bg-[#1E222D] p-8">
@@ -20,44 +19,49 @@ export default function CopyBox({
         </div>
       </div>
       <div className="flex flex-col items-center gap-4">
-        <h2 className="font-semibold text-xl">3513514 | Thomas Kralow</h2>
-        <p className="text-sm">812706397</p>
+        <h2 className="font-semibold text-xl">{details.TraderDetails}</h2>
+        <p className="text-sm">{details.StandaloneNumber}</p>
         <div className="flex gap-2">
           <p>Copy Guarantee</p>
           <IoMdCheckmarkCircle size={24} color="green" />
         </div>
-        <button className="flex gap-2 rounded-lg items-center bg-background2 px-8 py-2">
-          <p className="text-[.8rem] md:text-normal">COPY MASTER - 28 days</p>
+        <button
+          onClick={onInvest}
+          className="flex gap-2 rounded-lg items-center bg-background2 px-8 py-2"
+        >
+          <p className="text-[.8rem] md:text-normal">
+            COPY MASTER - {details.Days} days
+          </p>
           <LuLockKeyhole size={15} />
         </button>
         <p className="text-sm">TitanTrust does not own this master.</p>
         <div className="flex flex-col justify-between w-full gap-4 text-sm md:flex-row">
           <div className="flex-1 flex justify-between">
             <p>ROI:</p>
-            <p>{percent}%</p>
+            <p>{details.ROI}%</p>
           </div>
           <div className="flex-1 flex justify-between">
             <p>Accuracy</p>
-            <p>{accuracy}</p>
+            <p>{details.Accuracy}</p>
           </div>
         </div>
         <div className="flex flex-col justify-between w-full gap-4 text-sm md:flex-row">
           <div className="flex-1 flex justify-between">
             <p>All Profits:</p>
-            <p>108,900 USD</p>
+            <p>{details.TotalProfit}</p>
           </div>
           <div className="flex-1 flex justify-between">
             <p>Copiers:</p>
             <div className="flex gap-2 items-center">
               <IoMdContacts size={24} color="purple" />
-              <p>208</p>
+              <p>{details.Copiers}</p>
             </div>
           </div>
         </div>
         <div className="flex flex-col justify-between w-full gap-4 text-sm md:flex-row">
           <div className="flex-1 flex justify-between">
             <p>Min Fee</p>
-            <p>{min} USD</p>
+            <p>{details.MinFee} USD</p>
           </div>
           <div className="flex-1 flex justify-between">
             <p>Account Type:</p>

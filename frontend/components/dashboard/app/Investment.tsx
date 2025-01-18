@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaCreditCard } from "react-icons/fa";
 import { TbHomeDollar } from "react-icons/tb";
 import { TiArrowRightOutline } from "react-icons/ti";
@@ -8,9 +8,9 @@ import Modal from "../Modal";
 import { Deposit } from "../Deposit";
 import { Withdraw } from "../Withdraw";
 import { User } from "../type";
-import { get_trxs } from "@/api/transactions";
 import { MultiType } from "@/api/type";
 import Transfer from "../Transfer";
+import { get_investment } from "@/api/app";
 
 export default function Investment({
   userDetail,
@@ -22,11 +22,31 @@ export default function Investment({
   const [showLogOut, setShowLogoOut] = useState(false);
   const [transactions, setTransactions] = useState<MultiType[] | null>();
   const [action, setAction] = useState("deposit");
+  const [gained, setGained] = useState<number>(0);
 
   async function getTrxs() {
-    const trxs = await get_trxs(true);
-    setTransactions(trxs);
+    // do nothing
   }
+
+  async function onClose() {
+    const inv = await get_investment();
+    setTransactions(inv);
+  }
+
+  function totalProfit() {
+    if (transactions) {
+      const gain = transactions
+        .map((itm) => (Number(itm.roi) * itm.amount) / 100)
+        .reduce((a, b) => a + b, 0);
+      setGained(gain);
+    }
+  }
+
+  useEffect(() => totalProfit, [transactions]);
+
+  useEffect(() => {
+    onClose();
+  }, []);
 
   return (
     <>
@@ -78,7 +98,7 @@ export default function Investment({
             <h2 className="relative font-base text-xl">Investment Account</h2>
             <div>
               <h2>{userDetail!.plan_balance} USD</h2>
-              <p>Gained profits</p>
+              <p>Balance</p>
             </div>
             <div>
               <button
@@ -97,13 +117,8 @@ export default function Investment({
             <div className="flex flex-col gap-4 ">
               <h2 className="relative font-base text-xl">Investment Account</h2>
               <div>
-                <h2>0 USD</h2>
-                <p>Gained profits</p>
-              </div>
-              <div>
-                <button className="flex gap-2 rounded-lg items-center bg-[#ECF2FF] px-4 py-2">
-                  <p className="text-background2">History</p>
-                </button>
+                <h2>{gained} USD</h2>
+                <p>Unrealized PnL</p>
               </div>
             </div>
             <TfiBarChart size={100} color="#0094FF" />
@@ -116,7 +131,7 @@ export default function Investment({
               List of ongoing investments in your account
             </p>
           </div>
-          <InvTable tableData={[]} />
+          <InvTable tableData={transactions || []} />
         </div>
       </div>
       <Modal
@@ -129,7 +144,11 @@ export default function Investment({
         ) : action === "withdraw" ? (
           <Withdraw onAction={getTrxs} balance={userDetail!.balance} />
         ) : (
-          <Transfer userDetail={userDetail!} setUser={setUser!} />
+          <Transfer
+            userDetail={userDetail!}
+            setUser={setUser!}
+            onAction={onClose}
+          />
         )}
       </Modal>
     </>

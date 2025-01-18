@@ -6,6 +6,7 @@ import { transfer } from "@/api/transactions";
 export default function Transfer({
   closeModal,
   userDetail,
+  onAction,
   setUser,
 }: LogOutActionType & {
   userDetail: User;
@@ -67,12 +68,6 @@ export default function Transfer({
       return;
     }
 
-    console.log("Transferring assets:", {
-      from: selectedFirst,
-      amountFrom: amountFirst,
-      to: selectedSecond,
-    });
-
     // Perform transfer logic here
     const send = await transfer({
       from: hashTable[selectedFirst as keyof typeof hashTable],
@@ -83,6 +78,7 @@ export default function Transfer({
     if (send) {
       setUser!();
       toast.success("Asset transferred successfully");
+      await onAction!();
       closeModal!();
     } else {
       toast.error("Transfer failed");

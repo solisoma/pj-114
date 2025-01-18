@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaCreditCard } from "react-icons/fa";
 import { TbHomeDollar } from "react-icons/tb";
 import { TiArrowRightOutline } from "react-icons/ti";
@@ -7,19 +7,46 @@ import { InvTable } from "../InvTable";
 import Modal from "../Modal";
 import { Deposit } from "../Deposit";
 import { Withdraw } from "../Withdraw";
-import { get_trxs } from "@/api/transactions";
 import { MultiType } from "@/api/type";
 import { User } from "../type";
+import { get_copy } from "@/api/app";
+import Transfer from "../Transfer";
 
-export default function Plan({ userDetail }: { userDetail?: User }) {
+export default function Plan({
+  userDetail,
+  setUser,
+}: {
+  userDetail?: User;
+  setUser: () => void;
+}) {
   const [showLogOut, setShowLogoOut] = useState(false);
   const [transactions, setTransactions] = useState<MultiType[] | null>();
   const [action, setAction] = useState("deposit");
+  const [gained, setGained] = useState<number>(0);
 
   async function getTrxs() {
-    const trxs = await get_trxs(true);
-    setTransactions(trxs);
+    // do nothing
   }
+
+  async function onClose() {
+    const copy = await get_copy();
+    setTransactions(copy);
+  }
+
+  function totalProfit() {
+    if (transactions) {
+      const gain = transactions
+        .map((itm) => itm.pnl)
+        .reduce((a, b) => a + b, 0);
+      setGained(gain);
+    }
+  }
+
+  useEffect(() => totalProfit, [transactions]);
+
+  useEffect(() => {
+    onClose();
+  }, []);
 
   return (
     <>
@@ -72,11 +99,17 @@ export default function Plan({ userDetail }: { userDetail?: User }) {
           <div className="flex flex-col gap-4 rounded-lg p-8 w-full bg-[#1E222D] md:w-[30%]">
             <h2 className="relative font-base text-xl">CopyTrade Account</h2>
             <div>
-              <h2>0 USD</h2>
-              <p>Gained profits</p>
+              <h2>{userDetail!.copytrade_balance} USD</h2>
+              <p>Balance</p>
             </div>
             <div>
-              <button className="flex gap-2 rounded-lg items-center bg-[#ECF2FF] px-4 py-2">
+              <button
+                onClick={() => {
+                  setAction("transfer");
+                  setShowLogoOut(true);
+                }}
+                className="flex gap-2 rounded-lg items-center bg-[#ECF2FF] px-4 py-2"
+              >
                 <p className="text-background2">Transfer Funds</p>
                 <TiArrowRightOutline size={15} color="#0094FF" />
               </button>
@@ -86,13 +119,8 @@ export default function Plan({ userDetail }: { userDetail?: User }) {
             <div className="flex flex-col gap-4 ">
               <h2 className="relative font-base text-xl">Investment Account</h2>
               <div>
-                <h2>0 USD</h2>
-                <p>Gained profits</p>
-              </div>
-              <div>
-                <button className="flex gap-2 rounded-lg items-center bg-[#ECF2FF] px-4 py-2">
-                  <p className="text-background2">History</p>
-                </button>
+                <h2>{gained} USD</h2>
+                <p>Unrealized PnL</p>
               </div>
             </div>
             <TfiBarChart size={100} color="#0094FF" />
@@ -105,7 +133,7 @@ export default function Plan({ userDetail }: { userDetail?: User }) {
               List of ongoing CopyTrading in your account
             </p>
           </div>
-          <InvTable tableData={[]} />
+          <InvTable tableData={transactions || []} />
         </div>
       </div>
       <Modal
@@ -115,8 +143,14 @@ export default function Plan({ userDetail }: { userDetail?: User }) {
       >
         {action === "deposit" ? (
           <Deposit onPurchase={getTrxs} />
-        ) : (
+        ) : action === "withdraw" ? (
           <Withdraw onAction={getTrxs} balance={userDetail!.balance} />
+        ) : (
+          <Transfer
+            userDetail={userDetail!}
+            setUser={setUser!}
+            onAction={onClose}
+          />
         )}
       </Modal>
     </>

@@ -53,6 +53,7 @@ export class PlanService implements IPlanService {
   async getSubscribedUser(id: number): Promise<Plan[]> {
     const users_plan = await this.planRepository.find({
       where: { user: { id }, expired: false },
+      order:{created_at:'DESC'}
     });
 
     const user = await this.usersRepository.findOne({ where: { id } });

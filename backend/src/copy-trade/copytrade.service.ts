@@ -76,9 +76,11 @@ export class CopyTradeService implements ICopyTradeService {
       ) {
         const shuffle = [roi, roi * 1.534, roi * 2.0073, roi * 2.5344];
         const main_roi = shuffle[Math.floor(Math.random() * shuffle.length)];
-        contract.pnl = contract.amount + (contract.amount * main_roi) / 100;
+        contract.pnl = Number(
+          ((Number(contract.amount) * main_roi) / 100).toFixed(4),
+        );
         contract.expired = true;
-        user.copytrade_balance += contract.pnl;
+        user.copytrade_balance += Number(contract.amount) + contract.pnl;
 
         await this.copyTradeRepository.save(contract);
         await this.usersRepository.save(user);
@@ -101,7 +103,9 @@ export class CopyTradeService implements ICopyTradeService {
           roi * 2.5344,
         ];
         const main_roi = shuffle[Math.floor(Math.random() * shuffle.length)];
-        contract.pnl = contract.amount + (contract.amount * main_roi) / 100;
+        contract.pnl = Number(
+          ((Number(contract.amount) * main_roi) / 100).toFixed(4),
+        );
         await this.copyTradeRepository.save(contract);
 
         return true;

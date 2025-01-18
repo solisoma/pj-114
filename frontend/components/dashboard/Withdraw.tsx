@@ -57,14 +57,16 @@ export function Withdraw({
           Kindly enter the amount you would like to withdraw. Once confirmed, we
           will process the request and transfer the funds to your wallet.
         </p>
-        <input
-          type="number"
-          placeholder="Enter amount"
-          value={amount || ""}
-          onChange={(e) => setAmount(Number(e.target.value))}
-          className="w-full px-4 py-2 border rounded-md text-gray-800 mb-6"
-        />
-        <p>{balance}</p>
+        <div className="mb-6">
+          <input
+            type="number"
+            placeholder="Enter amount"
+            value={amount || ""}
+            onChange={(e) => setAmount(Number(e.target.value))}
+            className="w-full px-4 py-2  border rounded-md text-gray-800"
+          />
+          <p className="flex justify-end">{balance} USD</p>
+        </div>
         <h2 className="text-xl font-bold text-[#ffffff] mb-4">
           Enter Your Wallet Address
         </h2>

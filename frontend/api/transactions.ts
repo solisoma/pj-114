@@ -51,6 +51,29 @@ export async function deposit(
   return false;
 }
 
+export async function transfer(
+  details: MultiType
+): Promise<MultiType | boolean> {
+  const token = await getSecureStorageClient("token");
+  if (token) {
+    const SAPI = process.env.NEXT_PUBLIC_SAPI_URL;
+    const route = `${SAPI}/users/transfer`;
+    const res = await fetch(route, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token.token}`,
+      },
+      body: JSON.stringify(details),
+    });
+    if (res.ok) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 export async function withdraw(
   details: MultiType
 ): Promise<MultiType | boolean> {

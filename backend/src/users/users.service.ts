@@ -1,16 +1,12 @@
 /* eslint-disable prettier/prettier */
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { DeepPartial, LessThan, Not, Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EntityCondition } from 'src/utils/types/entity-condition.type';
 import { NullableType } from 'src/utils/types/nullable.type';
 import { IPaginationOptions } from 'src/utils/types/pagination-options';
 import { IUsersService } from './users';
-import {
-  User,
-  UserPermission,
-  UserStatus,
-} from 'src/typeorm/entities/user.entity';
+import { User, UserPermission } from 'src/typeorm/entities/user.entity';
 import { CreateUserDto } from './dto/createUserDto';
 import { compareHash, hashPassword } from 'src/utils/helpers';
 import { ChangePasswordDto } from './dto/changePasswordDto';
@@ -293,10 +289,11 @@ export class UsersService implements IUsersService {
       );
 
     if (user[from] >= amount) {
-      user[from] -= amount;
-      user[to] += amount;
+      user[from] = Number(user[from]) - Number(amount);
+      user[to] = Number(user[to]) + Number(amount);
 
       this.usersRepository.save(user);
+      return;
     }
 
     throw new HttpException('Insufficient funds', HttpStatus.CONFLICT);

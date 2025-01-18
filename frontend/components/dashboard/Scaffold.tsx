@@ -25,6 +25,7 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
   const router = useRouter();
   const Children = React.cloneElement(children, {
     userId: userDetail.id,
+    setUser: setUser,
     userDetail,
     permission: userDetail.permission,
     addProduct,

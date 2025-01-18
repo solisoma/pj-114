@@ -150,7 +150,7 @@ export class UsersController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('withdraw')
-  @HttpCode(HttpStatus.NO_CONTENT)
+  @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Update balance' })
   @ApiResponse({
     status: 204,
@@ -219,7 +219,7 @@ export class UsersController {
       back: req.files?.back ? req.files.back[0].path : '', // Handle 'back'
     };
 
-    return await this.userService.handleKYC(id, Details);
+    return res.status(200).json(await this.userService.handleKYC(id, Details));
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -242,7 +242,9 @@ export class UsersController {
       ...req.body,
       file: req.files?.file ? req.files.file[0].path : '', // Handle 'file'
     };
-
-    return await this.userService.addDepositProof(Details);
+    console.log(req.body, req.files);
+    return res
+      .status(200)
+      .json(await this.userService.addDepositProof(Details));
   }
 }

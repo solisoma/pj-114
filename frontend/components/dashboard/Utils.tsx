@@ -52,33 +52,24 @@ export function LogOutAction({
   );
 }
 
-export function Deposit({
+export function DeleteWallet({
   closeModal,
   onDelete,
 }: LogOutActionType): React.JSX.Element {
-  const [confirmPayment, setConfirmPayment] = useState(false);
-
   async function handleLogOut() {
-    try {
-      await onDelete!();
-      closeModal!();
-      toast.success("Product deleted successfully");
-    } catch (e) {
-      toast.error("Failed to delete product please try again");
-    }
+    await onDelete!();
+    closeModal!();
   }
 
-  useEffect(() => {}, []);
-
   return (
-    <div className="flex items-center justify-center h-[95%]">
-      <div className="flex flex-col justify-between w-[80%] h-[60%] md:h-[70%]">
+    <div className="flex items-center justify-center h-[95%] p-6">
+      <div className="flex flex-col justify-between gap-6 w-[80%] h-full">
         <div className="flex flex-col gap-2 md:gap-[.8vw]">
-          <h2 className="font-bold text-xl md:text-[1.4vw] text-white">
-            Delete product
+          <h2 className="font-bold text-xl md:text-[1.2vw] text-white">
+            Delete wallet
           </h2>
-          <p className="text-[#969696] font-bold md:text-[1.4vw]">
-            Are you sure you want to delete product?
+          <p className="text-[#969696] text-sm font-bold md:text-[.8vw]">
+            Are you sure you want to delete wallet?
           </p>
         </div>
         <div className="flex justify-end gap-3 md:gap-[.7vw]">
@@ -87,60 +78,14 @@ export function Deposit({
             text="Delete"
             type="background"
             url="#"
-            style="from-tex to-tex py-3 px-6 transform md:py-[.7vw] md:px-[1.5vw] md:text-[1.2vw]"
+            style="from-background2 to-background2 py-3 px-6 transform md:py-[.7vw] md:px-[1.5vw] md:text-[.9vw]"
           />
           <Button
             onClick={() => closeModal!()}
             text="Cancel"
             type="background"
             url="#"
-            style="from-btn to-btn py-3 px-6 transform md:py-[.7vw] md:px-[1.5vw] md:text-[1.2vw]"
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export function DeleteAnnouncement({
-  closeModal,
-  onDelete,
-}: LogOutActionType): React.JSX.Element {
-  async function handleLogOut() {
-    try {
-      await onDelete!();
-      closeModal!();
-      toast.success("Notification deleted successfully");
-    } catch (e) {
-      toast.error("Failed to delete notification please try again");
-    }
-  }
-
-  return (
-    <div className="flex items-center justify-center h-[95%]">
-      <div className="flex flex-col justify-between w-[80%] h-[60%] md:h-[70%]">
-        <div className="flex flex-col gap-2 md:gap-[.8vw]">
-          <h2 className="font-bold text-xl md:text-[1.4vw] text-white">
-            Delete notification
-          </h2>
-          <p className="text-[#969696] font-bold md:text-[1.4vw]">
-            Are you sure you want to delete notification?
-          </p>
-        </div>
-        <div className="flex justify-end gap-3 md:gap-[.7vw]">
-          <Button
-            onClick={handleLogOut}
-            text="Delete"
-            type="background"
-            url="#"
-            style="from-tex to-tex py-3 px-6 transform md:py-[.7vw] md:px-[1.5vw] md:text-[1.2vw]"
-          />
-          <Button
-            onClick={() => closeModal!()}
-            text="Cancel"
-            type="background"
-            url="#"
-            style="from-btn to-btn py-3 px-6 transform md:py-[.7vw] md:px-[1.5vw] md:text-[1.2vw]"
+            style="from-btn to-btn py-3 px-6 transform md:py-[.7vw] md:px-[1.5vw] md:text-[.9vw]"
           />
         </div>
       </div>

@@ -15,11 +15,14 @@ import { User } from "../type";
 import { MultiType } from "@/api/type";
 import { get_trxs } from "@/api/transactions";
 import Modal from "../Modal";
+import { Deposit } from "../Deposit";
+import { Withdraw } from "../Withdraw";
 
 export default function Overview({ userDetail }: { userDetail?: User }) {
   const [dotIndex, setDotIndex] = useState<number>(0);
   const [transactions, setTransactions] = useState<MultiType[] | null>();
   const [showLogOut, setShowLogoOut] = useState(false);
+  const [action, setAction] = useState("deposit");
   const containerRef = useRef(null);
   const coverRef = useRef(null);
   const symbolRef = useRef(null);
@@ -46,7 +49,6 @@ export default function Overview({ userDetail }: { userDetail?: User }) {
 
   async function getTrxs() {
     const trxs = await get_trxs(true);
-    console.log(trxs);
     setTransactions(trxs);
   }
 
@@ -161,11 +163,23 @@ export default function Overview({ userDetail }: { userDetail?: User }) {
                 </div>
               </div>
               <div className="flex gap-4 md:gap-6">
-                <button className="flex gap-2 rounded-lg items-center bg-background2 px-4 py-2">
+                <button
+                  onClick={() => {
+                    setAction("deposit");
+                    setShowLogoOut(true);
+                  }}
+                  className="flex gap-2 rounded-lg items-center bg-background2 px-4 py-2"
+                >
                   <TbHomeDollar size={20} />
                   <p>Deposit</p>
                 </button>
-                <button className="flex gap-2 rounded-lg items-center bg-[#10BD9D] px-4 py-2">
+                <button
+                  onClick={() => {
+                    setAction("withdraw");
+                    setShowLogoOut(true);
+                  }}
+                  className="flex gap-2 rounded-lg items-center bg-[#10BD9D] px-4 py-2"
+                >
                   <FaCreditCard size={20} color="" />
                   <p>Withdraw</p>
                 </button>
@@ -269,18 +283,22 @@ export default function Overview({ userDetail }: { userDetail?: User }) {
               ></div>
             </div>
           </div>
-          <div className="w-full md:w-[70%] mh-[55vh]">
+          <div className="w-full md:w-[70%] max-h-[55vh]">
             <TnxTable tableData={transactions || []} />
           </div>
         </div>
       </div>
 
       <Modal
-        show={true}
+        show={showLogOut}
         setShow={setShowLogoOut}
-        classes="bg-[#1E222D] w-[80%] h-[40%] shadow-2xl md:p-[.1vw] rounded-lg md:w-[30%]"
+        classes="bg-[#1E222D] w-[90%] h-auto shadow-2xl md:p-[.1vw] rounded-lg md:w-[35%]"
       >
-        <div>hi</div>
+        {action === "deposit" ? (
+          <Deposit onPurchase={getTrxs} />
+        ) : (
+          <Withdraw onAction={getTrxs} balance={userDetail!.balance} />
+        )}
       </Modal>
     </>
   );

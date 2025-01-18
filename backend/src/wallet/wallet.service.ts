@@ -13,7 +13,7 @@ export class WalletService implements IWalletService {
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
     @InjectRepository(CryptoWallet)
-    private readonly cryptoRepository: Repository<CryptoWallet>,
+    private readonly walletRepository: Repository<CryptoWallet>,
   ) {}
 
   async createWallet(
@@ -27,22 +27,23 @@ export class WalletService implements IWalletService {
     if (!existingUser)
       throw new HttpException("User doesn't exists", HttpStatus.CONFLICT);
 
-    const wallet = this.cryptoRepository.create({
+    const wallet = this.walletRepository.create({
       ...createWalletDto,
       user: { id },
     });
 
-    return await this.cryptoRepository.save(wallet);
+    return await this.walletRepository.save(wallet);
   }
 
   async getWallet(id: number): Promise<CryptoWallet[]> {
-    return await this.cryptoRepository.find({
+    return await this.walletRepository.find({
       where: { user: { id } },
+      order: { created_at: 'DESC' },
     });
   }
 
   async updateWallet(details: UpdateWalletDto): Promise<CryptoWallet> {
-    const wallet = await this.cryptoRepository.findOne({
+    const wallet = await this.walletRepository.findOne({
       where: { id: details.id },
     });
 
@@ -51,19 +52,19 @@ export class WalletService implements IWalletService {
 
     const updateWallet = { ...wallet, ...details };
 
-    return await this.cryptoRepository.save(updateWallet);
+    return await this.walletRepository.save(updateWallet);
   }
 
   async deleteWallet(id: number): Promise<{ id: number; deleted: boolean }> {
     try {
-      const wallet = await this.cryptoRepository.findOne({
+      const wallet = await this.walletRepository.findOne({
         where: { id },
       });
 
       if (!wallet)
         throw new HttpException("Wallet doesn't exists", HttpStatus.CONFLICT);
 
-      await this.cryptoRepository.softDelete(id);
+      await this.walletRepository.softDelete(id);
 
       return { id, deleted: true };
     } catch {

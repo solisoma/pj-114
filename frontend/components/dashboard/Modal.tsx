@@ -39,20 +39,18 @@ const Modal: React.FC<ModalType> = ({
 
   return (
     <div
-      className="fixed top-0 left-0 flex justify-center items-center w-full h-full bg-black bg-opacity-50 z-50"
+      className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50"
       onClick={closeModal} // Close modal on backdrop click
     >
       <div
-        className={`relative ${
-          classes || "bg-white w-full md:w-1/2 rounded-lg p-4 shadow-lg"
-        }`}
+        className={`relative ${classes || "bg-white rounded-lg p-4 shadow-lg"}`}
         onClick={(e) => e.stopPropagation()} // Prevent close when clicking inside modal
       >
         <button
           onClick={closeModal}
           className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
         >
-          <MdOutlineCancel size={24} color="white" />
+          <MdOutlineCancel size={24} />
         </button>
         {Children}
       </div>

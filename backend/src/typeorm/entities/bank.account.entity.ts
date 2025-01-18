@@ -5,6 +5,7 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   UpdateDateColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 import { User } from './user.entity';
 
@@ -19,7 +20,7 @@ export class CryptoWallet {
   @Column({ type: String })
   name: string;
 
-  @Column({ type: String })
+  @Column({ type: String, unique: true })
   address: string;
 
   @Column({ type: String })
@@ -34,4 +35,7 @@ export class CryptoWallet {
     onUpdate: 'CURRENT_TIMESTAMP',
   })
   updated_at: Date;
+
+  @DeleteDateColumn()
+  deleted_at?: Date;
 }

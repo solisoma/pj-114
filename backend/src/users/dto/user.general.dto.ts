@@ -83,8 +83,8 @@ export class KycDto {
 
 export class ProofDto {
   @IsNumber()
-  @IsNotEmpty()
-  id: number;
+  @IsOptional()
+  id?: number;
 
   @IsOptional()
   @IsString()

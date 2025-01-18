@@ -67,7 +67,7 @@ export class WalletController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Delete()
+  @Delete(':id')
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: 200,

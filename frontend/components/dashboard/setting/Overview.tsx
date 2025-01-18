@@ -3,8 +3,9 @@ import Profile from "./Profile";
 import { FaRegUserCircle } from "react-icons/fa";
 import { TbBuildingBank } from "react-icons/tb";
 import Account from "./Account";
+import { User } from "../type";
 
-export default function Overview() {
+export default function Overview({ userDetail }: { userDetail?: User }) {
   const [activeTab, setActiveTab] = useState("profile");
 
   const scrollToTop = () => {
@@ -48,7 +49,11 @@ export default function Overview() {
           <h2>Account</h2>
         </button>
       </div>
-      {activeTab === "profile" ? <Profile /> : <Account />}
+      {activeTab === "profile" ? (
+        <Profile />
+      ) : (
+        <Account isVerified={userDetail!.isVerified} />
+      )}
     </div>
   );
 }

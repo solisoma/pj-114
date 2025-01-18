@@ -3,16 +3,10 @@ import { Injectable } from '@nestjs/common';
 import multer from 'multer';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-import * as fs from 'fs';
 
 @Injectable()
 export class UploadService {
-  constructor() {
-    const baseUploadPath = './uploads';
-    if (!fs.existsSync(baseUploadPath)) {
-      fs.mkdirSync(baseUploadPath, { recursive: true });
-    }
-  }
+  constructor() {}
 
   getUploadMiddleware(
     multerFields: { name: string; maxCount: number }[],
@@ -21,7 +15,7 @@ export class UploadService {
     const multerInstance = multer({
       storage: diskStorage({
         destination: (_, __, cb) => {
-          cb(null, '../public');
+          cb(null, './src/public');
         },
         filename: (_, file, cb) => {
           const fileExtName = extname(file.originalname);

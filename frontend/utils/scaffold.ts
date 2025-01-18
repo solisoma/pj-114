@@ -66,10 +66,6 @@ export function sidenavs(notUser: boolean): NavType[] {
         { icon: FiShare2, text: "Referrals", route: "referral" },
       ],
     },
-    {
-      header: "EXTRAS",
-      content: [{ icon: ImSwitch, text: "Log Out", route: "#" }],
-    },
   ];
 
   if (notUser) {

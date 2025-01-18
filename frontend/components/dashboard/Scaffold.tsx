@@ -14,6 +14,7 @@ import { NavType } from "@/utils/type";
 import { GiHamburgerMenu } from "react-icons/gi";
 import PrettyMenu from "./PrettyMenu";
 import Link from "next/link";
+import { ImSwitch } from "react-icons/im";
 
 function Scaffold({ children, activeLink, route }: ScaffoldType) {
   const [loading, setLoading] = useState(false);
@@ -93,6 +94,15 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
                     )}
                   </div>
                 </div>
+                <div
+                  onClick={() => {
+                    setShowLogoOut(true);
+                  }}
+                  className={`flex items-center cursor-pointer gap-2 py-1 md:gap-[1.2vw] md:py-[.7vw]`}
+                >
+                  <ImSwitch size={24} />
+                  <p className="md:text-[.9vw]">Log Out</p>
+                </div>
               </div>
             </div>
           </div>
@@ -130,7 +140,7 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
               <Modal
                 show={showLogOut}
                 setShow={setShowLogoOut}
-                classes="bg-background2 w-[80%] h-[40%] shadow-2xl md:p-[.1vw] rounded-lg md:w-[30%]"
+                classes="bg-[#1E222D] w-[80%] h-[40%] shadow-2xl md:p-[.1vw] rounded-lg md:w-[30%]"
               >
                 <LogOutAction onLogOut={LogOut} />
               </Modal>

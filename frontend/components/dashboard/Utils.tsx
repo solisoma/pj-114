@@ -1,5 +1,5 @@
 import Button from "@/components/Button";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { toast } from "react-toastify";
 import { LogOutActionType } from "./type";
 import { ErrorMessage, Field, Form, Formik, FormikValues } from "formik";

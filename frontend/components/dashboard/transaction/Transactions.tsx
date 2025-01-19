@@ -61,7 +61,7 @@ export default function Transactions({ userDetail }: { userDetail?: User }) {
         classes="bg-[#1E222D] w-[90%] h-auto shadow-2xl md:p-[.1vw] rounded-lg md:w-[35%]"
       >
         {action === "deposit" ? (
-          <Deposit onPurchase={getTrxs} />
+          <Deposit />
         ) : (
           <Withdraw onAction={getTrxs} balance={userDetail!.balance} />
         )}

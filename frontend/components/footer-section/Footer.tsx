@@ -23,7 +23,7 @@ export default function Footer() {
 
       <div className="relative flex flex-col w-[90%] gap-4 md:flex-row md:gap-10 md:w-[95%] lg:w-[70%]">
         <div className="flex flex-col gap-4">
-          <img src="/clans-logo.png" className="w-[6rem]" />
+          <img src="/full-icon.png" className="w-[15rem]" />
           <div className="flex flex-col gap-2">
             <InfoFooter info="Mail support@Noble.com" desc="Phone" />
             <InfoFooter info="Mail support@Noble.com" desc="Phone" />

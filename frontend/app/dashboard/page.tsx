@@ -1,7 +1,5 @@
 "use client";
-// import { get_announcement } from "@/api/announcement";
-// import { hash_notis, is_same } from "@/api/auth";
-// import { get_user_status } from "@/api/default";
+import { get_user_status } from "@/api/default";
 import Scaffold from "@/components/dashboard/Scaffold";
 import { User } from "@/components/dashboard/type";
 import { RouteHash } from "@/utils/scaffold";
@@ -21,8 +19,8 @@ function Page() {
   }
 
   async function setUser() {
-    // const get_user = await get_user_status();
-    // setUserDetail(get_user);
+    const get_user = await get_user_status();
+    setUserDetail(get_user);
   }
 
   function child(page: string) {
@@ -31,7 +29,7 @@ function Page() {
   }
 
   useEffect(() => {
-    document.title = "thesmsplug | dashboard";
+    document.title = "Nobleassetsmarket | dashboard";
     const metaDescription = document.querySelector(
       "meta[name='description']"
     ) as HTMLMetaElement;

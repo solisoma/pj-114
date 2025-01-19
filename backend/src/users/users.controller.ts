@@ -218,6 +218,7 @@ export class UsersController {
     @Res() res: any,
   ): Promise<void> {
     await this.uploadService.getUploadMiddleware(
+      './src/public/kyc',
       [
         { name: 'front', maxCount: 1 }, // Handle 'front'
         { name: 'back', maxCount: 1 }, // Handle 'back'
@@ -246,6 +247,7 @@ export class UsersController {
     @Res() res: any,
   ): Promise<void> {
     await this.uploadService.getUploadMiddleware(
+      './src/public',
       [
         { name: 'file', maxCount: 1 }, // Handle 'front'
       ],

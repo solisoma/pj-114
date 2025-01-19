@@ -259,7 +259,7 @@ export const investmentPlans = [
 
 export const traders = [
   {
-    TraderDetails: "4356712 | Alex Summers",
+    TraderDetails: "4356712 | Young bull investor",
     ROI: "10%",
     Accuracy: "97%",
     TotalProfit: "108,900",
@@ -269,7 +269,7 @@ export const traders = [
     StandaloneNumber: "4356712",
   },
   {
-    TraderDetails: "9694814 | Samuel Rios",
+    TraderDetails: "9694814 | Sean Trades",
     ROI: "11%",
     Accuracy: "98%",
     TotalProfit: "10,895,785",
@@ -279,7 +279,7 @@ export const traders = [
     StandaloneNumber: "9694814",
   },
   {
-    TraderDetails: "3182915 | Jordan Investments",
+    TraderDetails: "3182915 | Sniper Trades",
     ROI: "8%",
     Accuracy: "95%",
     TotalProfit: "458,608",
@@ -289,7 +289,7 @@ export const traders = [
     StandaloneNumber: "3182915",
   },
   {
-    TraderDetails: "4447716 | Elite Traders Hub",
+    TraderDetails: "4447716 | Mamba FX",
     ROI: "10%",
     Accuracy: "97%",
     TotalProfit: "506,078",
@@ -299,7 +299,7 @@ export const traders = [
     StandaloneNumber: "4447716",
   },
   {
-    TraderDetails: "7491017 | Crypto Savvy",
+    TraderDetails: "7491017 | Panda Options",
     ROI: "9%",
     Accuracy: "99%",
     TotalProfit: "458,769",
@@ -467,5 +467,32 @@ export const traders = [
     MinFee: 5000,
     Days: 60,
     StandaloneNumber: "7503735",
+  },
+];
+
+export const wallets = [
+  {
+    name: "Bitcoin",
+    value: "Bitcoin",
+  },
+  {
+    name: "Ethereum",
+    value: "Ethereum",
+  },
+  {
+    name: "USDT(ERC20)",
+    value: "USDT(ERC20)",
+  },
+  {
+    name: "USDT(TRC20)",
+    value: "USDT(TRC20)",
+  },
+  {
+    name: "SOL",
+    value: "SOL",
+  },
+  {
+    name: "XRP",
+    value: "XRP",
   },
 ];

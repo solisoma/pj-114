@@ -190,11 +190,11 @@ export default function SignIn() {
                   </div>
                   <Button
                     submit
-                    disabled={!dirty || !isValid || isSubmitting}
+                    disabled={!isValid || isSubmitting}
                     type="background"
                     text="Sign in"
                     style={`${
-                      !dirty || !isValid || isSubmitting
+                      !isValid || isSubmitting
                         ? "from-gray-300 to-gray-300"
                         : "from-[#00CCFF] to-[#034AA6]"
                     }  py-3 px-4 text-center rounded-2xl md:px-[.7vw] md:py-[.7vw] md:text-[1vw]`}

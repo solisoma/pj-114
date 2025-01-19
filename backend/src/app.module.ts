@@ -20,6 +20,7 @@ import { PlanModule } from './plan/plan.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { UploadModule } from './upload/upload.module';
 import { WalletModule } from './wallet/wallet.module';
+import { MyWalletModule } from './my-wallet/myWallet.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -42,6 +43,7 @@ import { WalletModule } from './wallet/wallet.module';
     TransactionModule,
     UploadModule,
     WalletModule,
+    MyWalletModule,
   ],
   controllers: [AppController, AuthController, UsersController],
   providers: [DatabaseInitializerService, AppService],

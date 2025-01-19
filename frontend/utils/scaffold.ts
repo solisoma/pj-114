@@ -19,6 +19,8 @@ import Deposits from "@/components/dashboard/transaction/Deposits";
 import Referral from "@/components/dashboard/transaction/Referral";
 import React from "react";
 import Admin from "@/components/dashboard/admin/Admin";
+import Kyc from "@/components/dashboard/kyc/Kyc";
+import ConfirmDeposit from "@/components/dashboard/deposit/ConfirmDeposit";
 
 interface IRoute {
   [key: string]: React.FC<any>;
@@ -83,4 +85,6 @@ export const RouteHash: IRoute = {
   deposit: Deposits,
   referral: Referral,
   admin: Admin,
+  kyc: Kyc,
+  fundwallet: ConfirmDeposit,
 };

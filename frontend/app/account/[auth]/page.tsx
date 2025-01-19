@@ -1,5 +1,5 @@
 import SignIn from "@/components/sign-in/SignIn";
-import SignUp from "@/components/sign-out/SignUp";
+import SignUp from "@/components/sign-up/SignUp";
 import { redirect } from "next/navigation";
 import React from "react";
 

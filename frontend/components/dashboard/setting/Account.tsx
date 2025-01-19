@@ -12,7 +12,6 @@ import {
 import { MultiType } from "@/api/type";
 import { toast } from "react-toastify";
 import { DeleteWallet } from "../Utils";
-import Kyc from "../Kyc";
 import { User } from "../type";
 
 export default function Account({
@@ -92,15 +91,12 @@ export default function Account({
                 </p>
               </div>
               <div className="flex items-center">
-                <button
-                  onClick={() => {
-                    setAction("kyc");
-                    setShowLogoOut(true);
-                  }}
+                <a
+                  href="/dashboard?page=kyc"
                   className="px-6 py-2 rounded-lg bg-background2"
                 >
-                  {userDetail!.front_image ? "Verifying..." : "Verify"}
-                </button>
+                  {userDetail!.front_image ? "Pending" : "Verify"}
+                </a>
               </div>
             </div>
           )}
@@ -147,7 +143,7 @@ export default function Account({
                     }}
                     className="cursor-pointer"
                   >
-                    <h2 className="font-bold">USDT(TRC20)</h2>
+                    <h2 className="font-bold">{itm.name}</h2>
                     <p className="text-sm">{itm.address}</p>
                   </div>
                 </div>
@@ -195,8 +191,6 @@ export default function Account({
       >
         {action === "delete" ? (
           <DeleteWallet onDelete={handleDelete} />
-        ) : action === "kyc" ? (
-          <Kyc setUser={setUser!} />
         ) : (
           <AddWallet
             initialValue={initialValue || {}}

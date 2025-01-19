@@ -7,6 +7,7 @@ export enum Routes {
   CopyTrade = 'copytrade',
   Plan = 'plan',
   Wallet = 'wallet',
+  MyWallet = 'my-wallet',
 }
 
 export enum Services {

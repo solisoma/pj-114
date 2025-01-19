@@ -24,7 +24,7 @@ export default function Nav({
   const [sid, setSid] = useState<number | null>(null);
 
   async function checkUser() {
-    const user = (await getSecureStorage("token")) || true;
+    const user = await getSecureStorage("token");
     setUserExist(user);
     setShow(true);
   }
@@ -40,9 +40,9 @@ export default function Nav({
             <div className="flex items-center justify-between">
               <Link href="/">
                 <img
-                  src="/clans-logo.png"
+                  src="/full-icon.png"
                   className={`${
-                    auth ? "md:w-[2vw] w-[3rem]" : "md:w-[4vw] w-[3rem]"
+                    auth ? "md:w-[2vw] w-[3rem]" : "md:w-[10vw] w-[10rem]"
                   }`}
                 />
               </Link>

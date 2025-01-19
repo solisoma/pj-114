@@ -3,6 +3,7 @@ import { LogOutActionType } from "./type";
 import Button from "../Button";
 import { toast } from "react-toastify";
 import { MultiType } from "@/api/type";
+import { wallets } from "@/utils/info";
 
 export function AddWallet({
   closeModal,
@@ -15,6 +16,7 @@ export function AddWallet({
 }): React.JSX.Element {
   const [address, setAddress] = useState<string>(initialValue.address);
   const [label, setLabel] = useState<string>(initialValue.label);
+  const [name, setName] = useState<string>(initialValue.name);
 
   async function handleSubmit() {
     if (!address) {
@@ -30,7 +32,7 @@ export function AddWallet({
 
     try {
       // Handle the submission logic here (save data, etc.)
-      await onAction!({ ...initialValue, name: "USDT(TRC20)", address, label });
+      await onAction!({ ...initialValue, name, address, label });
       closeModal!(); // Close the modal after successful submission
     } catch (error) {
       toast.error("An error occurred. Please try again.");
@@ -43,18 +45,25 @@ export function AddWallet({
         <h2 className="text-xl font-bold text-[#FFFFFF] mb-4">Add Wallet</h2>
         <div className="mb-6">
           <label className="block text-[#A0AEC0] mb-2">Name</label>
-          <input
-            type="text"
-            value="USDT(TRC20)"
-            readOnly
-            className="w-full px-4 py-2 border rounded-md text-gray-800"
-          />
+          <select
+            className="w-full border rounded-md px-4 py-2 text-gray-800"
+            onChange={({ target }) => setName(target.value)}
+          >
+            <option disabled selected value="">
+              Wallet Name
+            </option>
+            {wallets.map((wallet, i) => (
+              <option key={i} value={wallet.value}>
+                {wallet.name}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="mb-6">
           <label className="block text-[#A0AEC0] mb-2">Wallet Address</label>
           <input
             type="text"
-            placeholder="Enter TRC20 wallet address"
+            placeholder="Enter wallet address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             className="w-full px-4 py-2 border rounded-md text-gray-800"

@@ -101,7 +101,7 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
                   className={`flex items-center cursor-pointer gap-2 py-1 md:gap-[1.2vw] md:py-[.7vw]`}
                 >
                   <ImSwitch size={24} />
-                  <p className="md:text-[.9vw]">Log Out</p>
+                  <p className="md:text-[1rem]">Log Out</p>
                 </div>
               </div>
             </div>
@@ -140,7 +140,7 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
               <Modal
                 show={showLogOut}
                 setShow={setShowLogoOut}
-                classes="bg-[#1E222D] w-[60%] h-[35%] shadow-2xl md:p-[.1vw] rounded-lg md:w-[20%]"
+                classes="bg-[#1E222D] w-[80%] h-[35%] shadow-2xl md:p-[.1vw] rounded-lg md:w-[20%]"
               >
                 <LogOutAction onLogOut={LogOut} />
               </Modal>

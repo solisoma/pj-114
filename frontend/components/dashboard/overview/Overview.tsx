@@ -18,7 +18,29 @@ import Modal from "../Modal";
 import { Deposit } from "../Deposit";
 import { Withdraw } from "../Withdraw";
 
-export default function Overview({ userDetail }: { userDetail?: User }) {
+export function setScript(ref: any, src: string, innerHTML: any) {
+  // Clear the container before appending
+  if (ref.current) {
+    (ref.current as any).innerHTML = "";
+  }
+
+  const script = document.createElement("script");
+  script.src = src;
+  script.async = true;
+  script.innerHTML = JSON.stringify(innerHTML);
+  // Append the script to the container
+  if (ref.current) {
+    (ref.current as any).appendChild(script);
+  }
+}
+
+export default function Overview({
+  userDetail,
+  setUser,
+}: {
+  userDetail?: User;
+  setUser?: () => void;
+}) {
   const [dotIndex, setDotIndex] = useState<number>(0);
   const [transactions, setTransactions] = useState<MultiType[] | null>();
   const [showLogOut, setShowLogoOut] = useState(false);
@@ -57,22 +79,6 @@ export default function Overview({ userDetail }: { userDetail?: User }) {
   };
 
   // Call scrollToTop() wherever needed, such as on a button click or route change.
-
-  function setScript(ref: any, src: string, innerHTML: any) {
-    // Clear the container before appending
-    if (ref.current) {
-      (ref.current as any).innerHTML = "";
-    }
-
-    const script = document.createElement("script");
-    script.src = src;
-    script.async = true;
-    script.innerHTML = JSON.stringify(innerHTML);
-    // Append the script to the container
-    if (ref.current) {
-      (ref.current as any).appendChild(script);
-    }
-  }
 
   useEffect(() => {
     // scrollToTop();
@@ -198,9 +204,14 @@ export default function Overview({ userDetail }: { userDetail?: User }) {
                 </p>
               </div>
               <div>
-                <button className="flex gap-2 rounded-lg items-center bg-white px-4 py-2">
-                  <p className="text-[#FA896B]">Verify KYC</p>
-                </button>
+                <a
+                  href="/dashboard?page=kyc"
+                  className="flex gap-2 rounded-lg items-center bg-white px-4 py-2"
+                >
+                  <p className="text-[#FA896B]">
+                    {userDetail!.front_image ? "Pending" : "Verify KYC"}
+                  </p>
+                </a>
               </div>
             </div>
           )}
@@ -295,7 +306,7 @@ export default function Overview({ userDetail }: { userDetail?: User }) {
         classes="bg-[#1E222D] w-[90%] h-auto shadow-2xl md:p-[.1vw] rounded-lg md:w-[35%]"
       >
         {action === "deposit" ? (
-          <Deposit onPurchase={getTrxs} />
+          <Deposit />
         ) : (
           <Withdraw onAction={getTrxs} balance={userDetail!.balance} />
         )}

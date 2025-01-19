@@ -23,11 +23,11 @@ export function LogOutAction({
   return (
     <div className="flex items-center justify-center h-[95%]">
       <div className="flex flex-col justify-between w-[80%] h-[60%] md:h-[70%]">
-        <div className="flex flex-col gap-2 md:gap-[.8vw]">
+        <div className="flex flex-col gap-2 md:gap-[1vw]">
           <h2 className="font-bold text-xl md:text-[1.4vw] text-white">
             Log out
           </h2>
-          <p className="text-[#969696] font-bold md:text-[1.4vw]">
+          <p className="text-[#969696] font-bold md:text-[.9vw]">
             Are you sure you want to log out?
           </p>
         </div>
@@ -37,14 +37,14 @@ export function LogOutAction({
             text="Log out"
             type="background"
             url="#"
-            style="from-tex to-tex py-3 px-6 transform md:py-[.7vw] md:px-[1.5vw] md:text-[1.2vw]"
+            style="from-tex to-tex py-3 px-6 transform md:py-[.7vw] md:px-[1.5vw] md:text-[.9vw]"
           />
           <Button
             onClick={() => closeModal!()}
             text="Cancel"
             type="background"
             url="#"
-            style="from-btn to-btn py-3 px-6 transform md:py-[.7vw] md:px-[1.5vw] md:text-[1.2vw]"
+            style="from-btn to-btn py-3 px-6 transform md:py-[.7vw] md:px-[1.5vw] md:text-[.9vw]"
           />
         </div>
       </div>
@@ -158,12 +158,12 @@ export function AdminActions({
     <div className="flex items-center justify-center h-[95%]">
       <div className="flex flex-col justify-between w-[80%] h-[60%] md:h-[70%]">
         <div className="flex flex-col gap-2 md:gap-[.8vw]">
-          <h2 className="font-bold text-xl md:text-[1.4vw] text-white">
+          <h2 className="font-bold text-xl md:text-[1vw] text-white">
             {command === "permission"
               ? "Change user permission"
-              : "Change user status"}
+              : "Change user kyc status"}
           </h2>
-          <p className="text-[#969696] font-bold md:text-[1.4vw]">
+          <p className="text-[#969696] font-bold md:text-[1vw]">
             Are you sure you want to execute this command?
           </p>
         </div>
@@ -173,14 +173,14 @@ export function AdminActions({
             text="Execute"
             type="background"
             url="#"
-            style="from-tex to-tex py-3 px-6 transform md:py-[.7vw] md:px-[1.5vw] md:text-[1.2vw]"
+            style="from-tex to-tex py-3 px-6 transform md:py-[.7vw] md:px-[1.5vw] md:text-[.9vw]"
           />
           <Button
             onClick={() => closeModal!()}
             text="Cancel"
             type="background"
             url="#"
-            style="from-btn to-btn py-3 px-6 transform md:py-[.7vw] md:px-[1.5vw] md:text-[1.2vw]"
+            style="from-btn to-btn py-3 px-6 transform md:py-[.7vw] md:px-[1.5vw] md:text-[.9vw]"
           />
         </div>
       </div>
@@ -262,13 +262,15 @@ export default function UpdateBalance({
               text="Cancel"
               type="background"
               url="#"
-              style="from-tex to-tex py-3 px-6 transform md:py-[.7vw] md:px-[1.5vw] md:text-[1.2vw]"
+              style="from-tex to-tex py-3 px-6 transform md:py-[.7vw] md:px-[1.5vw] md:text-[.9vw]"
             />
             <button
               type="submit"
               disabled={isSubmitting || !dirty}
               className={`${
-                isSubmitting || !dirty ? "bg-tex cursor-not-allowed" : "bg-btn"
+                isSubmitting || !dirty
+                  ? "bg-tex cursor-not-allowed"
+                  : "bg-background2"
               } w-full text-white py-2 rounded-md transition duration-200`}
             >
               Submit

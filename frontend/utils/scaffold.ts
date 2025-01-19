@@ -1,14 +1,5 @@
 import { NavType } from "./type";
-// import Product from "@/components/dashboard/number/Number";
-// import Details from "@/components/dashboard/productDetails/ProductDetails";
-// import Admin from "@/components/dashboard/admin/Admin";
-// import Deposit from "@/components/dashboard/deposit/Deposit";
-// import Profile from "@/components/dashboard/setting/Profile";
-// import PurchasedProduct from "@/components/dashboard/purchased-product/PurchasedProduct";
-// import VIPNumbers from "@/components/dashboard/vip-numbers/VIPNumbers";
-// import Suspended from "@/components/dashboard/Suspended";
 import { MdAdminPanelSettings } from "react-icons/md";
-// import Announcement from "@/components/dashboard/announcement/Announcement";
 import { GrAppsRounded } from "react-icons/gr";
 import { RiUserSettingsLine } from "react-icons/ri";
 import { FiShare2 } from "react-icons/fi";
@@ -16,7 +7,6 @@ import { TbReportMoney } from "react-icons/tb";
 import { TbBuildingBank } from "react-icons/tb";
 import { GrDocumentUpload } from "react-icons/gr";
 import { GrDocumentDownload } from "react-icons/gr";
-import { ImSwitch } from "react-icons/im";
 import Overview from "@/components/dashboard/overview/Overview";
 import POverview from "@/components/dashboard/setting/Overview";
 import Investment from "@/components/dashboard/app/Investment";
@@ -28,6 +18,7 @@ import Withdrawals from "@/components/dashboard/transaction/Withdrawals";
 import Deposits from "@/components/dashboard/transaction/Deposits";
 import Referral from "@/components/dashboard/transaction/Referral";
 import React from "react";
+import Admin from "@/components/dashboard/admin/Admin";
 
 interface IRoute {
   [key: string]: React.FC<any>;
@@ -91,12 +82,5 @@ export const RouteHash: IRoute = {
   withdrawal: Withdrawals,
   deposit: Deposits,
   referral: Referral,
-  //   product: Details,
-  //   admin: Admin,
-  //   deposit: Deposit,
-  //   notification: Announcement,
-  //   setting: Profile,
-  //   purchased: PurchasedProduct,
-  //   vip: VIPNumbers,
-  //   suspended: Suspended,
+  admin: Admin,
 };

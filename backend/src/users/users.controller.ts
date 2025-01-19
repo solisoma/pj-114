@@ -26,6 +26,7 @@ import {
   ProofDto,
   transcDetailsDto,
   TransferDto,
+  UserDto,
 } from './dto/user.general.dto';
 import { NullableType } from '@app/utils/types/nullable.type';
 import { User } from '@app/typeorm/entities/user.entity';
@@ -84,7 +85,7 @@ export class UsersController {
     description: 'User fetched successfully',
   })
   async getUser(
-    @Query(new ValidationPipe()) param: IdDto,
+    @Query(new ValidationPipe()) param: UserDto,
   ): Promise<NullableType<User>> {
     return this.userService.findOneUser({ id: Number(param.userId) });
   }

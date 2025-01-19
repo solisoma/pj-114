@@ -14,6 +14,7 @@ export enum Actions {
   ToAdmin = 'to-admin',
   ToUser = 'to-user',
   Verify = 'verify',
+  NotVerify = 'not-verify',
 }
 
 export enum TrxCategory {
@@ -59,6 +60,12 @@ export class IdDto {
   @IsNotEmpty()
   @IsEnum(TrxCategory)
   category: TrxCategory;
+}
+
+export class UserDto {
+  @IsString()
+  @IsOptional()
+  userId: string;
 }
 
 export class TransferDto {

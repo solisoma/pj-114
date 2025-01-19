@@ -157,6 +157,16 @@ export class UsersService implements IUsersService {
           );
         }
         break;
+      case Actions.NotVerify:
+        if (isUser.permission === UserPermission.Admin) {
+          await this.usersRepository.update(userId, { isVerified: false });
+        } else {
+          throw new HttpException(
+            "User doesn't have the permission",
+            HttpStatus.UNAUTHORIZED,
+          );
+        }
+        break;
       case Actions.ToAdmin:
         if (isUser.permission === UserPermission.Admin) {
           await this.usersRepository.update(userId, {

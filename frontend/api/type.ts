@@ -8,6 +8,8 @@ export enum Actions {
   Delete = "delete",
   ToAdmin = "to-admin",
   ToUser = "to-user",
+  Verify = "verify",
+  NotVerify = "not-verify",
 }
 
 export interface SignUpMessageType {

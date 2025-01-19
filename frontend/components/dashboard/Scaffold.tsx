@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { sidenavs } from "@/utils/scaffold";
 import AuthGuard from "../auth/AuthGuard";
 import { clearSecureStorage } from "@/api/auth";
@@ -140,7 +140,7 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
               <Modal
                 show={showLogOut}
                 setShow={setShowLogoOut}
-                classes="bg-[#1E222D] w-[80%] h-[40%] shadow-2xl md:p-[.1vw] rounded-lg md:w-[30%]"
+                classes="bg-[#1E222D] w-[60%] h-[35%] shadow-2xl md:p-[.1vw] rounded-lg md:w-[20%]"
               >
                 <LogOutAction onLogOut={LogOut} />
               </Modal>

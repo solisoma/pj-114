@@ -39,7 +39,9 @@ export default function Deposits({ userDetail }: { userDetail: User }) {
             <h2 className="relative font-base text-xl">Available Balance</h2>
             <div>
               <div className="flex gap-2 justify-between">
-                <h2 className="font-bold text-3xl">${userDetail.balance}</h2>
+                <h2 className="font-bold text-3xl">
+                  ${Number(userDetail.balance)}
+                </h2>
                 <div>
                   <div className="rounded-full p-2 bg-[#10BD9D]">
                     <FaCreditCard size={24} className="w-full h-full" />

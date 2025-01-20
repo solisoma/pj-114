@@ -22,8 +22,8 @@ export class CreateWalletDto {
 export class UpdateWalletDto {
   @ApiProperty({ example: '12' })
   @IsNumber()
-  @IsNotEmpty()
-  id: number;
+  @IsOptional()
+  id?: number;
 
   @ApiProperty({ example: 'USDT(TRC20)' })
   @IsString()

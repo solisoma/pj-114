@@ -41,7 +41,7 @@ export default function Referral({ userDetail }: { userDetail: User }) {
             <div>
               <div className="flex gap-2 justify-between">
                 <h2 className="font-bold text-3xl">
-                  ${userDetail.referralBonus}
+                  ${Number(userDetail.referralBonus)}
                 </h2>
                 <div>
                   <div className="rounded-full p-2 bg-[#D5745B]">

@@ -75,3 +75,53 @@ export async function change_user_status(
 
   return false;
 }
+
+export async function update_wallet(
+  details: MultiType
+): Promise<MultiType | boolean> {
+  const token = await getSecureStorageClient("token");
+  const formData = new FormData();
+  formData.append("qrcode", details.qrcode);
+  formData.append("id", String(details.id));
+  formData.append("name", String(details.name));
+  formData.append("address", String(details.address));
+
+  if (token) {
+    const SAPI = process.env.NEXT_PUBLIC_SAPI_URL;
+    const route = `${SAPI}/my-wallet`;
+    const res = await fetch(route, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token.token}`,
+      },
+      body: formData,
+    });
+    if (res.ok) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+export async function get_all_wallet() {
+  const token = await getSecureStorageClient("token");
+
+  if (token) {
+    const SAPI = process.env.NEXT_PUBLIC_SAPI_URL;
+    const route = `${SAPI}/my-wallet/all`;
+    const res = await fetch(route, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token.token}`,
+      },
+    });
+
+    if (res.ok) {
+      return await res.json();
+    }
+  }
+
+  return false;
+}

@@ -10,29 +10,40 @@ export function AddWallet({
   onAction,
   initialValue,
   action,
+  isWallet,
 }: LogOutActionType & {
   initialValue: MultiType;
   action: string;
+  isWallet?: boolean;
 }): React.JSX.Element {
   const [address, setAddress] = useState<string>(initialValue.address);
   const [label, setLabel] = useState<string>(initialValue.label);
   const [name, setName] = useState<string>(initialValue.name);
+  const [qrcode, setQrcode] = useState<File | null>(null);
+
+  const handleFileChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setFile: React.Dispatch<React.SetStateAction<File | null>>
+  ) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
+  };
 
   async function handleSubmit() {
     if (!address) {
       toast.error("Wallet address is required.");
       return;
     }
-    // Validate the wallet address for TRC20 format
-    const isValidTrc20 = address.startsWith("T"); // Simple check for TRC20 addresses
-    if (!isValidTrc20) {
-      toast.error("Please enter a valid TRC20 wallet address.");
+
+    if (!name) {
+      toast.error("Name is required.");
       return;
     }
 
     try {
       // Handle the submission logic here (save data, etc.)
-      await onAction!({ ...initialValue, name, address, label });
+      await onAction!({ ...initialValue, name, address, label, qrcode });
       closeModal!(); // Close the modal after successful submission
     } catch (error) {
       toast.error("An error occurred. Please try again.");
@@ -47,9 +58,10 @@ export function AddWallet({
           <label className="block text-[#A0AEC0] mb-2">Name</label>
           <select
             className="w-full border rounded-md px-4 py-2 text-gray-800"
+            value={name}
             onChange={({ target }) => setName(target.value)}
           >
-            <option disabled selected value="">
+            <option disabled value="">
               Wallet Name
             </option>
             {wallets.map((wallet, i) => (
@@ -72,16 +84,35 @@ export function AddWallet({
             * Please ensure the wallet address is for USDT (TRC20).
           </p>
         </div>
-        <div className="mb-6">
-          <label className="block text-[#A0AEC0] mb-2">Label (Optional)</label>
-          <input
-            type="text"
-            placeholder="Optional label for the wallet"
-            value={label}
-            onChange={(e) => setLabel(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md text-gray-800"
-          />
-        </div>
+        {isWallet ? (
+          <div className="mb-4">
+            <label
+              htmlFor="addressProof"
+              className="block text-text-[#A0AEC0] font-medium mb-2"
+            >
+              QR Code
+            </label>
+            <input
+              type="file"
+              id="addressProof"
+              onChange={(e) => handleFileChange(e, setQrcode)}
+              className="w-full border rounded-md px-3 py-2 text-gray-700 focus:outline-none focus:ring focus:ring-blue-500"
+            />
+          </div>
+        ) : (
+          <div className="mb-6">
+            <label className="block text-[#A0AEC0] mb-2">
+              Label (Optional)
+            </label>
+            <input
+              type="text"
+              placeholder="Optional label for the wallet"
+              value={label}
+              onChange={(e) => setLabel(e.target.value)}
+              className="w-full px-4 py-2 border rounded-md text-gray-800"
+            />
+          </div>
+        )}
         <div className="flex justify-end gap-3">
           <Button
             onClick={() => closeModal!()}

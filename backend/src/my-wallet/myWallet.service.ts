@@ -34,20 +34,24 @@ export class WalletService implements IWalletService {
       );
 
     const wallet = this.walletRepository.create({
-      ...createWalletDto,
-      user: { id },
+      ...createWalletDto
     });
 
     return await this.walletRepository.save(wallet);
   }
 
-  async getWallet(id: number, name: string): Promise<MyWallet> {
+  async getWallet(name: string): Promise<MyWallet> {
     return await this.walletRepository.findOne({
-      where: { user: { id }, name },
+      where: { name },
     });
   }
 
+  async getAllWallet(): Promise<MyWallet[]> {
+    return await this.walletRepository.find();
+  }
+
   async updateWallet(id: number, details: UpdateWalletDto): Promise<MyWallet> {
+    const { id: userId, ...values } = details;
     const user = await this.usersRepository.findOne({
       where: { id },
     });
@@ -59,13 +63,13 @@ export class WalletService implements IWalletService {
       );
 
     const wallet = await this.walletRepository.findOne({
-      where: { id: details.id },
+      where: { id: userId },
     });
 
     if (!wallet)
       throw new HttpException("Wallet doesn't exists", HttpStatus.CONFLICT);
 
-    const updateWallet = { ...wallet, ...details };
+    const updateWallet = { ...wallet, ...values };
 
     return await this.walletRepository.save(updateWallet);
   }

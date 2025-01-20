@@ -252,9 +252,18 @@ export default function Overview({
           </div>
         </div>
         <div className="flex flex-col gap-4 md:flex-row">
-          <Box heading="Available Balance" desc={userDetail!.balance} />
-          <Box heading="Total Deposit" desc={userDetail!.totalDeposits} />
-          <Box heading="Total Withdraw" desc={userDetail!.totalWithdrawals} />
+          <Box
+            heading="Available Balance"
+            desc={String(Number(userDetail!.balance))}
+          />
+          <Box
+            heading="Total Deposit"
+            desc={String(Number(userDetail!.totalDeposits))}
+          />
+          <Box
+            heading="Total Withdraw"
+            desc={String(Number(userDetail!.totalWithdrawals))}
+          />
         </div>
         <div className="flex items-center justify-between bg-[#E6FFFA] px-4 py-6 rounded-lg">
           <div className="flex gap-2 items-center">
@@ -264,8 +273,10 @@ export default function Overview({
           <div className="flex gap-2">
             <p className="font-bold text-xl text-[#FA896B]">
               $
-              {userDetail!.balance -
-                (userDetail!.totalDeposits - userDetail!.totalWithdrawals)}
+              {Number(
+                userDetail!.balance -
+                  (userDetail!.totalDeposits - userDetail!.totalWithdrawals)
+              )}
             </p>
             <div className="flex gap-1">
               <IoMdTrendingDown size={24} color="red" />

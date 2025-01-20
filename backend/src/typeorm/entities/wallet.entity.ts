@@ -3,19 +3,14 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  ManyToOne,
   UpdateDateColumn,
   DeleteDateColumn,
 } from 'typeorm';
-import { User } from './user.entity';
 
 @Entity()
 export class MyWallet {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @ManyToOne(() => User, (user) => user.transactions, { onDelete: 'CASCADE' })
-  user: User;
 
   @Column({ type: String })
   name: string;

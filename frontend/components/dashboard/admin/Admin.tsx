@@ -39,13 +39,25 @@ function Admin() {
     return (
       <PageWrapper>
         <div className="h-full pt-8">
-          <div className="flex flex-col items-start md:items-center md:justify-between px-4 w-full md:flex-row mb-4">
+          <div className="flex flex-col items-start gap-4 md:items-center md:justify-between px-4 w-full md:flex-row mb-4">
+            <a
+              className="p-2 bg-background2 w-full font-bold rounded-lg md:w-auto text-center md:hidden"
+              href="/dashboard?page=wallets"
+            >
+              My wallets
+            </a>
             <input
               type="text"
               onChange={(e) => filterUser(e.target.value)}
               placeholder="search"
               className="outline-none w-full text-white p-2 border border-gray-400 rounded-lg bg-black  md:w-[50%]"
             />
+            <a
+              className="p-2 hidden bg-background2 w-full font-bold rounded-lg md:w-auto text-center md:block"
+              href="/dashboard?page=wallets"
+            >
+              My wallets
+            </a>
           </div>
           <ContentPage
             flexType="flex-col gap-4"

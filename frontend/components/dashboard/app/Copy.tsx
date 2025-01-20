@@ -99,7 +99,7 @@ export default function Plan({
           <div className="flex flex-col gap-4 rounded-lg p-8 w-full bg-[#1E222D] md:w-[30%]">
             <h2 className="relative font-base text-xl">CopyTrade Account</h2>
             <div>
-              <h2>{userDetail!.copytrade_balance} USD</h2>
+              <h2>{Number(userDetail!.copytrade_balance)} USD</h2>
               <p>Balance</p>
             </div>
             <div>
@@ -119,7 +119,7 @@ export default function Plan({
             <div className="flex flex-col gap-4 ">
               <h2 className="relative font-base text-xl">Investment Account</h2>
               <div>
-                <h2>{gained} USD</h2>
+                <h2>{Number(gained)} USD</h2>
                 <p>Unrealized PnL</p>
               </div>
             </div>

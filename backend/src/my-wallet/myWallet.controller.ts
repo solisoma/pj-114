@@ -75,10 +75,19 @@ export class WalletController {
   })
   async getWallet(
     @Query(new ValidationPipe()) param: GetWalletDto,
-    @Req() req: any,
   ): Promise<MyWallet> {
-    const userId = req.user.id;
-    return this.walletService.getWallet(userId, param.name);
+    return this.walletService.getWallet(param.name);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('all')
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: 200,
+    description: 'wallets fetched successfully',
+  })
+  async getAllWallet(): Promise<MyWallet[]> {
+    return this.walletService.getAllWallet();
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -107,7 +116,9 @@ export class WalletController {
       ...req.body,
       qrcode: req.files?.qrcode ? req.files.qrcode[0].path : '', // Handle 'front'
     };
-    return this.walletService.updateWallet(id, updateWallet);
+    return res
+      .status(200)
+      .json(await this.walletService.updateWallet(id, updateWallet));
   }
 
   @UseGuards(AuthGuard('jwt'))

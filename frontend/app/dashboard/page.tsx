@@ -44,7 +44,11 @@ function Page() {
     if (newPage) setPage(newPage);
   }, []);
 
-  if (page && page === "admin" && userDetail.permission === "user") {
+  if (
+    page &&
+    ["admin", "wallets"].includes(page) &&
+    userDetail.permission === "user"
+  ) {
     router.replace("/404");
   } else if (page && Object.keys(RouteHash).includes(page)) {
     return (

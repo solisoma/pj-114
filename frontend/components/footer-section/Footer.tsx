@@ -27,7 +27,7 @@ export default function Footer() {
           <div className="flex flex-col gap-2">
             <InfoFooter info="©2023 Noble" desc="Email" />
             <InfoFooter info="Mail support@Noble.com" desc="Phone" />
-            <InfoFooter info="+1 (401) 666-3359" desc="Address" />
+            <InfoFooter info="+1 (843) 854‑3236" desc="Address" />
           </div>
           <div>
             <p>203 Pall Mall, St. James’s London SW1Y 5NQ, United Kingdom</p>

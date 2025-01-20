@@ -5,18 +5,18 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateWalletDto {
   @ApiProperty({ example: 'USDT(TRC20)' })
   @IsString()
-  @IsNotEmpty()
-  name: string;
+  @IsOptional()
+  name?: string;
 
   @ApiProperty({ example: 'My wallet' })
   @IsString()
   @IsOptional()
-  qrcode: string;
+  qrcode?: string;
 
   @ApiProperty({ example: '24467hb5yh7uhb56ey7u76jh7u8i6u979km9k7' })
   @IsString()
-  @IsNotEmpty()
-  address: string;
+  @IsOptional()
+  address?: string;
 }
 
 export class UpdateWalletDto {

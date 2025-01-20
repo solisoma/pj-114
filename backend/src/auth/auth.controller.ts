@@ -9,10 +9,7 @@ import {
   Get,
   UseGuards,
   Request,
-  Query,
   Response,
-  Req,
-  Res,
 } from '@nestjs/common';
 import { Routes, Services } from 'src/utils/constants';
 import { AuthEmailLoginDto } from './dtos/auth-email-login.dto';

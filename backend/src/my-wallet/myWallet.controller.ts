@@ -63,7 +63,9 @@ export class WalletController {
       qrcode: req.files?.qrcode ? req.files.qrcode[0].path : '', // Handle 'front'
     };
 
-    return this.walletService.createWallet(id, createWalletDto);
+    return res
+      .status(200)
+      .json(await this.walletService.createWallet(id, createWalletDto));
   }
 
   @UseGuards(AuthGuard('jwt'))

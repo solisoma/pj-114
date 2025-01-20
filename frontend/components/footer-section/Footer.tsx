@@ -36,17 +36,13 @@ export default function Footer() {
         </div>
         <div>
           <p className="text-sm md:pt-8">
-            ©2023 Noble Email Mail support@Noble.com Phone +1 (401) 666-3359
-            Address - 203 Pall Mall, St. James’s London SW1Y 5NQ, United Kingdom
-            - 973, N American way, Miami,FL33132, United States The Transactions
-            offered by this Website can be executed only by fully competent
-            adults. Transactions with financial instruments offered on the
-            Website involve substantial risk and trading may be very risky. If
-            you make Transactions with the financial instruments offered on this
-            Website, you might incur substantial losses or even lose everything
-            in your Account. Before you decide to start Transactions with the
-            financial instruments offered on the Website, you must review the
-            Service Agreement and Risk Disclosure Information.
+            Transactions with financial instruments offered on the Website
+            involve substantial risk and trading may be very risky. If you make
+            Transactions with the financial instruments offered on this Website,
+            you might incur substantial losses or even lose everything in your
+            Account. Before you decide to start Transactions with the financial
+            instruments offered on the Website, you must review the Service
+            Agreement and Risk Disclosure Information.
           </p>
         </div>
       </div>

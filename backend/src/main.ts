@@ -13,7 +13,10 @@ import validationOptions from './utils/validation-options';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: ['http://localhost:3002', 'https://quantureinc.netlify.app'],
+    origin: [
+      'https://nobleassetmarkets.com',
+      'https://quantureinc.netlify.app',
+    ],
     credentials: true,
   });
 

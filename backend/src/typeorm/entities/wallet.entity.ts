@@ -18,7 +18,7 @@ export class MyWallet {
   @Column({ type: String })
   qrcode: string;
 
-  @Column({ type: String, unique: true })
+  @Column({ type: String })
   address: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

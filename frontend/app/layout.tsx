@@ -14,7 +14,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Nobleassetsmarket",
-  description: "The best online trading and investment platform",
+  description:
+    "Empowering your trading journey to achieve financial success and guiding you with the tools and support to trade smarter and succeed financially.",
 };
 
 export default function RootLayout({

@@ -12,6 +12,7 @@ import UpdateBalance, { AdminActions } from "../Utils";
 import { FormikValues } from "formik";
 import { toast } from "react-toastify";
 import { get_trxs } from "@/api/transactions";
+import UpdateTrx from "./UpdateTrx";
 
 export const AdminUserTable = ({
   setShowUser,
@@ -21,6 +22,7 @@ export const AdminUserTable = ({
   user: User;
 }) => {
   const [trxs, setTrxs] = useState<MultiType[]>([]);
+  const [initialValue, setInitialValue] = useState<MultiType>();
   const [m_user, setMUser] = useState<User>();
   const [modalDetails, setModalDetails] = useState<{
     show: boolean;
@@ -117,12 +119,40 @@ export const AdminUserTable = ({
   if (m_user)
     return (
       <PageWrapper>
+        <div className="flex gap-2 border rounded-lg p-2 mt-2 md:mt-0">
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={
+              m_user.front_image
+                ? `${process.env.NEXT_PUBLIC_SAPI_URL}/static/${m_user.front_image}`
+                : "#"
+            }
+            className="text-background2 underline"
+          >
+            Front: {m_user.front_image ? "open" : "no image"}
+          </a>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={
+              m_user.back_image
+                ? `${process.env.NEXT_PUBLIC_SAPI_URL}/static/${m_user.back_image}`
+                : "#"
+            }
+            className="text-background2 underline"
+          >
+            Back: {m_user.back_image ? "open" : "no image"}
+          </a>
+        </div>
         <div className="flex items-center justify-between px-4 w-full">
           <HeaderWrapper
             header={
               <div>
                 <p className="text-sm md:text-base">{m_user.name}</p>
-                <p className="text-sm md:text-base">${m_user.balance}</p>
+                <p className="text-sm md:text-base">
+                  ${Number(m_user.balance)}
+                </p>
               </div>
             }
           />
@@ -165,10 +195,22 @@ export const AdminUserTable = ({
               {trxs.map((trx) => {
                 return (
                   <tr
-                    className="hover:bg-background3 border border-gray-400"
+                    className="hover:bg-background3 border border-gray-400 cursor-pointer"
                     key={trx.id}
                   >
-                    <td className="py-4 px-1 h-16 border border-gray-400 md:w-[5%] md:px-2 md:h-20">
+                    <td
+                      onClick={() => {
+                        if (!["withdrawal", "deposit"].includes(trx.category)) {
+                          toast.info(
+                            "You are not allowed to modify this transactions status"
+                          );
+                          return;
+                        }
+                        setInitialValue(trx);
+                        setModalDetails({ show: true, type: "update-status" });
+                      }}
+                      className="py-4 px-1 h-16 border border-gray-400 md:w-[5%] md:px-2 md:h-20"
+                    >
                       {trx.id}
                     </td>
                     <td className="py-4 px-1 border border-gray-400 text-sm md:text-sm md:w-[8%] md:px-2">
@@ -178,7 +220,24 @@ export const AdminUserTable = ({
                       {trx.amount}
                     </td>
                     <td className="py-4 px-1 border border-gray-400 text-sm md:text-sm md:w-[8%] md:px-2">
+                      {trx.category}
+                    </td>
+                    <td className="py-4 px-1 border border-gray-400 text-sm md:text-sm md:w-[8%] md:px-2">
                       {trx.status}
+                    </td>
+                    <td className="py-4 px-1 border border-gray-400 text-sm md:text-sm md:w-[8%] md:px-2">
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={
+                          trx.proof
+                            ? `${process.env.NEXT_PUBLIC_SAPI_URL}/static/${trx.proof}`
+                            : "#"
+                        }
+                        className="underline text-background2"
+                      >
+                        {trx.proof ? "open" : "no proof"}
+                      </a>
                     </td>
                     <td className="py-4 px-1 border border-gray-400 text-sm md:text-sm md:w-[8%] md:px-2">
                       {trx.created_at}
@@ -206,6 +265,8 @@ export const AdminUserTable = ({
               />
             ) : modalDetails.type === "kyc" ? (
               <AdminActions command={modalDetails.type} onAction={updateKyc} />
+            ) : modalDetails.type === "update-status" ? (
+              <UpdateTrx initialValue={initialValue!} onAction={getTrx} />
             ) : (
               <UpdateBalance onAction={modifyBalance} />
             )}

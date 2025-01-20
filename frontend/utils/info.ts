@@ -496,3 +496,22 @@ export const wallets = [
     value: "XRP",
   },
 ];
+
+export const trxStatus = [
+  {
+    name: "Failed",
+    value: "failed",
+  },
+  {
+    name: "Pending",
+    value: "pending",
+  },
+  {
+    name: "Reverse",
+    value: "reverse",
+  },
+  {
+    name: "Successful",
+    value: "successful",
+  },
+];

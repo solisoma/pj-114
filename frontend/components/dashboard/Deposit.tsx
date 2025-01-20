@@ -19,8 +19,7 @@ export function Deposit({ closeModal }: LogOutActionType): React.JSX.Element {
     if (amount && amount > 0 && name) {
       try {
         setLoading(true);
-        // const send = await deposit({ amount });
-        const send = { id: 1 };
+        const send = await deposit({ amount });
         if (!send) throw new Error("failed");
         window.location.href = `/dashboard?page=fundwallet&id=${
           (send as MultiType).id

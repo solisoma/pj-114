@@ -12,6 +12,8 @@ export const adminTableHeaders = [
   "Id",
   "Service",
   "Amount",
+  "Category",
   "Status",
+  "Proof",
   "Created at",
 ];

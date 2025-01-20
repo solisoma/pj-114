@@ -8,6 +8,7 @@ import { setScript } from "../overview/Overview";
 export default function ConfirmDeposit() {
   const [paymentProof, setPaymentProof] = useState<File | null>(null);
   const [walletAddress, setWalletAddress] = useState<string>("");
+  const [qrcode, setQrcode] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [id, setId] = useState<number | null>(null);
   const [amount, setAmount] = useState<number | null>(null);
@@ -60,6 +61,7 @@ export default function ConfirmDeposit() {
       }, 1000);
     } else {
       setWalletAddress(wallet.address);
+      setQrcode(wallet.qrcode);
     }
   }
 
@@ -110,7 +112,7 @@ export default function ConfirmDeposit() {
           <div className="flex w-full justify-center mb-4">
             <div className="bg-white w-[50%] h-[30vh] p-2 rounded-lg md:w-[40%]">
               <img
-                src="/qr.png" // Replace with your QR code generation logic
+                src={`${process.env.NEXT_PUBLIC_SAPI_URL}/static/${qrcode}`} // Replace with your QR code generation logic
                 alt="QR Code"
                 className="mb-2 w-full h-full"
               />

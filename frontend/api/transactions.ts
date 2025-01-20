@@ -21,7 +21,7 @@ export async function get_trxs(
       const data = await res.json();
       if (part) return data.slice(0, 10);
 
-      console.log(data);
+      // console.log(data);
       return data;
     }
   }

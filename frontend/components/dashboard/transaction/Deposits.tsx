@@ -63,7 +63,7 @@ export default function Deposits({ userDetail }: { userDetail: User }) {
         </div>
         <div className="flex flex-col gap-4 py-4">
           <div className="flex flex-col gap-2">
-            <h2 className="font-semibold text-xl">Withdrawal</h2>
+            <h2 className="font-semibold text-xl">Deposit</h2>
             <p className="text-sm">List of deposits in your account</p>
           </div>
           <TnxTable tableData={transactions || []} />

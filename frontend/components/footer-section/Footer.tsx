@@ -5,7 +5,7 @@ function InfoFooter({ info, desc }: { info: string; desc: string }) {
     <div className="flex flex-col gap-2">
       <div className="flex flex-col">
         <p>{info}</p>
-        <span className="w-[20vw] border-b-2 border-white" />
+        <span className="w-full border-b-2 border-white md:w-[20vw]" />
       </div>
       <p>{desc}</p>
     </div>
@@ -25,10 +25,9 @@ export default function Footer() {
         <div className="flex flex-col gap-4">
           <img src="/full-icon.png" className="w-[15rem]" />
           <div className="flex flex-col gap-2">
+            <InfoFooter info="©2023 Noble" desc="Email" />
             <InfoFooter info="Mail support@Noble.com" desc="Phone" />
-            <InfoFooter info="Mail support@Noble.com" desc="Phone" />
-            <InfoFooter info="Mail support@Noble.com" desc="Phone" />
-            <InfoFooter info="Mail support@Noble.com" desc="Phone" />
+            <InfoFooter info="+1 (401) 666-3359" desc="Address" />
           </div>
           <div>
             <p>203 Pall Mall, St. James’s London SW1Y 5NQ, United Kingdom</p>

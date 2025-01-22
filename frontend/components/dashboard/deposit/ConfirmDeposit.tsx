@@ -121,7 +121,7 @@ export default function ConfirmDeposit() {
           <div className="mb-4 flex flex-col gap-2">
             <p>{name} Address</p>
             <div className="flex items-center justify-between border p-1 rounded-lg w-full gap-2">
-              <p className="text-sm text-gray-300 font-mono break-words">
+              <p className="text-sm text-gray-300 font-mono truncate w-[80%]">
                 Wallet Address: {walletAddress}
               </p>
               <Button

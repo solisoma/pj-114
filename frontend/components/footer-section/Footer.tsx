@@ -31,7 +31,6 @@ export default function Footer() {
           </div>
           <div>
             <p>203 Pall Mall, St. James’s London SW1Y 5NQ, United Kingdom</p>
-            <p>203 Pall Mall, St. James’s London SW1Y 5NQ, United Kingdom</p>
           </div>
         </div>
         <div>

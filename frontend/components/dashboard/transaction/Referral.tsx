@@ -76,13 +76,13 @@ export default function Referral({ userDetail }: { userDetail: User }) {
                 <MdInsertLink size={17} color="black" />
               </div>
               <h2 className="border p-1 rounded-lg text-[15px] w-full overflow-hidden text-ellipsis whitespace-nowrap md:text-sm">
-                {`https://quantureinc.netlify.app/account/sign-up?ref=${userDetail.referral_id}`}
+                {`https://nobleassetmarkets.com/account/sign-up?ref=${userDetail.referral_id}`}
               </h2>
             </div>
             <button
               onClick={() => {
                 navigator.clipboard.writeText(
-                  `https://quantureinc.netlify.app/account/sign-up?ref=${userDetail.referral_id}`
+                  `https://nobleassetmarkets.com/account/sign-up?ref=${userDetail.referral_id}`
                 );
                 toast.success("Link copied to clipboard!");
               }}

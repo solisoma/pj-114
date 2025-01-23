@@ -96,7 +96,7 @@ export default function SignUp() {
   async function isLoggedIn() {
     const isActive = await getSecureStorage("token");
     if (isActive) {
-      router.push("/dashboard?page=collection");
+      router.push("/dashboard?page=overview");
     } else {
       setLoading(false);
     }

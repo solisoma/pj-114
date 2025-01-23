@@ -55,7 +55,7 @@ export default function SignIn() {
     const is_redirect = params.get("q");
     const isActive = await getSecureStorage("token");
     if (isActive && !is_redirect) {
-      router.push("/dashboard?page=collection");
+      router.push("/dashboard?page=overview");
     } else {
       const googleAuthFailed = params.get("r_id");
       if (googleAuthFailed)

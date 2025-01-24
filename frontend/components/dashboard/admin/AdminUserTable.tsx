@@ -192,7 +192,7 @@ export const AdminUserTable = ({
               </tr>
             </thead>
             <tbody className="w-full border border-gray-400">
-              {trxs.map((trx) => {
+              {trxs.map((trx, i) => {
                 return (
                   <tr
                     className="hover:bg-background3 border border-gray-400 cursor-pointer"
@@ -211,7 +211,7 @@ export const AdminUserTable = ({
                       }}
                       className="py-4 px-1 h-16 border border-gray-400 md:w-[5%] md:px-2 md:h-20"
                     >
-                      {trx.id}
+                      {trxs.length - i}
                     </td>
                     <td className="py-4 px-1 border border-gray-400 text-sm md:text-sm md:w-[8%] md:px-2">
                       {trx.service}

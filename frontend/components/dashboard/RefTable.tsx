@@ -23,14 +23,14 @@ export const RefTable = ({ tableData }: { tableData: any }) => {
           </tr>
         </thead>
         <tbody className="w-full border border-gray-400">
-          {tableData.map((data: any) => {
+          {tableData.map((data: any, i: number) => {
             return (
               <tr
                 className="hover:bg-background3 border border-gray-400"
                 key={data.id}
               >
                 <td className="py-4 px-1 h-16 border border-gray-400 md:w-[5%] md:px-2 md:h-20">
-                  {data.id}
+                  {tableData.length - i}
                 </td>
                 <td className="py-4 px-1 h-16 border border-gray-400 md:w-[5%] md:px-2 md:h-20">
                   {data.host.name}

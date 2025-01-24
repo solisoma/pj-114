@@ -99,7 +99,7 @@ export default function Transfer({
           <select
             value={selectedFirst || ""}
             onChange={(e) => handleSelectFirst(e.target.value)}
-            className="w-full px-4 py-2 rounded-md border border-gray-600 bg-[inherit] text-black"
+            className="w-full px-4 py-2 rounded-md border border-gray-600 bg-[inherit] text-white"
           >
             <option value="" disabled>
               Select an asset
@@ -129,7 +129,7 @@ export default function Transfer({
           <select
             value={selectedSecond || ""}
             onChange={(e) => handleSelectSecond(e.target.value)}
-            className="w-full px-4 py-2 rounded-md border border-gray-600 bg-[inherit] text-black"
+            className="w-full px-4 py-2 rounded-md border border-gray-600 bg-[inherit] text-white"
           >
             <option value="" disabled>
               Select an asset
@@ -147,7 +147,7 @@ export default function Transfer({
             placeholder="Enter amount"
             disabled
             value={amountFirst || ""}
-            className="outline-none w-full px-4 py-2 mt-2 rounded-md border border-gray-600 text-black"
+            className="outline-none w-full px-4 py-2 mt-2 rounded-md border border-gray-600 text-white"
           />
           <p className="flex justify-end">{balanceSecond} USD</p>
         </div>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
 import Link from "next/link";
 import Button from "../Button";
@@ -7,7 +7,6 @@ import { Formik, Form, ErrorMessage, Field, FormikHelpers } from "formik";
 import { useRouter, useSearchParams } from "next/navigation";
 import Error from "../Error";
 import { sign_up } from "@/api/default";
-import { getSecureStorage } from "@/api/auth";
 import { FieldFnType } from "../type";
 import { LuCircleUser } from "react-icons/lu";
 import {
@@ -22,7 +21,6 @@ import { TbPasswordFingerprint } from "react-icons/tb";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 
 export default function SignUp() {
-  const [loading, setLoading] = useState(true);
   const [passwordField, setPassswordField] = useState(true);
   const [confirmPasswordField, setConfirmPassswordField] = useState(true);
   const [apiError, setApiError] = useState({ state: false, msg: "" });
@@ -92,21 +90,6 @@ export default function SignUp() {
       setApiError({ state: true, msg: e.message });
     }
   }
-
-  async function isLoggedIn() {
-    const isActive = await getSecureStorage("token");
-    if (isActive) {
-      router.push("/dashboard?page=overview");
-    } else {
-      setLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    isLoggedIn();
-  }, []);
-
-  if (loading) return null;
 
   return (
     <div className="flex h-full justify-center md:items-center md:pt-0">

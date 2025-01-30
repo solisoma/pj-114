@@ -419,7 +419,7 @@ export class AuthService implements IAuthService {
       },
     );
 
-    const tokenExpires = Date.now() + ms(tokenExpiresIn);
+    const tokenExpires = Date.now() + ms(Number(tokenExpiresIn));
 
     const [token, refreshToken] = await Promise.all([
       await this.jwtService.signAsync(

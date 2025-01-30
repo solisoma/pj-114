@@ -15,7 +15,7 @@ import { ISessionService } from 'src/session/session';
 import { Session } from 'src/session/entities/session.entity';
 import { ConfigService } from '@nestjs/config';
 import { AllConfigType } from 'src/config/config.type';
-import ms from 'ms';
+import ms, { StringValue } from 'ms';
 import { JwtService } from '@nestjs/jwt';
 import { IAuthService } from './auth';
 import { AuthRegisterDto } from './dtos/auth-register.dto';
@@ -419,7 +419,7 @@ export class AuthService implements IAuthService {
       },
     );
 
-    const tokenExpires = Date.now() + ms(Number(tokenExpiresIn));
+    const tokenExpires = Date.now() + ms(tokenExpiresIn as StringValue);
 
     const [token, refreshToken] = await Promise.all([
       await this.jwtService.signAsync(

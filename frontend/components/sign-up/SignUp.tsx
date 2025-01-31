@@ -30,9 +30,15 @@ export default function SignUp() {
   const validator = Yup.object({
     name: Yup.string()
       .required("This field is required")
-      .min(3, "Characters must be greater than 2"),
+      .min(3, "Characters must be greater than 2")
+      .max(150, "Characters must be less than 151")
+      .matches(
+        /^[A-Za-z_]+$/,
+        "Names can only include alphabetic characters and underscores."
+      ),
     email: Yup.string()
       .required("This field is required")
+      .max(254, "Characters must be less than 255")
       .email("Invalid email format"),
     address: Yup.string().required("This field is required"),
     gender: Yup.string().required("This field is required"),
@@ -49,7 +55,8 @@ export default function SignUp() {
         /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9\s])/gi,
         "Must include upper-Case, lower-case, number and special character"
       )
-      .min(10, "characters must be greater than 9"),
+      .min(10, "characters must be greater than 9")
+      .max(48, "characters must be less than 49"),
     confirm_password: Yup.string()
       .required("This field is required")
       .oneOf([Yup.ref("password")], "Passwords must match"),

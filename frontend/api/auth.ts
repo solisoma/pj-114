@@ -46,10 +46,14 @@ export async function setSecureStorage(name: string, value: MultiType) {
 }
 
 export async function getSecureStorage(name: string) {
-  const data = (await cookies()).get(name);
-  if (!data) return undefined;
-  const decryptedValue = await decrypt(data.value);
-  return decryptedValue;
+  try {
+    const data = (await cookies()).get(name);
+    if (!data) return undefined;
+    const decryptedValue = await decrypt(data.value);
+    return decryptedValue;
+  } catch {
+    return undefined;
+  }
 }
 
 export async function clearSecureStorage() {

@@ -120,7 +120,7 @@ export const boxThreeDeet3: {
   },
   {
     heading:
-      "Time to take action with the international Noble Trade trading broker",
+      "Time to take action with the international Noble Asset Markets trading broker",
     desc: "Trading will bring you profit with proper support, constant education, and a reasonable approach. Noble is a broker platform that has created all the conditions to help you improve your trading life in every possible way.",
   },
 ];

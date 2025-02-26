@@ -24,11 +24,11 @@ export default function page() {
           <div className="flex flex-col gap-8 px-4 py-[5rem] w-full md:px-10 lg:w-[72%]">
             <h2 className="font-bold text-6xl">About Us</h2>
             <p className="text-xl text-[#7B8EA4]">
-              Noble Trades has been sharing financial freedom with traders since
-              2014. In a continuous effort to give traders a more comfortable
-              and safe experience, its experts have been improving the platform
-              ensuring traders can enjoy and make use of that freedom to trade
-              whenever and wherever they like.
+              Noble Asset Markets has been sharing financial freedom with
+              traders since 2014. In a continuous effort to give traders a more
+              comfortable and safe experience, its experts have been improving
+              the platform ensuring traders can enjoy and make use of that
+              freedom to trade whenever and wherever they like.
             </p>
           </div>
         </div>
@@ -38,8 +38,8 @@ export default function page() {
           <div className="flex flex-col gap-4 mb-[3rem] md:justify-between md:flex-row">
             <div className="flex-1">
               <BoxThree
-                desc="Trading will bring you profit with proper support, constant education, and a reasonable approach. Noble Trades is a broker platform that has created all the conditions to help you improve your trading life in every possible way.<br/><br/>From educational broker's tools, demo accounts, and 24/7 support to your financial success, Noble Trades works tirelessly to remain at the forefront in trading online. Join now! Take full advantage of this online trading leader and make your way into the world of professional trading.<br/><br/>Our people are our greatest asset - we say it often and with good reason. It is only with the determination and dedication of our people that we can serve our clients, generate long-term value for our shareholders and contribute to the broader public. At every step of our employees careers we invest in them, and ensure their interests remain focused on the long term and closely aligned with those of our clients and shareholders.."
-                heading="Time to take action with the international Noble Trades broker"
+                desc="Trading will bring you profit with proper support, constant education, and a reasonable approach. Noble Asset Markets is a broker platform that has created all the conditions to help you improve your trading life in every possible way.<br/><br/>From educational broker's tools, demo accounts, and 24/7 support to your financial success, Noble Asset Markets works tirelessly to remain at the forefront in trading online. Join now! Take full advantage of this online trading leader and make your way into the world of professional trading.<br/><br/>Our people are our greatest asset - we say it often and with good reason. It is only with the determination and dedication of our people that we can serve our clients, generate long-term value for our shareholders and contribute to the broader public. At every step of our employees careers we invest in them, and ensure their interests remain focused on the long term and closely aligned with those of our clients and shareholders.."
+                heading="Time to take action with the international Noble Asset Markets broker"
               />
             </div>
             <div className="flex-1 rounded-lg flex min-h-[30vh]">

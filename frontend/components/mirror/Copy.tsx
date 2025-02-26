@@ -23,11 +23,11 @@ export default function Copy() {
           <div className="flex flex-col gap-8 px-4 py-[5rem] w-full md:px-10 lg:w-[72%]">
             <h2 className="font-bold text-4xl md:text-6xl">Copy Trading</h2>
             <p className="text-xl text-[#7B8EA4]">
-              Cinpax Trade has been sharing financial freedom with traders since
-              2014. In a continuous effort to give traders a more comfortable
-              and safe experience, its experts have been improving the platform
-              ensuring traders can enjoy and make use of that freedom to trade
-              whenever and wherever they like.
+              Noble Asset Markets has been sharing financial freedom with
+              traders since 2014. In a continuous effort to give traders a more
+              comfortable and safe experience, its experts have been improving
+              the platform ensuring traders can enjoy and make use of that
+              freedom to trade whenever and wherever they like.
             </p>
           </div>
         </div>

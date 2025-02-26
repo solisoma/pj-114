@@ -25,11 +25,11 @@ export default function Advanced() {
               Advanced Trading Account
             </h2>
             <p className="text-xl text-[#7B8EA4]">
-              Cinpax Trade has been sharing financial freedom with traders since
-              2014. In a continuous effort to give traders a more comfortable
-              and safe experience, its experts have been improving the platform
-              ensuring traders can enjoy and make use of that freedom to trade
-              whenever and wherever they like.
+              Noble Asset Markets has been sharing financial freedom with
+              traders since 2014. In a continuous effort to give traders a more
+              comfortable and safe experience, its experts have been improving
+              the platform ensuring traders can enjoy and make use of that
+              freedom to trade whenever and wherever they like.
             </p>
           </div>
         </div>

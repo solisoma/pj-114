@@ -40,7 +40,7 @@ export default function Invest({
             or monthly and get higher returns in your investment.
           </p>
         </div>
-        <div className="flex flex-col gap-4 md:flex-wrap md:flex-row">
+        <div className="flex flex-col gap-4 md:flex-wrap md:flex-row md:gap-[1vw]">
           {investmentPlans.map((itm, i) => (
             <div key={i} className="w-full md:w-[32%]">
               <PlanBox

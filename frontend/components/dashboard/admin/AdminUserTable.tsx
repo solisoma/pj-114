@@ -13,6 +13,8 @@ import { FormikValues } from "formik";
 import { toast } from "react-toastify";
 import { get_trxs } from "@/api/transactions";
 import UpdateTrx from "./UpdateTrx";
+import InfoBox from "./InfoBox";
+import { HiOutlineHome } from "react-icons/hi";
 
 export const AdminUserTable = ({
   setShowUser,
@@ -119,158 +121,194 @@ export const AdminUserTable = ({
   if (m_user)
     return (
       <PageWrapper>
-        <div className="flex gap-2 border rounded-lg p-2 mt-2 md:mt-0">
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href={
-              m_user.front_image
-                ? `${process.env.NEXT_PUBLIC_SAPI_URL}/static/${m_user.front_image}`
-                : "#"
-            }
-            className="text-background2 underline"
-          >
-            Front: {m_user.front_image ? "open" : "no image"}
-          </a>
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href={
-              m_user.back_image
-                ? `${process.env.NEXT_PUBLIC_SAPI_URL}/static/${m_user.back_image}`
-                : "#"
-            }
-            className="text-background2 underline"
-          >
-            Back: {m_user.back_image ? "open" : "no image"}
-          </a>
-        </div>
-        <div className="flex items-center justify-between px-4 w-full">
-          <HeaderWrapper
-            header={
-              <div>
-                <p className="text-sm md:text-base">{m_user.name}</p>
-                <p className="text-sm md:text-base">
-                  ${Number(m_user.balance)}
-                </p>
-              </div>
-            }
+        <div className="flex items-center gap-x-1 pb-2">
+          <HiOutlineHome
+            className="cursor-pointer text-white text-[5vw] sm:text-[2.5vw] md:text-[1.8vw] lg:text-[1.5vw] xl:text-[1.2vw] flex-shrink-0"
+            onClick={() => setShowUser(false)}
           />
-          <div className=" flex items-center justify-end gap-6 w-full">
-            <button
-              onClick={() => setShowUser(false)}
-              className="bg-btn p-2 rounded-lg text-white w-[8rem]"
-              type="submit"
-            >
-              Go back
-            </button>
-            <select
-              ref={actionRef}
-              onChange={(e) => showAction(e.target.value)}
-              className="outline-none p-2 border border-gray-400 text-white bg-[#1E222D] rounded-lg w-[50%]"
-            >
-              <option value="">Actions</option>
-              {actions.map((action) => {
-                return <option value={action.value}> {action.label}</option>;
-              })}
-            </select>
-          </div>
+          <p className="font-medium text-white text-[5vw] sm:text-[2.5vw] md:text-[1.8vw] lg:text-[1.4vw] xl:text-[1.2vw] leading-none">
+            {` / ${m_user.name}`}
+          </p>
         </div>
 
-        <div className="w-full h-[90%] overflow-auto live-trade-table border md:h-[73vh] text-white">
-          <table className="w-full border border-gray-400">
-            <thead className="px-2 border-b w-full">
-              <tr>
-                {adminTableHeaders.map((header, ind) => (
-                  <th
-                    className="text-left p-2 border text-sm md:text-base border-gray-400"
-                    key={ind}
-                  >
-                    {header}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="w-full border border-gray-400">
-              {trxs.map((trx, i) => {
-                return (
-                  <tr
-                    className="hover:bg-background3 border border-gray-400 cursor-pointer"
-                    key={trx.id}
-                  >
-                    <td
-                      onClick={() => {
-                        if (!["withdrawal", "deposit"].includes(trx.category)) {
-                          toast.info(
-                            "You are not allowed to modify this transactions status"
-                          );
-                          return;
-                        }
-                        setInitialValue(trx);
-                        setModalDetails({ show: true, type: "update-status" });
-                      }}
-                      className="py-4 px-1 h-16 border border-gray-400 md:w-[5%] md:px-2 md:h-20"
-                    >
-                      {trxs.length - i}
-                    </td>
-                    <td className="py-4 px-1 border border-gray-400 text-sm md:text-sm md:w-[8%] md:px-2">
-                      {trx.service}
-                    </td>
-                    <td className="py-4 px-1 border border-gray-400 text-sm md:text-sm md:w-[8%] md:px-2">
-                      {trx.amount}
-                    </td>
-                    <td className="py-4 px-1 border border-gray-400 text-sm md:text-sm md:w-[8%] md:px-2">
-                      {trx.category}
-                    </td>
-                    <td className="py-4 px-1 border border-gray-400 text-sm md:text-sm md:w-[8%] md:px-2">
-                      {trx.status}
-                    </td>
-                    <td className="py-4 px-1 border border-gray-400 text-sm md:text-sm md:w-[8%] md:px-2">
-                      <a
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href={
-                          trx.proof
-                            ? `${process.env.NEXT_PUBLIC_SAPI_URL}/static/${trx.proof}`
-                            : "#"
-                        }
-                        className="underline text-background2"
-                      >
-                        {trx.proof ? "open" : "no proof"}
-                      </a>
-                    </td>
-                    <td className="py-4 px-1 border border-gray-400 text-sm md:text-sm md:w-[8%] md:px-2">
-                      {trx.created_at}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          <Modal
-            show={modalDetails.show}
-            setShow={(show) => {
-              setModalDetails((prev) => {
-                return { ...prev, show };
-              });
-            }}
-            classes={`bg-[#1E222D] ${
-              modalDetails.type === "balance" ? "md:w-[30%]" : "md:w-[25%]"
-            } h-[40%] shadow-2xl md:p-[.1vw] rounded-lg w-[80%]`}
-          >
-            {modalDetails.type === "permission" ? (
-              <AdminActions
-                command={modalDetails.type}
-                onAction={updatePermission}
+        <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-4 bg-[#0F0F0F] rounded-lg px-3 py-8 md:flex-row md:flex-wrap">
+            <div className="w-full lg:w-[48%]">
+              <InfoBox
+                header="Name"
+                desc={`${m_user?.name ? m_user?.name : ""}`}
               />
-            ) : modalDetails.type === "kyc" ? (
-              <AdminActions command={modalDetails.type} onAction={updateKyc} />
-            ) : modalDetails.type === "update-status" ? (
-              <UpdateTrx initialValue={initialValue!} onAction={getTrx} />
-            ) : (
-              <UpdateBalance onAction={modifyBalance} />
-            )}
-          </Modal>
+            </div>
+            <div className="w-full lg:w-[48%]">
+              <InfoBox
+                header="Balance"
+                desc={`$${
+                  m_user?.balance
+                    ? new Intl.NumberFormat().format(m_user?.balance!)
+                    : ""
+                }`}
+              />
+            </div>
+            <div className="w-full lg:w-[48%]">
+              <InfoBox
+                header="Front Image"
+                desc={
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={
+                      m_user.front_image
+                        ? `${process.env.NEXT_PUBLIC_SAPI_URL}/static/${m_user.front_image}`
+                        : "#"
+                    }
+                    className="text-background2 underline"
+                  >
+                    {m_user.front_image ? "open" : "No image"}
+                  </a>
+                }
+              />
+            </div>
+            <div className="w-full lg:w-[48%]">
+              <InfoBox
+                header="Back Image"
+                desc={
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={
+                      m_user.back_image
+                        ? `${process.env.NEXT_PUBLIC_SAPI_URL}/static/${m_user.back_image}`
+                        : "#"
+                    }
+                    className="text-background2 underline"
+                  >
+                    {m_user.back_image ? "open" : "No image"}
+                  </a>
+                }
+              />
+            </div>
+            <div className="flex gap-4 items-center font-semibold md:w-[48%]">
+              <select
+                ref={actionRef}
+                onChange={(e) => showAction(e.target.value)}
+                className="outline-none p-2 border border-gray-400 text-white bg-[#0F0F0F] rounded-lg w-full"
+              >
+                <option value="">Actions</option>
+                {actions.map((action) => {
+                  return <option value={action.value}> {action.label}</option>;
+                })}
+              </select>
+            </div>
+          </div>
+
+          <div className="w-full overflow-x-scroll remove-scrollbar live-trade-table border border-[#292B37] rounded-lg">
+            <table className="min-w-full border-collapse">
+              <thead className="rounded-lg">
+                <tr className="text-[1rem] bg-[#292B37]">
+                  {adminTableHeaders.map((header, ind) => (
+                    <th
+                      className="text-left pr-6 md:pr-[2vw] py-2 first:pl-6 first:md:pl-[2vw] md:py-[.7vw]"
+                      key={ind}
+                    >
+                      {header}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {trxs.map((trx, i) => {
+                  return (
+                    <tr
+                      className={`${
+                        i % 2 != 0 ? "bg-[#20232A]" : "bg-[--background]"
+                      }  md:text-[1.3vw]`}
+                      key={trx.id}
+                    >
+                      <td
+                        onClick={() => {
+                          if (
+                            !["withdrawal", "deposit"].includes(trx.category)
+                          ) {
+                            toast.info(
+                              "You are not allowed to modify this transactions status"
+                            );
+                            return;
+                          }
+                          setInitialValue(trx);
+                          setModalDetails({
+                            show: true,
+                            type: "update-status",
+                          });
+                        }}
+                        className="px-6 py-2 md:px-[2vw] md:py-[.7vw]"
+                      >
+                        {i + 1}
+                      </td>
+                      <td className="text-sm pr-6 md:pr-[2vw]">
+                        {trx.service}
+                      </td>
+                      <td className="text-sm pr-6 md:pr-[2vw]">{trx.amount}</td>
+                      <td className="text-sm pr-6 md:pr-[2vw]">
+                        {trx.category}
+                      </td>
+                      <td className="text-sm pr-6 md:pr-[2vw]">{trx.status}</td>
+                      <td className="text-sm pr-6 md:pr-[2vw]">
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={
+                            trx.proof
+                              ? `${process.env.NEXT_PUBLIC_SAPI_URL}/static/${trx.proof}`
+                              : "#"
+                          }
+                          className="underline text-background2"
+                        >
+                          {trx.proof ? "open" : "no proof"}
+                        </a>
+                      </td>
+                      <td className="text-sm pr-6 md:pr-[2vw] whitespace-nowrap">
+                        {new Date(trx.created_at).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: true,
+                        })}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            <Modal
+              show={modalDetails.show}
+              setShow={(show) => {
+                setModalDetails((prev) => {
+                  return { ...prev, show };
+                });
+              }}
+              classes={`bg-[#1E222D] ${
+                modalDetails.type === "balance" ? "md:w-[30%]" : "md:w-[25%]"
+              } h-[40%] shadow-2xl md:p-[.1vw] rounded-lg w-[80%]`}
+            >
+              {modalDetails.type === "permission" ? (
+                <AdminActions
+                  command={modalDetails.type}
+                  onAction={updatePermission}
+                />
+              ) : modalDetails.type === "kyc" ? (
+                <AdminActions
+                  command={modalDetails.type}
+                  onAction={updateKyc}
+                />
+              ) : modalDetails.type === "update-status" ? (
+                <UpdateTrx initialValue={initialValue!} onAction={getTrx} />
+              ) : (
+                <UpdateBalance onAction={modifyBalance} />
+              )}
+            </Modal>
+          </div>
         </div>
       </PageWrapper>
     );

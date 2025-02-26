@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { LogOutActionType } from "./type";
 import Button from "../Button";
 import { toast } from "react-toastify";
-import { deposit } from "@/api/transactions";
 import { wallets } from "@/utils/info";
-import { MultiType } from "@/api/type";
 
 export function Deposit({ closeModal }: LogOutActionType): React.JSX.Element {
   const [loading, setLoading] = useState(false);
@@ -19,11 +17,7 @@ export function Deposit({ closeModal }: LogOutActionType): React.JSX.Element {
     if (amount && amount > 0 && name) {
       try {
         setLoading(true);
-        const send = await deposit({ amount });
-        if (!send) throw new Error("failed");
-        window.location.href = `/dashboard?page=fundwallet&id=${
-          (send as MultiType).id
-        }&name=${name}&amount=${amount}`;
+        window.location.href = `/dashboard?page=fundwallet&name=${name}&amount=${amount}`;
       } catch {
         setLoading(false);
         toast.info("An error occurred please try again");

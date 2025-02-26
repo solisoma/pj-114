@@ -50,15 +50,15 @@ export default function PrettyMenu({
                 "border"
               } pl-4 md:pl-[2vw] rounded-xl gap-2 py-2 md:py-[1vw] md:gap-[1.2vw]`}
             >
-              <inav.icon className="text-white" size={24} />
+              <inav.icon className="text-white text-[4vw] sm:text-[3.5vw] md:text-[2.5vw] lg:text-[1.8vw] xl:text-[1.5vw]" />
               <div className="flex items-center gap-4">
-                <p className="block md:text-[1rem]">{inav.text}</p>
+                <p className="block md:text-[.9vw]">{inav.text}</p>
                 {inav.sub && (
                   <>
                     {showSub ? (
-                      <MdKeyboardArrowDown size={20} />
+                      <MdKeyboardArrowDown className="text-[4vw] sm:text-[3.5vw] md:text-[2.5vw] lg:text-[1.8vw] xl:text-[1.5vw]" />
                     ) : (
-                      <MdKeyboardArrowRight size={20} />
+                      <MdKeyboardArrowRight className="text-[4vw] sm:text-[3.5vw] md:text-[2.5vw] lg:text-[1.8vw] xl:text-[1.5vw]" />
                     )}
                   </>
                 )}
@@ -73,10 +73,10 @@ export default function PrettyMenu({
                       route(itm.route || "#");
                     }}
                     key={i}
-                    className={`flex items-center text-gray-300 pl-10 md:pl-[4vw] py-1 md:py-[.3vw]`}
+                    className={`flex items-center text-gray-300 pl-10 md:pl-[4vw] py-1 md:py-[.3vw]x`}
                   >
                     <p
-                      className={`block md:text-[.9rem] ${
+                      className={`block md:text-[.9vw] ${
                         activeLink == itm.route && "text-background2"
                       }`}
                     >

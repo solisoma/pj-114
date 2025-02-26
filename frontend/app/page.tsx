@@ -91,7 +91,7 @@ export default function Home() {
               desc="Trading will bring you profit with proper support, constant education, and a reasonable approach. Noble is a broker platform that has created all the conditions to help you improve your trading life in every possible way.<br/><br/>From educational broker's tools, demo accounts, and 24/7 support to your financial success, Noble works tirelessly to remain at the forefront in trading online. Join now! Take full advantage of this online trading leader and make your way into the world of professional trading."
             />
           </div>
-          <div className="flex flex-col gap-4 lg:justify-between lg:flex-row">
+          <div className="flex flex-col gap-[1vw] lg:justify-between lg:flex-row">
             <div className="flex-1 h-full">
               <BoxOne
                 bg="bg-[url('/world-img.webp')] bg-cover"
@@ -100,9 +100,9 @@ export default function Home() {
                 desc="We support all, so traders from all over the world could enjoy and profit anytime"
               />
             </div>
-            <div className="flex-1 flex flex-wrap gap-4 items-stretch">
+            <div className="flex-1 flex flex-wrap gap-[1vw] items-stretch">
               {boxOneDeet.map((item, i) => (
-                <div key={i} className="w-full lg:w-[18rem]">
+                <div key={i} className="w-full lg:w-[48%]">
                   <BoxOne
                     Icon={item.Icon}
                     heading={item.heading}
@@ -114,7 +114,7 @@ export default function Home() {
           </div>
           <div className="flex flex-col gap-8">
             <h2 className="font-bold text-4xl">Mirror Trading</h2>
-            <div className="flex flex-wrap gap-4 items-stretch">
+            <div className="flex flex-wrap gap-[1vw] items-stretch">
               {boxTwoDeet.map((item, i) => (
                 <div key={i} className="w-full lg:w-[49%]">
                   <BoxTwo
@@ -128,7 +128,7 @@ export default function Home() {
           </div>
           <div className="flex flex-col gap-8">
             <h2 className="font-bold text-4xl">Stocks</h2>
-            <div className="flex flex-wrap gap-4 items-stretch">
+            <div className="flex flex-wrap gap-[1vw] items-stretch">
               {boxTwoDeet2.map((item, i) => (
                 <div key={i} className="w-full lg:w-[49%]">
                   <BoxTwo
@@ -142,7 +142,7 @@ export default function Home() {
           </div>
           <div className="flex flex-col gap-8">
             <h2 className="font-bold text-4xl">Find Yourself on Noble</h2>
-            <div className="flex flex-wrap gap-4 items-stretch">
+            <div className="flex flex-wrap gap-[1vw] items-stretch">
               {boxThreeDeet.map((item, i) => (
                 <div key={i} className="w-full lg:w-[49%]">
                   <BoxThree
@@ -168,7 +168,7 @@ export default function Home() {
             <h2 className="font-bold text-4xl">
               Our Asset Management Solutions
             </h2>
-            <div className="flex flex-wrap gap-4 items-stretch">
+            <div className="flex flex-wrap gap-[1vw] items-stretch">
               {boxThreeDeet2.map((item, i) => (
                 <div key={i} className="w-full lg:w-[49%]">
                   <BoxThree desc={item.desc} heading={item.heading} />
@@ -199,7 +199,7 @@ export default function Home() {
               desc="Clients in over 200 countries and territories trade stocks, options, futures, currencies, bonds, funds and more on 150 global markets from a single unified platform.<br/><br/>Spot opportunities and calibrate complete portfolio performance. Keep your performance track record with PortfolioAnalyst inception reporting and historical aggregation at no cost.<br/><br/>Our mission is to bring advanced portfolio analytics to everyone who needs them � both professionals and individuals. The best way to do that is to offer them at no cost, with no strings."
             />
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-[1vw]">
             <h2 className="font-bold text-xl">CHAMBERS LEVEL</h2>
             <p className="text-[#9AADBF]">
               Chambers level, is the target level for an expert trader that is
@@ -268,7 +268,7 @@ export default function Home() {
           </div>
           <div className="flex flex-col gap-8 mb-8">
             <h2 className="font-bold text-4xl">Become a Pro Trader</h2>
-            <div className="flex flex-wrap gap-4 items-stretch">
+            <div className="flex flex-wrap gap-[1vw] items-stretch">
               {boxThreeDeet3.map((item, i) => (
                 <div key={i} className="w-full lg:w-[49%]">
                   <BoxThree

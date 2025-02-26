@@ -3,17 +3,13 @@ import { invHead } from "@/utils/table";
 
 export const InvTable = ({ tableData }: { tableData: any }) => {
   return (
-    <div
-      className={`w-full overflow-x-scroll live-trade-table border md:overflow-y-scroll md:h-full ${
-        !tableData.length && "remove-scrollbar"
-      }`}
-    >
-      <table className="w-full border border-gray-400">
-        <thead className="px-2 border-b w-full">
-          <tr>
+    <div className="w-full overflow-x-scroll remove-scrollbar live-trade-table border border-[#292B37] rounded-lg">
+      <table className="min-w-full border-collapse">
+        <thead className="rounded-lg">
+          <tr className="text-[1rem] bg-[#292B37]">
             {invHead.map((header, ind) => (
               <th
-                className="text-left p-2 border text-sm md:text-base border-gray-400"
+                className="text-left pr-6 md:pr-[2vw] py-2 first:pl-6 first:md:pl-[2vw] md:py-[.7vw]"
                 key={ind}
               >
                 {header}
@@ -21,30 +17,31 @@ export const InvTable = ({ tableData }: { tableData: any }) => {
             ))}
           </tr>
         </thead>
-        <tbody className="w-full border border-gray-400">
+        <tbody>
           {tableData.map((data: any, i: number) => {
             return (
               <tr
-                className="hover:bg-background3 border border-gray-400"
+                className={`${
+                  i % 2 != 0 ? "bg-[#20232A]" : "bg-[--background]"
+                }  md:text-[1.3vw]`}
                 key={data.id}
               >
-                <td className="py-4 px-1 h-16 border border-gray-400 md:w-[5%] md:px-2 md:h-20">
-                  {tableData.length - i}
-                </td>
-                <td className="py-4 px-1 border border-gray-400 text-sm md:text-sm md:w-[8%] md:px-2">
-                  {data.amount}
-                </td>
-                <td className="py-4 px-1 border border-gray-400 text-sm md:text-sm md:w-[8%] md:px-2">
-                  running
-                </td>
-                <td className="py-4 px-1 border border-gray-400 text-sm md:text-sm md:w-[8%] md:px-2">
-                  {data.roi}%
-                </td>
-                <td className="py-4 px-1 h-16 border border-gray-400 md:w-[5%] md:px-2 md:h-20">
+                <td className="px-6 py-2 md:px-[2vw] md:py-[.7vw]">{i + 1}</td>
+                <td className="text-sm pr-6 md:pr-[2vw]">{data.amount}</td>
+                <td className="text-sm pr-6 md:pr-[2vw]">Running</td>
+                <td className="text-sm pr-6 md:pr-[2vw]">{data.roi}%</td>
+                <td className="text-sm pr-6 md:pr-[2vw]">
                   {data.duration} days
                 </td>
-                <td className="py-4 px-1 border border-gray-400 text-sm md:text-sm md:w-[8%] md:px-2">
-                  {data.created_at}
+                <td className="text-sm pr-6 md:pr-[2vw] whitespace-nowrap">
+                  {new Date(data.created_at).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: true,
+                  })}
                 </td>
               </tr>
             );

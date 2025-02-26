@@ -1,5 +1,5 @@
 export const tnxHead = [
-  "Id",
+  "S/N",
   "Details",
   "Amount",
   "Status",

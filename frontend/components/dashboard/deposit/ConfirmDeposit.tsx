@@ -1,16 +1,16 @@
-import { get_owner_wallet, sendProof } from "@/api/transactions";
+import { deposit, get_owner_wallet, sendProof } from "@/api/transactions";
 import Button from "@/components/Button";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { setScript } from "../overview/Overview";
+import { MultiType } from "@/api/type";
 
 export default function ConfirmDeposit() {
   const [paymentProof, setPaymentProof] = useState<File | null>(null);
   const [walletAddress, setWalletAddress] = useState<string>("");
   const [qrcode, setQrcode] = useState<string>("");
   const [name, setName] = useState<string>("");
-  const [id, setId] = useState<number | null>(null);
   const [amount, setAmount] = useState<number | null>(null);
   const search = useSearchParams();
   const containerRef = useRef(null);
@@ -22,7 +22,9 @@ export default function ConfirmDeposit() {
     }
     try {
       // Logic to handle proof submission
-      await sendProof(id || -1, paymentProof);
+      const send = await deposit({ amount });
+      if (!send) throw new Error("failed");
+      await sendProof((send as MultiType).id || -1, paymentProof);
       toast.success("Payment proof submitted successfully.");
       setTimeout(() => {
         window.location.href = "/dashboard?page=overview";
@@ -39,16 +41,15 @@ export default function ConfirmDeposit() {
 
   async function handleParams() {
     const name = search.get("name");
-    const id = search.get("id");
+    // const id = search.get("id");
     const amount = search.get("amount");
 
-    if (!id || !name || !amount) {
+    if (!name || !amount) {
       toast.error("Incorrect URL");
       window.location.href = "/dashboard?page=overview";
       return;
     }
 
-    setId(Number(id));
     setName(name);
     setAmount(Number(amount));
 

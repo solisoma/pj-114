@@ -169,7 +169,7 @@ export default function SignUp() {
                             type="text"
                             placeholder="Email address"
                             {...field}
-                            className="outline-none p-2 bg-[inherit] w-full md:p-[.6vw] md:placeholder:text-[.8vw] md:text-[.8vw]"
+                            className="text-black outline-none p-2 bg-[inherit] w-full md:p-[.6vw] md:placeholder:text-[.8vw] md:text-[.8vw]"
                           />
                         </div>
                       )}

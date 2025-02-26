@@ -41,3 +41,25 @@ body {
   display: none;
   /* Hide the thumb */
 }
+
+.live-trade-table th:nth-child(n + 2) {
+  position: sticky;
+  top: 0;
+  background-color: inherit;
+  z-index: 6;
+}
+
+.live-trade-table th:nth-child(1) {
+  position: sticky;
+  left: 0;
+  top: 0;
+  background-color: inherit;
+  z-index: 8;
+}
+
+.live-trade-table td:nth-child(1) {
+  position: sticky;
+  left: 0;
+  background-color: inherit;
+  z-index: 6;
+}

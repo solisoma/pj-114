@@ -23,7 +23,7 @@ export default function PlanBox({
       <div className="bg-[#FAFAFB] text-center rounded-tl-lg rounded-tr-lg py-2">
         <h2 className="text-black font-bold text-xl">{plan}</h2>
       </div>
-      <div className="flex flex-col items-center gap-4 rounded-br-lg rounded-bl-lg shadow-md px-6 py-4 shadow-[#1E222D] bg-[#1E222D]">
+      <div className="flex flex-col items-center gap-4 rounded-br-lg rounded-bl-lg shadow-md px-6 py-4 shadow-[#1E222D] bg-[#1E222D] text-sm">
         <div className="flex justify-between w-[80%]">
           <div>
             <h2 className="font-bold text-2xl text-center">{interest}</h2>

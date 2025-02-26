@@ -94,11 +94,11 @@ export const boxThreeDeet2: {
 }[] = [
   {
     heading: "Professionally managed investment portfolios",
-    desc: "Time is a precious commodity. Researching investments in ever-changing markets and handling investment transactions are more than most people have time for. Cinpax Trade's Asset Management Solutions program allows you to delegate the daily management of your assets and invest with confidence, knowing that your portfolio is in the hands of experienced professionals.",
+    desc: "Time is a precious commodity. Researching investments in ever-changing markets and handling investment transactions are more than most people have time for. Noble Asset Markets Asset Management Solutions program allows you to delegate the daily management of your assets and invest with confidence, knowing that your portfolio is in the hands of experienced professionals.",
   },
   {
     heading: "OUR APPROACH TO ASSET MANAGEMENT",
-    desc: "At Cinpax Trade we recognize that each investor is unique. That's why we take a personalized approach to developing an asset management strategy by selecting investment portfolios that closely match your goals, tolerance for risk, and expectation for returns.",
+    desc: "At Noble Asset Markets we recognize that each investor is unique. That's why we take a personalized approach to developing an asset management strategy by selecting investment portfolios that closely match your goals, tolerance for risk, and expectation for returns.",
   },
   {
     heading: "To provide you additional value, we strive to:",

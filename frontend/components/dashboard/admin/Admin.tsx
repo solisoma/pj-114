@@ -70,7 +70,7 @@ function Admin() {
             {selectedUsers?.map((user) => (
               <div
                 onClick={() => setUser(user)}
-                className="w-full h-[4rem] border border-gray-400 rounded-lg flex gap-4 items-center justify-start px-4 py-4 cursor-pointer"
+                className="w-full h-[4rem] border border-gray-400 rounded-lg flex gap-4 items-center justify-between px-4 py-4 cursor-pointer"
               >
                 <div className="flex gap-1 items-center">
                   <AiOutlineUser size={30} />

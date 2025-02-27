@@ -5,6 +5,8 @@ import { AiOutlineUser } from "react-icons/ai";
 import { AdminUserTable } from "./AdminUserTable";
 import { User } from "../type";
 import { get_all_users } from "@/api/admin";
+import { toast } from "react-toastify";
+import { FaRegCopy } from "react-icons/fa";
 
 function Admin() {
   const [showUser, setShowUser] = useState(false);
@@ -70,8 +72,21 @@ function Admin() {
                 onClick={() => setUser(user)}
                 className="w-full h-[4rem] border border-gray-400 rounded-lg flex gap-4 items-center justify-start px-4 py-4 cursor-pointer"
               >
-                <AiOutlineUser size={30} />
-                <p className="text-xl">{user.name}</p>
+                <div className="flex gap-1 items-center">
+                  <AiOutlineUser size={30} />
+                  <p className="text-xl">{user.name}</p>
+                </div>
+
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.navigator.clipboard.writeText(user.email);
+                    toast.success("User email copied to clipboard");
+                  }}
+                  className="p-1"
+                >
+                  <FaRegCopy size={17} color="white" />
+                </button>
               </div>
             ))}
           </ContentPage>

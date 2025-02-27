@@ -1,7 +1,6 @@
 /*eslint-disable */
 import { adminTableHeaders } from "@/utils/table";
 import { PageWrapper } from "../PageWrapper";
-import { HeaderWrapper } from "./HeaderWrapper";
 import { User } from "../type";
 import { useEffect, useRef, useState } from "react";
 import { change_user_status, get_user, update_balance } from "@/api/admin";

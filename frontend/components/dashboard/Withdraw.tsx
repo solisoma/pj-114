@@ -3,6 +3,7 @@ import { LogOutActionType } from "./type";
 import Button from "../Button";
 import { toast } from "react-toastify";
 import { withdraw } from "@/api/transactions";
+import { wallets } from "@/utils/info";
 
 export function Withdraw({
   closeModal,
@@ -12,6 +13,7 @@ export function Withdraw({
   const [loading, setLoading] = useState(false);
   const [amount, setAmount] = useState<number | undefined>();
   const [walletAddress, setWalletAddress] = useState<string>("");
+  const [name, setName] = useState<string>("");
 
   const isValidAmount = amount && amount > 0;
   const isValidWallet =
@@ -20,6 +22,11 @@ export function Withdraw({
   async function handleConfirm() {
     if (!isValidAmount) {
       toast.error("Please enter a valid withdrawal amount.");
+      return;
+    }
+
+    if (!name) {
+      toast.error("Please select the wallet type.");
       return;
     }
 
@@ -67,13 +74,28 @@ export function Withdraw({
           />
           <p className="flex justify-end">{balance} USD</p>
         </div>
+        <div className="mb-6">
+          <h2 className="text-xl font-bold text-[#ffffff] mb-4">
+            Select Wallet Type
+          </h2>
+          <select
+            className="w-full border rounded-md px-4 py-2 text-gray-800"
+            value={name}
+            onChange={({ target }) => setName(target.value)}
+          >
+            <option disabled value="">
+              Wallet Type
+            </option>
+            {wallets.map((wallet, i) => (
+              <option key={i} value={wallet.value}>
+                {wallet.name}
+              </option>
+            ))}
+          </select>
+        </div>
         <h2 className="text-xl font-bold text-[#ffffff] mb-4">
           Enter Your Wallet Address
         </h2>
-        <p className="text-[#A0AEC0] mb-6">
-          Ensure that your wallet address is correct and that you are using USDT
-          (TRC20), as any errors may result in the loss of your funds.
-        </p>
         <input
           type="text"
           placeholder="Enter wallet address"

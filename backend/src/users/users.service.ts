@@ -70,7 +70,7 @@ export class UsersService implements IUsersService {
       throw new HttpException('Not allowed', HttpStatus.FORBIDDEN);
 
     return await this.usersRepository.find({
-      select: ['id', 'name'],
+      select: ['id', 'name', 'email'],
     });
   }
 

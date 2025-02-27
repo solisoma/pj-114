@@ -81,7 +81,8 @@ export function AddWallet({
             className="w-full px-4 py-2 border rounded-md text-gray-800"
           />
           <p className="text-[#A0AEC0] text-sm mt-2">
-            * Please ensure the wallet address is for USDT (TRC20).
+            * Please ensure the wallet address is accurate and correspond to the
+            correct network.
           </p>
         </div>
         {isWallet ? (

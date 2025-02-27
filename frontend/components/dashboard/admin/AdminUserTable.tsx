@@ -200,7 +200,7 @@ export const AdminUserTable = ({
             </div>
           </div>
 
-          <div className="w-full overflow-x-scroll remove-scrollbar live-trade-table border border-[#292B37] rounded-lg">
+          <div className="w-full overflow-x-scroll remove-scrollbar live-trade-table border border-[#292B37] rounded-lg py-10">
             <table className="min-w-full border-collapse">
               <thead className="rounded-lg">
                 <tr className="text-[1rem] bg-[#292B37]">

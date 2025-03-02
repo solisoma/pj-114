@@ -26,7 +26,9 @@ export const TnxTable = ({ tableData }: { tableData: any }) => {
                 }  md:text-[1.3vw]`}
                 key={data.id}
               >
-                <td className="px-6 py-2 md:px-[2vw] md:py-[.7vw]">{i + 1}</td>
+                <td className="px-6 py-2 md:px-[2vw] md:py-[.7vw]">
+                  {tableData.length - 1}
+                </td>
                 <td className="text-sm pr-6 md:pr-[2vw]">{data.service}</td>
                 <td className="text-sm pr-6 md:pr-[2vw]">{data.amount}</td>
                 <td className="text-sm pr-6 md:pr-[2vw]">{data.status}</td>

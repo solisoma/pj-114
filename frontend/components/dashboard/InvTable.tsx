@@ -27,7 +27,7 @@ export const InvTable = ({ tableData }: { tableData: any }) => {
                 key={data.id}
               >
                 <td className="px-6 py-2 md:px-[2vw] md:py-[.7vw]">
-                  {tableData.length - 1}
+                  {tableData.length - i}
                 </td>
                 <td className="text-sm pr-6 md:pr-[2vw]">{data.amount}</td>
                 <td className="text-sm pr-6 md:pr-[2vw]">Running</td>

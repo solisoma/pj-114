@@ -242,7 +242,7 @@ export const AdminUserTable = ({
                         }}
                         className="px-6 py-2 md:px-[2vw] md:py-[.7vw]"
                       >
-                        {trxs.length - 1}
+                        {trxs.length - i}
                       </td>
                       <td className="text-sm pr-6 md:pr-[2vw]">
                         {trx.service}

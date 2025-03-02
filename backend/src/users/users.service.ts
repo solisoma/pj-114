@@ -26,6 +26,7 @@ import {
 import {
   Category,
   Transaction,
+  TrxStatus,
 } from '@app/typeorm/entities/transaction.entity';
 import { TransactionService } from '@app/transaction/transaction.service';
 import { Referral } from '@app/typeorm/entities/referral.entity';
@@ -221,6 +222,7 @@ export class UsersService implements IUsersService {
           await this.trxService.createTrx(userId, {
             service: `Lost`,
             amount,
+            status: TrxStatus.Successful,
             category: Category.PNL,
           });
         break;
@@ -234,6 +236,7 @@ export class UsersService implements IUsersService {
             await this.trxService.createTrx(userId, {
               service: `Profit`,
               amount,
+              status: TrxStatus.Successful,
               category: Category.PNL,
             });
         } else {

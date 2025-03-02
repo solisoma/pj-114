@@ -20,7 +20,7 @@ export const boxThreeDeet: {
     bg: "bg-black",
     txtColor: "",
     heading: "ESG",
-    desc: "ESG AT algorithm stock trade At algorithm stock trade, we aim to accelerate the evolution of ESG - on behalf of clients, investors, communities and all the stakeholders - to make a positive impact on people and the planet. With our size, scale and significance at the heart of the financial system, we touch many points along the financial value chain-giving us an unparalleled view of the continuous shifts in ESG. We're uniquely positioned to collaborate with clients to drive transparency, insight and impact.",
+    desc: "ESG at Noble Asset Markets trade, is aimed to accelerate the evolution of ESG - on behalf of clients, investors, communities and all the stakeholders - to make a positive impact on people and the planet. With our size, scale and significance at the heart of the financial system, we touch many points along the financial value chain-giving us an unparalleled view of the continuous shifts in ESG. We're uniquely positioned to collaborate with clients to drive transparency, insight and impact.",
   },
   {
     bg: "bg-white",

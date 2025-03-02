@@ -50,6 +50,7 @@ export interface InfoType {
 export interface UpdateBalanceType {
   userId: number;
   amount: number;
+  pnl: boolean;
   direction: string;
 }
 

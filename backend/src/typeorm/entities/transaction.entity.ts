@@ -15,6 +15,7 @@ export enum Category {
   Deposit = 'deposit',
   CopyTrade = 'copytrade',
   Plan = 'plan',
+  PNL = 'PnL',
 }
 
 @Entity()

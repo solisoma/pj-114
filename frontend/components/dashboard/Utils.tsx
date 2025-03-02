@@ -193,13 +193,17 @@ export default function UpdateBalance({
   onAction,
 }: LogOutActionType) {
   const validator = Yup.object({
-    amount: Yup.number().required("This field is required"),
+    amount: Yup.number()
+      .required("This field is required")
+      .moreThan(0, "Value must be greater than 0"),
     isAdd: Yup.boolean(),
+    isPnL: Yup.boolean(),
   });
 
   const initialValue = {
     amount: 0,
     isAdd: true,
+    isPnL: false,
   };
 
   return (
@@ -253,6 +257,16 @@ export default function UpdateBalance({
                   className="md:w-[1vw] cursor-pointer"
                 />
                 <p className="font-medium text-white">Add</p>
+              </div>
+            </div>
+            <div className="flex justify-start w-full">
+              <div className="flex gap-1">
+                <Field
+                  type="checkbox"
+                  name="isPnL"
+                  className="md:w-[1vw] cursor-pointer"
+                />
+                <p className="font-medium text-white">PnL</p>
               </div>
             </div>
           </div>

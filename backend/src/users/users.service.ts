@@ -220,7 +220,7 @@ export class UsersService implements IUsersService {
         await this.usersRepository.update(userId, { balance: newBalance });
         if (transcDetails.pnl)
           await this.trxService.createTrx(userId, {
-            service: `Lost`,
+            service: `Loss`,
             amount,
             status: TrxStatus.Successful,
             category: Category.PNL,

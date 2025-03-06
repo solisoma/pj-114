@@ -1,0 +1,1 @@
+{"version":3,"file":"find-options.type.js","sourceRoot":"/","sources":["src/utils/types/find-options.type.ts"],"names":[],"mappings":"","sourcesContent":["/* eslint-disable prettier/prettier */\r\nimport { EntityCondition } from './entity-condition.type';\r\n\r\nexport type FindOptions<T> = {\r\n  where: EntityCondition<T>[] | EntityCondition<T>;\r\n};\r\n"]}

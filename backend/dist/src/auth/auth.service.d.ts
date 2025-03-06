@@ -1,0 +1,42 @@
+import { AuthEmailLoginDto } from './dtos/auth-email-login.dto';
+import { LoginResponseType } from './types/login-response.type';
+import { ISessionService } from 'src/session/session';
+import { ConfigService } from '@nestjs/config';
+import { AllConfigType } from 'src/config/config.type';
+import { JwtService } from '@nestjs/jwt';
+import { IAuthService } from './auth';
+import { AuthRegisterDto } from './dtos/auth-register.dto';
+import { JwtPayloadType } from './strategies/types/jwt-payload.type';
+import { NullableType } from 'src/utils/types/nullable.type';
+import { IForgotPasswordService } from 'src/forgot-password/forgot-password';
+import { JwtRefreshPayloadType } from './strategies/types/jwt-refresh-payload.type';
+import { User } from 'src/typeorm/entities/user.entity';
+import { IUsersService } from 'src/users/users';
+import { EncryptService } from 'src/encrypt/encrypt.service';
+import { Transaction } from '@app/typeorm/entities/transaction.entity';
+import { Repository } from 'typeorm';
+import { Referral } from '@app/typeorm/entities/referral.entity';
+export declare class AuthService implements IAuthService {
+    private readonly trxRepository;
+    private readonly refRepository;
+    private readonly usersService;
+    private readonly sessionService;
+    private readonly forgotPasswordService;
+    private readonly encryptService;
+    private readonly configService;
+    private readonly jwtService;
+    constructor(trxRepository: Repository<Transaction>, refRepository: Repository<Referral>, usersService: IUsersService, sessionService: ISessionService, forgotPasswordService: IForgotPasswordService, encryptService: EncryptService, configService: ConfigService<AllConfigType>, jwtService: JwtService);
+    validateLogin(loginDto: AuthEmailLoginDto): Promise<LoginResponseType>;
+    registerUser(registerDto: AuthRegisterDto): Promise<void>;
+    status(userJwtPayload: JwtPayloadType): Promise<NullableType<User | {
+        totalDeposits: number;
+        totalWithdrawals: number;
+    }>>;
+    confirmEmail(hash: string): Promise<void>;
+    forgotPassword(email: string): Promise<void>;
+    resetPassword(hash: string, password: string): Promise<void>;
+    refreshToken(data: Pick<JwtRefreshPayloadType, 'sessionId'>): Promise<Omit<LoginResponseType, 'user'>>;
+    logout(data: Pick<JwtRefreshPayloadType, 'sessionId'>): Promise<void>;
+    encryptToken(): Promise<string>;
+    private getTokensData;
+}

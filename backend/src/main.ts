@@ -11,7 +11,7 @@ import { DatabaseInitializerService } from './database/database-initializer.serv
 import validationOptions from './utils/validation-options';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { logger: false });
   app.enableCors({
     origin: [
       'http://localhost:3002',

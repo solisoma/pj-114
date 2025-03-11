@@ -107,7 +107,7 @@ export default function ConfirmDeposit() {
           </div>
           <p className="text-[#A0AEC0] font-bold text-xl text-center mb-4">
             You are about to make a deposit of{" "}
-            <span className="text-[#FFAE1F]">{`${amount} ${name}`}</span> using
+            <span className="text-[#FFAE1F]">{`$${amount}`}</span> using
             your selected payment method
           </p>
           <div className="flex w-full justify-center mb-4">

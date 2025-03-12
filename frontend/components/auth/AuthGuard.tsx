@@ -23,7 +23,6 @@ function AuthGuard({ children }: AuthGuardType) {
         if (hash) {
           const data = await decrypt(decodeURIComponent(hash));
           if (!data.ttl || Date.now() > data.ttl) throw new Error("expired");
-          data.id.tokenExpires *= 1000;
           await setSecureStorage("token", data.id);
         } else {
           localStorage.setItem("path", path);
@@ -31,8 +30,10 @@ function AuthGuard({ children }: AuthGuardType) {
           return;
         }
       } else {
-        console.log(active);
-        if (Date.now() > active.tokenExpires) {
+        if (
+          Date.now() > active.tokenExpires ||
+          String(active.tokenExpires).length === 16
+        ) {
           try {
             await refreshToken();
           } catch {

@@ -24,7 +24,7 @@ export async function refreshToken(): Promise<MultiType> {
   const data: MultiType = await req.json();
   token.token = data.token;
   token.refreshToken = data.refreshToken;
-  token.tokenExpires = data.tokenExpires * 1000;
+  token.tokenExpires = data.tokenExpires;
   await setSecureStorage("token", token);
   return token;
 }

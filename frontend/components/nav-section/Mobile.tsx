@@ -34,7 +34,7 @@ export default function MobileNav({
     >
       <div className="flex items-center justify-between px-2 bg-[#1F2127] w-[70%] h-[15%]">
         <Link href="/">
-          <img src="/clans-logo.png" className="w-[3rem]" />
+          <img src="/logo.png" className="w-[3rem]" />
         </Link>
         <button onClick={() => setShowDropDown(false)}>
           <RxCross2 color="white" size={32} />

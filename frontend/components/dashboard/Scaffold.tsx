@@ -75,7 +75,7 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
             <div className="bg-background h-full w-[65%] md:w-full px-[1rem] md:px-[1.4vw] border-r">
               <div className="h-[15%] md:py-[.9vw]">
                 <a href="/" className="flex justify-center items-center w-full">
-                  <img src="/clans-logo.png" className="w-[5rem] h-[5rem]" />
+                  <img src="/logo.png" className="w-[5rem] h-[5rem]" />
                 </a>
               </div>
               <div className="flex h-[83%] flex-col gap-6 md:gap-[2.4vw] overflow-y-scroll remove-scrollbar">
@@ -110,7 +110,7 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
             <div className="fixed z-[99] top-0 w-full md:w-[82%] flex justify-between items-center bg-background h-[10%] p-6">
               <div className="flex items-center gap-3 md:hidden">
                 <Link href="/">
-                  <img src="/clans-logo.png" className="md:w-[4vw] w-[3rem]" />
+                  <img src="/logo.png" className="md:w-[4vw] w-[3rem]" />
                 </Link>
                 <button
                   onClick={() => setShowMobileMenu(true)}

@@ -64,7 +64,7 @@ export default function page() {
           </div>
           <div className="flex flex-col gap-4 mb-[3rem] md:justify-between md:flex-row">
             <div className="flex-1 rounded-lg flex justify-center bg-black items-center min-h-[30vh]">
-              <img src="/clans-logo.png" className="w-[30%]" />
+              <img src="/logo.png" className="w-[30%]" />
             </div>
             <div className="flex-1">
               <BoxThree

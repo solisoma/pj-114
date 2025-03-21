@@ -49,11 +49,11 @@ export default function UpdateTrx({
         <h2 className="font-bold text-xl mb-2">Status</h2>
         <select
           className="w-full border rounded-md px-4 mb-6 py-2 text-gray-800"
-          value={initialValue.status}
+          value={status}
           onChange={({ target }) => setStatus(target.value)}
         >
           <option disabled selected value="">
-            Payment Method
+            Payment Status
           </option>
           {trxStatus.map((trx, i) => (
             <option key={i} value={trx.value}>

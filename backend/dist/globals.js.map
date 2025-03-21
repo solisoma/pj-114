@@ -1,1 +1,0 @@
-{"version":3,"file":"globals.js","sourceRoot":"/","sources":["globals.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AACA,2CAA6B;AAEhB,QAAA,YAAY,GAAG,IAAI,CAAC,OAAO,CAAC,SAAS,EAAE,IAAI,CAAC,CAAC","sourcesContent":["/* eslint-disable prettier/prettier */\r\nimport * as path from 'path';\r\n\r\nexport const PROJECT_ROOT = path.resolve(__dirname, '..');\r\n"]}

@@ -1,1 +1,0 @@
-{"version":3,"file":"or-never.type.js","sourceRoot":"/","sources":["src/utils/types/or-never.type.ts"],"names":[],"mappings":"","sourcesContent":["/* eslint-disable prettier/prettier */\r\nexport type OrNeverType<T> = T | never;\r\n"]}

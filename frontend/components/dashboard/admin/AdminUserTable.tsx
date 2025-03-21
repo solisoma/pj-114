@@ -241,7 +241,7 @@ export const AdminUserTable = ({
                             type: "update-status",
                           });
                         }}
-                        className="px-6 py-2 md:px-[2vw] md:py-[.7vw]"
+                        className="cursor-pointer px-6 py-2 md:px-[2vw] md:py-[.7vw]"
                       >
                         {trxs.length - i}
                       </td>

@@ -9,13 +9,24 @@ import { MultiType } from "@/api/type";
 import { get_withdrawals } from "@/api/transactions";
 import { TnxTable } from "../TnxTable";
 
-export default function Withdrawals({ userDetail }: { userDetail: User }) {
+export default function Withdrawals({
+  userDetail,
+  setUser,
+}: {
+  userDetail: User;
+  setUser?: () => void;
+}) {
   const [showLogOut, setShowLogoOut] = useState(false);
   const [transactions, setTransactions] = useState<MultiType[] | null>();
 
   async function getTrxs() {
     const trxs = await get_withdrawals();
     setTransactions(trxs);
+  }
+
+  async function onWithdraw() {
+    setUser!();
+    getTrxs();
   }
 
   useEffect(() => {
@@ -95,7 +106,7 @@ export default function Withdrawals({ userDetail }: { userDetail: User }) {
         setShow={setShowLogoOut}
         classes="bg-[#1E222D] w-[90%] h-auto shadow-2xl md:p-[.1vw] rounded-lg md:w-[35%]"
       >
-        <Withdraw onAction={getTrxs} balance={userDetail!.balance} />
+        <Withdraw onAction={onWithdraw} balance={userDetail!.balance} />
       </Modal>
     </>
   );

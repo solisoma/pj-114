@@ -24,6 +24,11 @@ export class CreateTrxDto {
   @IsNotEmpty()
   amount: number;
 
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  walletAddress?: string;
+
   @IsEnum(TrxStatus)
   @IsOptional()
   status?: TrxStatus;

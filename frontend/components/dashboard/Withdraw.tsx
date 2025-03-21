@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { SetStateAction, useState } from "react";
 import { LogOutActionType } from "./type";
 import Button from "../Button";
 import { toast } from "react-toastify";
@@ -9,15 +9,15 @@ export function Withdraw({
   closeModal,
   onAction,
   balance,
-}: LogOutActionType & { balance: string }): React.JSX.Element {
+}: LogOutActionType & {
+  balance: string;
+}): React.JSX.Element {
   const [loading, setLoading] = useState(false);
   const [amount, setAmount] = useState<number | undefined>();
   const [walletAddress, setWalletAddress] = useState<string>("");
   const [name, setName] = useState<string>("");
 
   const isValidAmount = amount && amount > 0;
-  const isValidWallet =
-    walletAddress.length > 5 && walletAddress.startsWith("T");
 
   async function handleConfirm() {
     if (!isValidAmount) {
@@ -30,8 +30,8 @@ export function Withdraw({
       return;
     }
 
-    if (!isValidWallet) {
-      toast.error("Please enter a valid USDT(TRC20) wallet address.");
+    if (!walletAddress) {
+      toast.error("Please enter your wallet address.");
       return;
     }
 
@@ -42,7 +42,7 @@ export function Withdraw({
 
     try {
       setLoading(true);
-      const send = await withdraw({ amount });
+      const send = await withdraw({ amount, walletAddress });
       if (!send) throw new Error("Transaction failed. Please try again.");
       toast.success("Withdrawal request submitted successfully.");
       setLoading(false);
@@ -96,13 +96,18 @@ export function Withdraw({
         <h2 className="text-xl font-bold text-[#ffffff] mb-4">
           Enter Your Wallet Address
         </h2>
-        <input
-          type="text"
-          placeholder="Enter wallet address"
-          value={walletAddress}
-          onChange={(e) => setWalletAddress(e.target.value)}
-          className="w-full px-4 py-2 border rounded-md text-gray-800 mb-6"
-        />
+        <div>
+          <input
+            type="text"
+            placeholder="Enter wallet address"
+            value={walletAddress}
+            onChange={(e) => setWalletAddress(e.target.value)}
+            className="w-full px-4 py-2 border rounded-md text-gray-800"
+          />
+          <span className="text-[.7rem] text-[#FFD700]">
+            Double-check the address to avoid losing funds.
+          </span>
+        </div>
         <div className="flex justify-end gap-3">
           <Button
             onClick={() => closeModal!()}
@@ -116,7 +121,7 @@ export function Withdraw({
             text={loading ? "Processing..." : "Confirm"}
             type="background"
             url="#"
-            disabled={loading || !isValidAmount || !isValidWallet}
+            disabled={loading || !isValidAmount}
             style="from-background2 to-background2 py-2 px-4 md:py-3 md:px-6"
           />
         </div>

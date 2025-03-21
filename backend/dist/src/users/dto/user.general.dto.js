@@ -115,6 +115,11 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], DepositDto.prototype, "amount", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], DepositDto.prototype, "walletAddress", void 0);
 class KycDto {
 }
 exports.KycDto = KycDto;

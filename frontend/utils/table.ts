@@ -13,6 +13,7 @@ export const adminTableHeaders = [
   "Service",
   "Amount",
   "Category",
+  "Address",
   "Status",
   "Proof",
   "Created at",

@@ -13,7 +13,7 @@ const express_session_1 = __importDefault(require("express-session"));
 const database_initializer_service_1 = require("./database/database-initializer.service");
 const validation_options_1 = __importDefault(require("./utils/validation-options"));
 async function bootstrap() {
-    const app = await core_1.NestFactory.create(app_module_1.AppModule, { logger: false });
+    const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.enableCors({
         origin: [
             'http://localhost:3002',

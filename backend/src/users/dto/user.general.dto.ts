@@ -91,6 +91,10 @@ export class DepositDto {
   @IsNumber()
   @IsNotEmpty()
   amount: number;
+
+  @IsString()
+  @IsOptional()
+  walletAddress?: string;
 }
 
 export class KycDto {

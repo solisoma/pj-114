@@ -22,7 +22,7 @@ export default function ConfirmDeposit() {
     }
     try {
       // Logic to handle proof submission
-      const send = await deposit({ amount });
+      const send = await deposit({ amount, walletAddress });
       if (!send) throw new Error("failed");
       await sendProof((send as MultiType).id || -1, paymentProof);
       toast.success("Payment proof submitted successfully.");
@@ -107,8 +107,8 @@ export default function ConfirmDeposit() {
           </div>
           <p className="text-[#A0AEC0] font-bold text-xl text-center mb-4">
             You are about to make a deposit of{" "}
-            <span className="text-[#FFAE1F]">{`$${amount}`}</span> using
-            your selected payment method
+            <span className="text-[#FFAE1F]">{`$${amount}`}</span> using your
+            selected payment method
           </p>
           <div className="flex w-full justify-center mb-4">
             <div className="bg-white w-[50%] h-[30vh] p-2 rounded-lg md:w-[40%]">

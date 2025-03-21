@@ -267,20 +267,28 @@ export class UsersService implements IUsersService {
   }
 
   async deposit(id: number, details: DepositDto): Promise<Transaction> {
-    const { amount } = details;
+    const { amount, walletAddress } = details;
     return await this.trxService.createTrx(id, {
       service: 'Deposit',
       category: Category.Deposit,
       amount,
+      walletAddress: walletAddress || '',
     });
   }
 
   async withdraw(id: number, details: DepositDto): Promise<Transaction> {
-    const { amount } = details;
+    const { amount, walletAddress } = details;
+    const isUser = await this.usersRepository.findOne({ where: { id } });
+    if (!isUser)
+      throw new HttpException("User doesn't exist", HttpStatus.NOT_FOUND);
+
+    const newBalance = isUser.balance - amount;
+    await this.usersRepository.update(id, { balance: newBalance });
     return await this.trxService.createTrx(id, {
       service: 'Withdrawal',
       category: Category.Withdrawal,
       amount,
+      walletAddress: walletAddress || '',
     });
   }
 

@@ -69,6 +69,11 @@ export default function Overview({
     }
   }
 
+  async function onWithdraw() {
+    setUser!();
+    getTrxs();
+  }
+
   async function getTrxs() {
     const trxs = await get_trxs(true);
     setTransactions(trxs);
@@ -319,7 +324,7 @@ export default function Overview({
         {action === "deposit" ? (
           <Deposit />
         ) : (
-          <Withdraw onAction={getTrxs} balance={userDetail!.balance} />
+          <Withdraw onAction={onWithdraw} balance={userDetail!.balance} />
         )}
       </Modal>
     </>

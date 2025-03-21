@@ -40,6 +40,7 @@ export declare class TransferDto {
 }
 export declare class DepositDto {
     amount: number;
+    walletAddress?: string;
 }
 export declare class KycDto {
     front?: string;

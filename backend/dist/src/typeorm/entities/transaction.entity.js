@@ -56,6 +56,10 @@ __decorate([
     __metadata("design:type", String)
 ], Transaction.prototype, "proof", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: String, nullable: true }),
+    __metadata("design:type", String)
+], Transaction.prototype, "walletAddress", void 0);
+__decorate([
     (0, typeorm_1.Column)({ type: 'decimal', precision: 15, scale: 4 }),
     __metadata("design:type", Number)
 ], Transaction.prototype, "amount", void 0);

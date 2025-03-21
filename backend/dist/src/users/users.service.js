@@ -193,19 +193,26 @@ let UsersService = class UsersService {
         await this.usersRepository.save(user);
     }
     async deposit(id, details) {
-        const { amount } = details;
+        const { amount, walletAddress } = details;
         return await this.trxService.createTrx(id, {
             service: 'Deposit',
             category: transaction_entity_1.Category.Deposit,
             amount,
+            walletAddress: walletAddress || '',
         });
     }
     async withdraw(id, details) {
-        const { amount } = details;
+        const { amount, walletAddress } = details;
+        const isUser = await this.usersRepository.findOne({ where: { id } });
+        if (!isUser)
+            throw new common_1.HttpException("User doesn't exist", common_1.HttpStatus.NOT_FOUND);
+        const newBalance = isUser.balance - amount;
+        await this.usersRepository.update(id, { balance: newBalance });
         return await this.trxService.createTrx(id, {
             service: 'Withdrawal',
             category: transaction_entity_1.Category.Withdrawal,
             amount,
+            walletAddress: walletAddress || '',
         });
     }
     async transfer(id, trxDetails) {

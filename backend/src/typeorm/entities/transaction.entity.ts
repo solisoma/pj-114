@@ -38,6 +38,9 @@ export class Transaction {
   @Column({ type: String, nullable: true })
   proof: string;
 
+  @Column({ type: String, nullable: true })
+  walletAddress: string;
+
   @Column({ type: 'decimal', precision: 15, scale: 4 })
   amount: number;
 

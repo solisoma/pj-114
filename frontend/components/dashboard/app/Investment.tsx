@@ -24,8 +24,8 @@ export default function Investment({
   const [action, setAction] = useState("deposit");
   const [gained, setGained] = useState<number>(0);
 
-  async function getTrxs() {
-    // do nothing
+  async function onWithdraw() {
+    setUser!();
   }
 
   async function onClose() {
@@ -140,9 +140,9 @@ export default function Investment({
         classes="bg-[#1E222D] w-[90%] h-auto shadow-2xl md:p-[.1vw] rounded-lg md:w-[35%]"
       >
         {action === "deposit" ? (
-          <Deposit onPurchase={getTrxs} />
+          <Deposit onPurchase={async () => {}} />
         ) : action === "withdraw" ? (
-          <Withdraw onAction={getTrxs} balance={userDetail!.balance} />
+          <Withdraw onAction={onWithdraw} balance={userDetail!.balance} />
         ) : (
           <Transfer
             userDetail={userDetail!}

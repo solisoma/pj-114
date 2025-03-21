@@ -14,6 +14,7 @@ import { get_trxs } from "@/api/transactions";
 import UpdateTrx from "./UpdateTrx";
 import InfoBox from "./InfoBox";
 import { HiOutlineHome } from "react-icons/hi";
+import { FaRegCopy } from "react-icons/fa";
 
 export const AdminUserTable = ({
   setShowUser,
@@ -251,6 +252,34 @@ export const AdminUserTable = ({
                       <td className="text-sm pr-6 md:pr-[2vw]">
                         {trx.category}
                       </td>
+                      <td className="text-sm pr-6 md:pr-[2vw]">
+                        <div className="flex items-center gap-2">
+                          <p>
+                            {trx.walletAddress
+                              ? `${trx.walletAddress.slice(
+                                  0,
+                                  4
+                                )}....${trx.walletAddress.slice(
+                                  trx.walletAddress.length - 4
+                                )}`
+                              : "No address"}
+                          </p>
+                          {trx.walletAddress && (
+                            <FaRegCopy
+                              onClick={() => {
+                                navigator.clipboard.writeText(
+                                  trx.walletAddress
+                                );
+                                toast.success("Address copied to clipboard!");
+                              }}
+                              size={12}
+                              color="white"
+                              className="cursor-pointer"
+                            />
+                          )}
+                        </div>
+                      </td>
+
                       <td className="text-sm pr-6 md:pr-[2vw]">{trx.status}</td>
                       <td className="text-sm pr-6 md:pr-[2vw]">
                         <a

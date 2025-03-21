@@ -20,6 +20,7 @@ export declare class Transaction {
     status: TrxStatus;
     service: string;
     proof: string;
+    walletAddress: string;
     amount: number;
     created_at: Date;
 }

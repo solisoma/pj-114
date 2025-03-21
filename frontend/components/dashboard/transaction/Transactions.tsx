@@ -8,7 +8,13 @@ import { Deposit } from "../Deposit";
 import { Withdraw } from "../Withdraw";
 import { User } from "../type";
 
-export default function Transactions({ userDetail }: { userDetail?: User }) {
+export default function Transactions({
+  userDetail,
+  setUser,
+}: {
+  userDetail?: User;
+  setUser?: () => void;
+}) {
   const [transactions, setTransactions] = useState<MultiType[] | null>();
   const [showLogOut, setShowLogoOut] = useState(false);
   const [action, setAction] = useState("deposit");
@@ -16,6 +22,11 @@ export default function Transactions({ userDetail }: { userDetail?: User }) {
   async function getTrxs() {
     const trxs = await get_trxs(true);
     setTransactions(trxs);
+  }
+
+  async function onWithdraw() {
+    setUser!();
+    getTrxs();
   }
 
   useEffect(() => {
@@ -63,7 +74,7 @@ export default function Transactions({ userDetail }: { userDetail?: User }) {
         {action === "deposit" ? (
           <Deposit />
         ) : (
-          <Withdraw onAction={getTrxs} balance={userDetail!.balance} />
+          <Withdraw onAction={onWithdraw} balance={userDetail!.balance} />
         )}
       </Modal>
     </>

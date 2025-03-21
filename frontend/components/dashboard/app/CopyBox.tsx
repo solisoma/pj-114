@@ -34,17 +34,7 @@ export default function CopyBox({
           </p>
           <LuLockKeyhole size={15} />
         </button>
-        <p className="text-sm">TitanTrust does not own this master.</p>
-        <div className="flex flex-col justify-between w-full gap-4 text-sm md:flex-row">
-          <div className="flex-1 flex justify-between">
-            <p>ROI:</p>
-            <p>{details.ROI}%</p>
-          </div>
-          <div className="flex-1 flex justify-between">
-            <p>Accuracy</p>
-            <p>{details.Accuracy}</p>
-          </div>
-        </div>
+        {/* <p className="text-sm">TitanTrust does not own this master.</p> */}
         <div className="flex flex-col justify-between w-full gap-4 text-sm md:flex-row">
           <div className="flex-1 flex justify-between">
             <p>All Profits:</p>
@@ -66,6 +56,16 @@ export default function CopyBox({
           <div className="flex-1 flex justify-between">
             <p>Account Type:</p>
             <p>Master</p>
+          </div>
+        </div>
+        <div className="flex flex-col justify-between w-full gap-4 text-sm md:flex-row">
+          <div className="flex-1 flex justify-between">
+            <p>Accuracy</p>
+            <p>{details.Accuracy}</p>
+          </div>
+          <div className="flex-1 flex justify-between">
+            {/* <p>ROI:</p>
+            <p>{details.ROI}%</p> */}
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ export declare class CreateTrxDto {
     category: Category;
     service: string;
     amount: number;
+    walletAddress?: string;
     status?: TrxStatus;
 }
 export declare class UpdateTrxDto {

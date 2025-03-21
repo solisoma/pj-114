@@ -7,7 +7,14 @@ export const tnxHead = [
   "Date",
 ];
 export const refHead = ["Id", "User", "Profit", "Date"];
-export const invHead = ["Id", "Amount", "Status", "ROI", "Duration", "Date"];
+export const invHead = [
+  "Id",
+  "Amount",
+  "Status",
+  /*"ROI",*/
+  "Duration",
+  "Date",
+];
 export const adminTableHeaders = [
   "Id",
   "Service",

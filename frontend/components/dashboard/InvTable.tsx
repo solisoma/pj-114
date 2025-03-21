@@ -31,7 +31,7 @@ export const InvTable = ({ tableData }: { tableData: any }) => {
                 </td>
                 <td className="text-sm pr-6 md:pr-[2vw]">{data.amount}</td>
                 <td className="text-sm pr-6 md:pr-[2vw]">Running</td>
-                <td className="text-sm pr-6 md:pr-[2vw]">{data.roi}%</td>
+                {/* <td className="text-sm pr-6 md:pr-[2vw]">{data.roi}%</td> */}
                 <td className="text-sm pr-6 md:pr-[2vw]">
                   {data.duration} days
                 </td>

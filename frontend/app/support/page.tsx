@@ -15,7 +15,7 @@ enum UserPermission {
 }
 
 const customerService: User = {
-  id: Number(process.env.NEXT_PUBLIC_CUSTOMER_ID!),
+  id: Number(process.env.NEXT_PUBLIC_CUSTOMER_SERVICE_ID!),
   name: "Support Agent",
 };
 

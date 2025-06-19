@@ -8,6 +8,7 @@ export enum Routes {
   Plan = 'plan',
   Wallet = 'wallet',
   MyWallet = 'my-wallet',
+  Chat = 'chat',
 }
 
 export enum Services {
@@ -19,3 +20,8 @@ export enum Services {
   MAILS = 'MAILS_SERVICE',
   FORGOT_PASSWORD = 'FORGOT_PASSWORD_SERVICE',
 }
+
+export const Cors = {
+  prodCor: ['https://nobleassetmarkets.com', 'https://quantureinc.netlify.app'],
+  devCor: ['http://localhost:3002'],
+};

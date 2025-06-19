@@ -20,6 +20,7 @@ import { Transaction } from './transaction.entity';
 import { CopyTrade } from './copy.trade.entity';
 import { Plan } from './plan.entity';
 import { CryptoWallet } from './bank.account.entity';
+import { Chat } from './chat.entity';
 
 export enum UserStatus {
   Active = 'active',
@@ -347,6 +348,16 @@ export class User {
     cascade: true,
   })
   transactions: Transaction;
+
+  @OneToMany(() => Chat, (chat) => chat.sender, {
+    cascade: true,
+  })
+  chat_sender: Chat;
+
+  @OneToMany(() => Chat, (chat) => chat.recv, {
+    cascade: true,
+  })
+  chat_recv: Chat;
 
   @OneToMany(() => Plan, (plan) => plan.user, {
     cascade: true,

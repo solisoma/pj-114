@@ -9,17 +9,11 @@ import { AllConfigType } from './config/config.type';
 import session from 'express-session';
 import { DatabaseInitializerService } from './database/database-initializer.service';
 import validationOptions from './utils/validation-options';
+import { IoAdapter } from '@nestjs/platform-socket.io';
+import { Cors } from './utils/constants';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors({
-    origin: [
-      'http://localhost:3002',
-      'https://nobleassetmarkets.com',
-      'https://quantureinc.netlify.app',
-    ],
-    credentials: true,
-  });
 
   app.use(
     session({
@@ -32,6 +26,22 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService<AllConfigType>);
 
+  const allowedOrigins =
+    configService.get<string>('app.nodeEnv', { infer: true }) === 'production'
+      ? Cors.prodCor
+      : Cors.devCor;
+
+  app.enableCors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`CORS not allowed for: ${origin}`));
+      }
+    },
+    credentials: true,
+  });
+
   app.setGlobalPrefix(
     configService.getOrThrow('app.apiPrefix', { infer: true }),
     {
@@ -40,6 +50,8 @@ async function bootstrap() {
   );
 
   app.useGlobalPipes(new ValidationPipe(validationOptions));
+
+  app.useWebSocketAdapter(new IoAdapter(app));
 
   const options = new DocumentBuilder()
     .setTitle('Connector')

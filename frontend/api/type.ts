@@ -58,3 +58,22 @@ export interface ChangeUserStatusType {
   userId: number;
   action: Actions;
 }
+
+export interface User {
+  id: number;
+  name: string;
+}
+
+export interface Chat {
+  id: number;
+  sender: User;
+  recv: User;
+  message: string;
+  sentAt: string;
+}
+
+export interface PartnerPreview {
+  partner: User;
+  lastMessage: string;
+  sentAt: string;
+}

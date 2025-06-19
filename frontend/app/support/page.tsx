@@ -97,6 +97,7 @@ const ChatPage: React.FC = () => {
         (data.sender.id === selectedUser.id || data.recv.id === selectedUser.id)
       ) {
         setChatMessages((prev) => [...prev, data]);
+        getPartnerPreview();
       }
     });
 

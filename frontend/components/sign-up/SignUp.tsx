@@ -393,7 +393,7 @@ export default function SignUp() {
                             setConfirmPassswordField(!confirmPasswordField)
                           }
                         >
-                          {passwordField ? (
+                          {confirmPasswordField ? (
                             <MdOutlineVisibility className="text-tex" />
                           ) : (
                             <AiOutlineEyeInvisible className="text-tex" />

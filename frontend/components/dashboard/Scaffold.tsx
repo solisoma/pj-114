@@ -12,6 +12,7 @@ import { LogOutAction } from "./Utils";
 import { ScaffoldType, User } from "./type";
 import { NavType } from "@/utils/type";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { BiSupport } from "react-icons/bi";
 import PrettyMenu from "./PrettyMenu";
 import Link from "next/link";
 import { ImSwitch } from "react-icons/im";
@@ -94,6 +95,15 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
                     )}
                   </div>
                 </div>
+                <a
+                  href="/support"
+                  target="__blank"
+                  rel="noreferrer noopener"
+                  className={`flex items-center cursor-pointer gap-2 py-1 md:gap-[1.2vw] md:py-[.7vw]`}
+                >
+                  <BiSupport size={24} />
+                  <p className="md:text-[1rem]">Support Agent</p>
+                </a>
                 <div
                   onClick={() => {
                     setShowLogoOut(true);

@@ -21,6 +21,7 @@ import { TransactionModule } from './transaction/transaction.module';
 import { UploadModule } from './upload/upload.module';
 import { WalletModule } from './wallet/wallet.module';
 import { MyWalletModule } from './my-wallet/myWallet.module';
+import { ChatModule } from './chat/chat.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -44,6 +45,7 @@ import { MyWalletModule } from './my-wallet/myWallet.module';
     UploadModule,
     WalletModule,
     MyWalletModule,
+    ChatModule,
   ],
   controllers: [AppController, AuthController, UsersController],
   providers: [DatabaseInitializerService, AppService],

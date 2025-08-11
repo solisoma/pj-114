@@ -5,7 +5,6 @@ import {
   Get,
   HttpCode,
   HttpStatus,
-  Inject,
   Post,
   Query,
   Req,
@@ -14,8 +13,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Routes, Services } from 'src/utils/constants';
-import { IUsersService } from './users';
+import { Routes } from 'src/utils/constants';
 import { AuthGuard } from '@nestjs/passport';
 import { ChangePasswordDto } from './dto/changePasswordDto';
 import {
@@ -35,12 +33,14 @@ import { UpdateTrxDto } from '@app/transaction/dto/transactionDto';
 import { TransactionService } from '@app/transaction/transaction.service';
 import { UploadService } from '@app/upload/upload.service';
 import { Referral } from '@app/typeorm/entities/referral.entity';
+import { UsersService } from './users.service';
+import { UpdatePnLDto } from './dto/updateUserDto';
 
 @ApiTags('User')
 @Controller(Routes.USERS)
 export class UsersController {
   constructor(
-    @Inject(Services.USERS) private readonly userService: IUsersService,
+    private readonly userService: UsersService,
     private readonly trxService: TransactionService,
     private readonly uploadService: UploadService,
   ) {}
@@ -197,15 +197,23 @@ export class UsersController {
   @UseGuards(AuthGuard('jwt'))
   @Post('update/trx')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Update balance' })
+  @ApiOperation({ summary: 'Update status' })
   @ApiResponse({
     status: 204,
-    description: 'Balance updated successfully',
+    description: 'Status updated successfully',
   })
   async updateTrxStatus(
     @Body() transcDetails: UpdateTrxDto,
   ): Promise<Transaction> {
     return this.trxService.updateTrx(transcDetails.id, transcDetails);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('update/pnl')
+  @HttpCode(HttpStatus.OK)
+  async updatePnL(@Body() dto: UpdatePnLDto, @Req() req: any): Promise<void> {
+    const userId = req.user.id;
+    return this.userService.updatePnL(userId, dto);
   }
 
   @UseGuards(AuthGuard('jwt'))

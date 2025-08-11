@@ -29,6 +29,10 @@ export class TransactionService {
     return this.trxRepository.save(trx);
   }
 
+  async findTrx(id: number): Promise<Transaction | null> {
+    return await this.trxRepository.findOne({ where: { id } });
+  }
+
   async updateTrx(
     id: number,
     updateTrxDto: UpdateTrxDto,

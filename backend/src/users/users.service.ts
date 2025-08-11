@@ -30,6 +30,7 @@ import {
 } from '@app/typeorm/entities/transaction.entity';
 import { TransactionService } from '@app/transaction/transaction.service';
 import { Referral } from '@app/typeorm/entities/referral.entity';
+import { UpdatePnLDto } from './dto/updateUserDto';
 
 @Injectable()
 export class UsersService implements IUsersService {
@@ -216,7 +217,7 @@ export class UsersService implements IUsersService {
     let newBalance: number;
     switch (direction) {
       case Directions.Send:
-        newBalance = objectUser.balance - amount;
+        newBalance = Number(objectUser.balance) - Number(amount);
         await this.usersRepository.update(userId, { balance: newBalance });
         if (transcDetails.pnl)
           await this.trxService.createTrx(userId, {
@@ -348,6 +349,44 @@ export class UsersService implements IUsersService {
       where: { user: { id }, category: Category.Withdrawal },
       order: { id: 'DESC' },
     });
+  }
+
+  async updatePnL(id: number, dto: UpdatePnLDto): Promise<void> {
+    const user = await this.usersRepository.findOne({ where: { id } });
+    if (!user)
+      throw new HttpException('user does not exist', HttpStatus.NOT_FOUND);
+
+    if (user.permission !== UserPermission.Admin)
+      throw new HttpException(
+        "User doesn't have the permission to perform this action",
+        HttpStatus.UNAUTHORIZED,
+      );
+
+    const objectUser = await this.usersRepository.findOne({
+      where: { id: dto.userId },
+    });
+
+    if (!objectUser)
+      throw new HttpException(
+        'Object user does not exist',
+        HttpStatus.NOT_FOUND,
+      );
+
+    const pnl = await this.trxService.findTrx(dto.pnlId);
+
+    if (!pnl)
+      throw new HttpException('PnL does not exist', HttpStatus.NOT_FOUND);
+
+    if (pnl.service === 'Profit') {
+      objectUser.balance =
+        Number(objectUser.balance) - Number(pnl.amount) + Number(dto.amount);
+    } else {
+      objectUser.balance =
+        Number(objectUser.balance) + Number(pnl.amount) - Number(dto.amount);
+    }
+    pnl.amount = dto.amount;
+    await this.usersRepository.save(objectUser);
+    await this.trxRepository.save(pnl);
   }
 
   async changePassword(

@@ -24,7 +24,7 @@ export const RefTable = ({ tableData }: { tableData: any }) => {
               <tr
                 className={`${
                   i % 2 != 0 ? "bg-[#20232A]" : "bg-[--background]"
-                }  md:text-[1.3vw]`}
+                }  md:text-[1vw]`}
                 key={data.id}
               >
                 <td className="px-6 py-2 md:px-[2vw] md:py-[.7vw]">

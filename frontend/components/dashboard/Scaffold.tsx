@@ -73,7 +73,7 @@ function Scaffold({ children, activeLink, route }: ScaffoldType) {
               showMobileMenu ? "translate-x-0" : "-translate-x-full"
             } transition-transform duration-700 md:w-[20%] md:translate-x-0 md:static`}
           >
-            <div className="bg-background h-full w-[65%] md:w-full px-[1rem] md:px-[1.4vw] border-r">
+            <div className="bg-[#20232A] h-full w-[65%] md:w-full px-[1rem] md:px-[1.4vw]">
               <div className="h-[15%] md:py-[.9vw]">
                 <a href="/" className="flex justify-center items-center w-full">
                   <img src="/logo.png" className="w-[5rem] h-[5rem]" />

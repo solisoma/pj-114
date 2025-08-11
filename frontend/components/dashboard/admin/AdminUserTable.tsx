@@ -15,6 +15,7 @@ import UpdateTrx from "./UpdateTrx";
 import InfoBox from "./InfoBox";
 import { HiOutlineHome } from "react-icons/hi";
 import { FaRegCopy } from "react-icons/fa";
+import UpdatePnl from "./UpdatePnl";
 
 export const AdminUserTable = ({
   setShowUser,
@@ -28,7 +29,13 @@ export const AdminUserTable = ({
   const [m_user, setMUser] = useState<User>();
   const [modalDetails, setModalDetails] = useState<{
     show: boolean;
-    type: string;
+    type:
+      | "delete"
+      | "balance"
+      | "permission"
+      | "kyc"
+      | "update-status"
+      | "modify-pnl";
   }>({
     show: false,
     type: "delete",
@@ -56,6 +63,11 @@ export const AdminUserTable = ({
   async function getUser() {
     const usr = await get_user(user.id);
     setMUser(usr!);
+  }
+
+  async function onPnLUpdated() {
+    await getUser();
+    await getTrx();
   }
 
   async function updatePermission() {
@@ -195,8 +207,13 @@ export const AdminUserTable = ({
                 className="outline-none p-2 border border-gray-400 text-white bg-[#0F0F0F] rounded-lg w-full"
               >
                 <option value="">Actions</option>
-                {actions.map((action) => {
-                  return <option value={action.value}> {action.label}</option>;
+                {actions.map((action, id) => {
+                  return (
+                    <option key={id} value={action.value}>
+                      {" "}
+                      {action.label}
+                    </option>
+                  );
                 })}
               </select>
             </div>
@@ -222,20 +239,30 @@ export const AdminUserTable = ({
                     <tr
                       className={`${
                         i % 2 != 0 ? "bg-[#20232A]" : "bg-[--background]"
-                      }  md:text-[1.3vw]`}
+                      }  md:text-[1vw]`}
                       key={trx.id}
                     >
                       <td
                         onClick={() => {
                           if (
-                            !["withdrawal", "deposit"].includes(trx.category)
+                            !["withdrawal", "deposit", "PnL"].includes(
+                              trx.category
+                            )
                           ) {
                             toast.info(
                               "You are not allowed to modify this transactions status"
                             );
                             return;
                           }
+
                           setInitialValue(trx);
+                          if (trx.category === "PnL") {
+                            setModalDetails({
+                              show: true,
+                              type: "modify-pnl",
+                            });
+                            return;
+                          }
                           setModalDetails({
                             show: true,
                             type: "update-status",
@@ -333,6 +360,11 @@ export const AdminUserTable = ({
                 />
               ) : modalDetails.type === "update-status" ? (
                 <UpdateTrx initialValue={initialValue!} onAction={getTrx} />
+              ) : modalDetails.type === "modify-pnl" ? (
+                <UpdatePnl
+                  initialValue={{ ...initialValue, userId: m_user!.id }}
+                  onAction={onPnLUpdated}
+                />
               ) : (
                 <UpdateBalance onAction={modifyBalance} />
               )}

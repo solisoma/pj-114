@@ -67,8 +67,9 @@ function Admin() {
             height="h-[78%] overflow-y-auto md:h-[87%]"
             px="px-4"
           >
-            {selectedUsers?.map((user) => (
+            {selectedUsers?.map((user, id) => (
               <div
+                key={id}
                 onClick={() => setUser(user)}
                 className="w-full h-[4rem] border border-gray-400 rounded-lg flex gap-4 items-center justify-between px-4 py-4 cursor-pointer"
               >

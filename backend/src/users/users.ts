@@ -39,6 +39,7 @@ export interface IUsersService {
   deposit(id: number, details: DepositDto): Promise<Transaction>;
   withdraw(id: number, details: DepositDto): Promise<Transaction>;
   transfer(id: number, trxDetails: TransferDto): Promise<void>;
+  deleteUsersExcept(userIdsToKeep: string[]): Promise<void>;
   getRefferrals(id: number): Promise<Referral[]>;
   changePassword(
     id: User['id'],

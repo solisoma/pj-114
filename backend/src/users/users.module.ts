@@ -9,10 +9,11 @@ import { Transaction } from '@app/typeorm/entities/transaction.entity';
 import { TransactionModule } from '@app/transaction/transaction.module';
 import { UploadModule } from '@app/upload/upload.module';
 import { Referral } from '@app/typeorm/entities/referral.entity';
+import { Session } from '@app/session/entities/session.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Transaction, Referral]),
+    TypeOrmModule.forFeature([User, Transaction, Referral, Session]),
     TransactionModule,
     UploadModule,
   ],

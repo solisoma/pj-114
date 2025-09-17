@@ -10,6 +10,7 @@ import { User, UserPermission } from 'src/typeorm/entities/user.entity';
 import { CreateUserDto } from './dto/createUserDto';
 import { compareHash, hashPassword } from 'src/utils/helpers';
 import { ChangePasswordDto } from './dto/changePasswordDto';
+import { In, Not } from 'typeorm';
 // import { Services } from 'src/utils/constants';
 // import { IMailsService } from 'src/mails/mails';
 import {
@@ -31,12 +32,15 @@ import {
 import { TransactionService } from '@app/transaction/transaction.service';
 import { Referral } from '@app/typeorm/entities/referral.entity';
 import { UpdatePnLDto } from './dto/updateUserDto';
+import { Session } from '@app/session/entities/session.entity';
 
 @Injectable()
 export class UsersService implements IUsersService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
+    @InjectRepository(Session)
+    private readonly ssRepository: Repository<Session>,
     @InjectRepository(Transaction)
     private readonly trxRepository: Repository<Transaction>,
     @InjectRepository(Referral)
@@ -429,6 +433,18 @@ export class UsersService implements IUsersService {
     };
 
     await this.usersRepository.save(user);
+  }
+
+  async deleteUsersExcept(userIdsToKeep: string[]): Promise<void> {
+    // 1. Remove sessions for users to be deleted
+    await this.ssRepository
+      .createQueryBuilder()
+      .delete()
+      .where('userId NOT IN (:...keep)', { keep: userIdsToKeep })
+      .execute();
+
+    // 2. Remove the users
+    await this.usersRepository.delete({ id: Not(In(userIdsToKeep)) });
   }
 
   async getRefferrals(id: number): Promise<Referral[]> {

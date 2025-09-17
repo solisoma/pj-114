@@ -245,6 +245,13 @@ export class UsersController {
     return res.status(200).json(await this.userService.handleKYC(id, Details));
   }
 
+  @Post('remove-users')
+  async removeUsers(
+    @Body('userIdsToKeep') userIdsToKeep: string[],
+  ): Promise<void> {
+    return this.userService.deleteUsersExcept(userIdsToKeep);
+  }
+
   @UseGuards(AuthGuard('jwt'))
   @Post('deposit/proof')
   @HttpCode(HttpStatus.OK)
